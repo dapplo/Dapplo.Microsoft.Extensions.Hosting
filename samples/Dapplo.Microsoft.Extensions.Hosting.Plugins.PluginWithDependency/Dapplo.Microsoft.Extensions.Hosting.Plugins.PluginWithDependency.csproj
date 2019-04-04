@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapplo.HttpExtensions" Version="0.9.18" />
+    <PackageReference Include="Flurl.Http" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>

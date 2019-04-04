@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.OriginalSamplePlugin
+namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
 {
     /// <summary>
-    /// Init class for the plugin
+    /// This plug-in configures the HostBuilderContext to have the hosted services from the online example
     /// </summary>
     public class Plugin : IPlugin
     {

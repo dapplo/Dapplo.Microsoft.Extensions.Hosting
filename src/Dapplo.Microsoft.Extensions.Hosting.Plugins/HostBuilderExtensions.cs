@@ -1,4 +1,25 @@
-﻿using System;
+﻿//  Dapplo - building blocks for desktop applications
+//  Copyright (C) 2019 Dapplo
+// 
+//  For more information see: http://dapplo.net/
+//  Dapplo repositories are hosted on GitHub: https://github.com/dapplo
+// 
+//  This file is part of Dapplo.Microsoft.Extensions.Hosting.Plugins
+// 
+//  Dapplo.Microsoft.Extensions.Hosting.Plugins is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU Lesser General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+// 
+//  Dapplo.Microsoft.Extensions.Hosting.Plugins is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU Lesser General Public License for more details.
+// 
+//  You should have a copy of the GNU Lesser General Public License
+//  along with Dapplo.Microsoft.Extensions.Hosting.Plugins. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -77,14 +98,15 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             if (!File.Exists(pluginLocation))
             {
-                Console.WriteLine($"Can't find: {pluginLocation}");
+                // TODO: Log an error, how to get a logger here?
                 return null;
             }
-            Console.WriteLine($"Loading plugin from: {pluginLocation}");
+            // TODO: Log verbose that we are loading a plugin
  
             var loadContext = new PluginLoadContext(pluginLocation);
             var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
 
+            // TODO: Check if we want to scan all assemblies, or have a specify class on a predetermined location?
             var interfaceType = typeof(IPlugin);
             foreach (var type in assembly.GetExportedTypes())
             {

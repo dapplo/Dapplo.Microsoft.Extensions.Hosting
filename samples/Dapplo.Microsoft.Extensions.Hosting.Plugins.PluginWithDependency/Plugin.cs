@@ -11,7 +11,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
         /// <inheritdoc />
         public void ConfigureHost(HostBuilderContext hostBuilderContext, IServiceCollection serviceCollection)
         {
-            serviceCollection.AddHostedService<BackgroundService>();
+            serviceCollection.AddHostedService<MySampleBackgroundService>();
         }
     }
 }

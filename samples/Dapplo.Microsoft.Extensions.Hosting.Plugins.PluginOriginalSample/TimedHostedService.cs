@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.OriginalSamplePlugin
+namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
 {
     internal class TimedHostedService : IHostedService, IDisposable
     {

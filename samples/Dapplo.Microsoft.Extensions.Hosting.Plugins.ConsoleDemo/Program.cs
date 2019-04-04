@@ -23,7 +23,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.ConsoleDemo
                 // Specify the location from where the dll's are "globbed"
                 .UseContentRoot(@"..\..\..\..\")
                 // Add the plugins which can be found with the specified globs
-                .AddPlugins(@"**\bin\**\*.Plugin.*.dll")
+                .AddPlugins(@"**\bin\**\*.Plugin*.dll")
                 .UseConsoleLifetime()
                 .Build();
 
