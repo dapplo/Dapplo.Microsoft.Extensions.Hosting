@@ -1,6 +1,9 @@
 # Dapplo.Microsoft.Extensions.Hosting
 
+[![Build Status](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_apis/build/status/dapplo.Dapplo.Microsoft.Extensions.Hosting?branchName=master)](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_build/latest?definitionId=6&branchName=master)
+
 This repository contains extensions which work with the Microsoft.Extensions.Hosting 
+
 
 Dapplo.Microsoft.Extensions.Hosting.Plugins
 --------------------------------------------
