@@ -41,7 +41,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
                     var result = await _uri.GetStringAsync();
                     _logger.LogInformation("{0} : {1}", _uri, result.Substring(0, 40));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     _logger.LogError("Couldn't connect to {0}, this was expected behind a corporate firewall, as HttpClient doesn't have a default proxy!", _uri);
                 }

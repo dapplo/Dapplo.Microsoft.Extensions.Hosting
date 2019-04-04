@@ -5,17 +5,22 @@ using Microsoft.Extensions.Logging;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
 {
+    /// <summary>
+    /// Example for a IHostedService which tracks LivetimeEvents
+    /// </summary>
     internal class LifetimeEventsHostedService : IHostedService
     {
         private readonly ILogger _logger;
         private readonly IApplicationLifetime _appLifetime;
 
+        /// <inheritdoc />
         public LifetimeEventsHostedService(ILogger<LifetimeEventsHostedService> logger, IApplicationLifetime appLifetime)
         {
             _logger = logger;
             _appLifetime = appLifetime;
         }
 
+        /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _appLifetime.ApplicationStarted.Register(OnStarted);
@@ -25,6 +30,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc />
         public Task StopAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;

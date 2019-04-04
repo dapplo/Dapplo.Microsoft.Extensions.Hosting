@@ -1,4 +1,9 @@
-# Dapplo.Microsoft.Extensions.Hosting.Plugins
+# Dapplo.Microsoft.Extensions.Hosting
+
+This repository contains extensions which work with the Microsoft.Extensions.Hosting 
+
+Dapplo.Microsoft.Extensions.Hosting.Plugins
+--------------------------------------------
 Extend generic host based application with plugins
 
 This extension adds plug-in support to generic host based application.

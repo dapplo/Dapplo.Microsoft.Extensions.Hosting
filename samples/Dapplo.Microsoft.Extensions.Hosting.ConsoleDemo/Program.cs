@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Dapplo.Microsoft.Extensions.Hosting.Plugins;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.ConsoleDemo
+namespace Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo
 {
     /// <summary>
     /// This demonstrates loading plugins

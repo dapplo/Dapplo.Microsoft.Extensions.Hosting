@@ -3,9 +3,9 @@
     <Copyright>Copyright © Dapplo 2019</Copyright>
     <Authors>Dapplo</Authors>
     <PackageIconUrl>http://www.dapplo.net/favicon.ico</PackageIconUrl>
-	<RepositoryUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting.Plugins</RepositoryUrl>
+	<RepositoryUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting.Plugins</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</PackageProjectUrl>
     <PackageLicense>LGPL-3.0-or-later</PackageLicense>
 	<LangVersion>latest</LangVersion>
   </PropertyGroup>
