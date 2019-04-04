@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28711.60
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins", "..\src\Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj", "{021F054E-F3E0-44AB-AF4A-042A7513B2D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins.OriginalSamplePlugin", "Dapplo.Microsoft.Extensions.Hosting.Plugins.OriginalSamplePlugin\Dapplo.Microsoft.Extensions.Hosting.Plugins.OriginalSamplePlugin.csproj", "{32B89840-E40B-4530-A454-CF1B4C5CA2EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins.ConsoleDemo", "Dapplo.Microsoft.Extensions.Hosting.Plugins.ConsoleDemo\Dapplo.Microsoft.Extensions.Hosting.Plugins.ConsoleDemo.csproj", "{EA9149C7-5B38-4522-AD58-901AFFDCE588}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency", "Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency\Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency.csproj", "{617F6E42-23CB-45C4-AC52-6A44E492E59A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{021F054E-F3E0-44AB-AF4A-042A7513B2D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021F054E-F3E0-44AB-AF4A-042A7513B2D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021F054E-F3E0-44AB-AF4A-042A7513B2D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021F054E-F3E0-44AB-AF4A-042A7513B2D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32B89840-E40B-4530-A454-CF1B4C5CA2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B89840-E40B-4530-A454-CF1B4C5CA2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B89840-E40B-4530-A454-CF1B4C5CA2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B89840-E40B-4530-A454-CF1B4C5CA2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA9149C7-5B38-4522-AD58-901AFFDCE588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9149C7-5B38-4522-AD58-901AFFDCE588}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9149C7-5B38-4522-AD58-901AFFDCE588}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9149C7-5B38-4522-AD58-901AFFDCE588}.Release|Any CPU.Build.0 = Release|Any CPU
+		{617F6E42-23CB-45C4-AC52-6A44E492E59A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{617F6E42-23CB-45C4-AC52-6A44E492E59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{617F6E42-23CB-45C4-AC52-6A44E492E59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{617F6E42-23CB-45C4-AC52-6A44E492E59A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E385CD7A-F537-4976-A3E6-A2FB993A4301}
+	EndGlobalSection
+EndGlobal

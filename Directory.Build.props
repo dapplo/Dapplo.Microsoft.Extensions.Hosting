@@ -1,0 +1,49 @@
+﻿<Project>
+  <PropertyGroup>
+    <Copyright>Copyright © Dapplo 2019</Copyright>
+    <Authors>Dapplo</Authors>
+    <PackageIconUrl>http://www.dapplo.net/favicon.ico</PackageIconUrl>
+	<RepositoryUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting.Plugins</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting.Plugins</PackageProjectUrl>
+    <PackageLicense>LGPL-3.0-or-later</PackageLicense>
+	<LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!$(MSBuildProjectName.Contains('Test')) And !$(MSBuildProjectName.Contains('Demo'))">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	<IsPackable>true</IsPackable>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Tests')) Or $(MSBuildProjectName.Contains('Demo'))">
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+	<IsPackable>false</IsPackable>
+  </PropertyGroup>  
+	
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>True</DebugSymbols>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+	<Optimize>true</Optimize>
+	<DebugType>pdbonly</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  
+  <ItemGroup Condition="!$(MSBuildProjectName.Contains('Test')) And !$(MSBuildProjectName.Contains('Demo'))">
+    <PackageReference Include="Nerdbank.GitVersioning" Version="2.3.138">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="PdbGit" Version="3.0.41">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
