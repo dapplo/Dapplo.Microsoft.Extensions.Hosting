@@ -23,6 +23,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Hosting;
@@ -34,31 +35,61 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
     /// </summary>
     public static class HostBuilderPluginExtensions
     {
-        private static readonly Matcher GlobalMatcher = new Matcher();
+        private static readonly Matcher GlobalPluginMatcher = new Matcher();
+        private static readonly Matcher GlobalFrameworkMatcher = new Matcher();
         private static bool _isPluginLoadingConfigured;
+        private static bool _areFrameworkAssembliesConfigured;
+
+        /// <summary>
+        /// Specify what assemblies to load into the host, this is needed for frameworks used over multiple plug-ins
+        /// </summary>
+        /// <param name="hostBuilder">IHostBuilder</param>
+        /// <param name="configureAction">Action to configure where the framework assemblies come from</param>
+        /// <returns>IHostBuilder for fluently calling</returns>
+        public static IHostBuilder AddFrameworkAssemblies(this IHostBuilder hostBuilder, Action<Matcher> configureAction)
+        {
+            configureAction?.Invoke(GlobalFrameworkMatcher);
+            ConfigurePluginScanAndLoad(hostBuilder);
+            _areFrameworkAssembliesConfigured = true;
+            return hostBuilder;
+        }
+
+        /// <summary>
+        /// Specify what assemblies to load into the host, this is needed for frameworks used over multiple plug-ins
+        /// </summary>
+        /// <param name="hostBuilder">IHostBuilder</param>
+        /// <param name="globs">The glob patterns to match framework assemblies with, they are located from the ContentRoot</param>
+        /// <returns>IHostBuilder for fluently calling</returns>
+        public static IHostBuilder AddFrameworkAssemblies(this IHostBuilder hostBuilder, params string[] globs)
+        {
+            GlobalFrameworkMatcher.AddIncludePatterns(globs);
+            ConfigurePluginScanAndLoad(hostBuilder);
+            _areFrameworkAssembliesConfigured = true;
+            return hostBuilder;
+        }
         
         /// <summary>
-        /// This enables scanning for and loading of plug-ins
+        /// Specify what plug-ins assemblies to load
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="configureAction">Action to configure where the plugins come from</param>
         /// <returns>IHostBuilder for fluently calling</returns>
-        public static IHostBuilder AddPlugins(this IHostBuilder hostBuilder, Action<Matcher> configureAction)
+        public static IHostBuilder AddPluginAssemblies(this IHostBuilder hostBuilder, Action<Matcher> configureAction)
         {
-            configureAction?.Invoke(GlobalMatcher);
+            configureAction?.Invoke(GlobalPluginMatcher);
             ConfigurePluginScanAndLoad(hostBuilder);
             return hostBuilder;
         }
 
         /// <summary>
-        /// This enables scanning for and loading of plug-ins
+        /// Specify what plug-ins to load
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="globs">The glob patterns to match plugins with, they are located from the ContentRoot</param>
+        /// <param name="globs">The glob patterns to match plug-in assemblies, they are located from the ContentRoot</param>
         /// <returns>IHostBuilder for fluently calling</returns>
-        public static IHostBuilder AddPlugins(this IHostBuilder hostBuilder, params string[] globs)
+        public static IHostBuilder AddPluginAssemblies(this IHostBuilder hostBuilder, params string[] globs)
         {
-            GlobalMatcher.AddIncludePatterns(globs);
+            GlobalPluginMatcher.AddIncludePatterns(globs);
             ConfigurePluginScanAndLoad(hostBuilder);
             return hostBuilder;
         }
@@ -80,8 +111,25 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             {
                 // Figure out the root from which we scan
                 var scanRoot = hostBuilderContext.HostingEnvironment.ContentRootPath ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+                if (_areFrameworkAssembliesConfigured)
+                {
+                    // Do the globbing and try to load the framework files into the default AssemblyLoadContext
+                    foreach (var frameworkAssemblyPath in GlobalFrameworkMatcher.GetResultsInFullPath(scanRoot))
+                    {
+                        var frameworkAssemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(frameworkAssemblyPath));
+                        if (AssemblyLoadContext.Default.TryGetAssembly(frameworkAssemblyName, out _)) 
+                        {
+                            continue;
+                        }
+                    
+                        // TODO: Log the loading?
+                        AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
+                    }
+                }
+                
                 // Do the globbing and try to load the plug-ins
-                foreach (var pluginPath in GlobalMatcher.GetResultsInFullPath(scanRoot))
+                foreach (var pluginPath in GlobalPluginMatcher.GetResultsInFullPath(scanRoot))
                 {
                     var plugin = LoadPlugin(pluginPath);
                     plugin?.ConfigureHost(hostBuilderContext, serviceCollection);
@@ -102,9 +150,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                 return null;
             }
             // TODO: Log verbose that we are loading a plugin
- 
-            var loadContext = new PluginLoadContext(pluginLocation);
-            var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
+            var pluginName = Path.GetFileNameWithoutExtension(pluginLocation);
+            var loadContext = new PluginLoadContext(pluginLocation, pluginName);
+            // TODO: Decide if we rather have this to come up with the name: AssemblyName.GetAssemblyName(pluginLocation)
+            var pluginAssemblyName = new AssemblyName(pluginName);
+            // Only the 
+            var assembly = loadContext.LoadFromAssemblyName(pluginAssemblyName);
 
             // TODO: Check if we want to scan all assemblies, or have a specify class on a predetermined location?
             var interfaceType = typeof(IPlugin);

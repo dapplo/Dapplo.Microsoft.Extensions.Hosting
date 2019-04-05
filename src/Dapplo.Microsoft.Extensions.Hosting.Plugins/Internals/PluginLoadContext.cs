@@ -34,28 +34,37 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
     {
         private readonly AssemblyDependencyResolver _resolver;
 
-        public PluginLoadContext(string pluginPath)
+        public PluginLoadContext(string pluginPath, string name) : base(name)
         {
             _resolver = new AssemblyDependencyResolver(pluginPath);
+        }
+
+        /// <summary>
+        /// Returns the path where the specified assembly can be found
+        /// </summary>
+        /// <param name="assemblyName">AssemblyName</param>
+        /// <returns>string with the path</returns>
+        public string ResolveAssemblyPath(AssemblyName assemblyName)
+        {
+            return _resolver.ResolveAssemblyToPath(assemblyName);
         }
 
         /// <inheritdoc />
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            // Try to get the assembly from the AssemblyLoadContext.Default, when it is already loaded
+            if (Default.TryGetAssembly(assemblyName, out var alreadyLoadedAssembly)) 
             {
-                if (assembly.FullName.Equals(assemblyName.FullName))
-                {
-                    return assembly;
-                }
+                return alreadyLoadedAssembly;
             }
-            var assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+            var assemblyPath = ResolveAssemblyPath(assemblyName);
             if (assemblyPath == null)
             {
                 return null;
             }
 
-            return LoadFromAssemblyPath(assemblyPath);
+            var resultAssembly = LoadFromAssemblyPath(assemblyPath);
+            return resultAssembly;
         }
 
         /// <inheritdoc />

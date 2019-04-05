@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapplo.Microsoft.Extensions.Hosting.FrameworkLib;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -14,6 +15,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
         public TimedHostedService(ILogger<TimedHostedService> logger)
         {
             _logger = logger;
+            SomeStaticExampleClass.RegisteredServices.Add(nameof(TimedHostedService));
+
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

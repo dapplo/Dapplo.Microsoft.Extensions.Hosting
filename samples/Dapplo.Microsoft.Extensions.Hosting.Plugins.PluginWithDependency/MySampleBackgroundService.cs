@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapplo.Microsoft.Extensions.Hosting.FrameworkLib;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Flurl.Http;
@@ -19,6 +20,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
         public MySampleBackgroundService(ILogger<MySampleBackgroundService> logger)
         {
             _logger = logger;
+            SomeStaticExampleClass.RegisteredServices.Add(nameof(MySampleBackgroundService));
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -33,6 +35,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
         private void DoWork(object state)
         {
             _logger.LogInformation("Retrieving something.");
+            _logger.LogInformation("Current Services {0}", string.Join(", ", SomeStaticExampleClass.RegisteredServices));
 
             Task.Run(async () =>
             {

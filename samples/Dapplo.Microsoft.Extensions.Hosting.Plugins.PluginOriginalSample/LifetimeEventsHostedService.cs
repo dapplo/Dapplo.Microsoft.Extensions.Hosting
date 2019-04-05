@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Dapplo.Microsoft.Extensions.Hosting.FrameworkLib;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +19,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
         {
             _logger = logger;
             _appLifetime = appLifetime;
+            SomeStaticExampleClass.RegisteredServices.Add(nameof(LifetimeEventsHostedService));
         }
 
         /// <inheritdoc />
