@@ -25,7 +25,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Timed Background Service is starting.");
+            _logger.LogInformation("MySampleBackgroundService is starting.");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
 
@@ -52,7 +52,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Timed Background Service is stopping.");
+            _logger.LogInformation("MySampleBackgroundService is stopping.");
 
             _timer?.Change(Timeout.Infinite, 0);
 

@@ -6,6 +6,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
     /// <summary>
     /// This plug-in configures the HostBuilderContext to have the hosted services from the online example
     /// </summary>
+    [PluginOrder(100)]
     public class Plugin : IPlugin
     {
         /// <inheritdoc />

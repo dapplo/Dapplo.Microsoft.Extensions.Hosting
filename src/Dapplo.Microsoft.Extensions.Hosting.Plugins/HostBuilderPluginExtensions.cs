@@ -49,7 +49,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <returns>bool if there was a matcher</returns>
         private static bool TryGetMatcher(this IDictionary<object, object> properties, string propertyName, out Matcher matcher, bool create = true)
         {
-            if (properties.TryGetValue(PluginMatcherKey, out var matcherObject))
+            if (properties.TryGetValue(propertyName, out var matcherObject))
             {
                 matcher = matcherObject as Matcher;
                 return true;
@@ -57,7 +57,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             if (create)
             {
                 matcher = new Matcher();
-                properties[PluginMatcherKey] = matcher;
+                properties[propertyName] = matcher;
             } else
             {
                 matcher = null;
@@ -73,7 +73,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <returns>IHostBuilder for fluently calling</returns>
         public static IHostBuilder AddFrameworkAssemblies(this IHostBuilder hostBuilder, Action<Matcher> configureAction)
         {
-            if (!hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher))
+            if (!hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher) && !hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher))
             {
                 ConfigurePluginScanAndLoad(hostBuilder);
             }
@@ -89,7 +89,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <returns>IHostBuilder for fluently calling</returns>
         public static IHostBuilder AddFrameworkAssemblies(this IHostBuilder hostBuilder, params string[] globs)
         {
-            if (!hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher))
+            if (!hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher) && !hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher))
             {
                 ConfigurePluginScanAndLoad(hostBuilder);
             }
@@ -105,7 +105,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <returns>IHostBuilder for fluently calling</returns>
         public static IHostBuilder AddPluginAssemblies(this IHostBuilder hostBuilder, Action<Matcher> configureAction)
         {
-            if (!hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher))
+            if (!hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher) && !hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher))
             {
                 ConfigurePluginScanAndLoad(hostBuilder);
             }
@@ -121,7 +121,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <returns>IHostBuilder for fluently calling</returns>
         public static IHostBuilder AddPluginAssemblies(this IHostBuilder hostBuilder, params string[] globs)
         {
-            if (!hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher))
+            if (!hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher) && !hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher))
             {
                 ConfigurePluginScanAndLoad(hostBuilder);
             }
@@ -160,13 +160,27 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                 if (hostBuilderContext.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher, false))
                 {
                     // Do the globbing and try to load the plug-ins
-                    foreach (var pluginPath in pluginMatcher.GetResultsInFullPath(scanRoot))
+                    var pluginPaths = pluginMatcher.GetResultsInFullPath(scanRoot);
+                    var plugins = pluginPaths
+                        .Select(pluginPath => LoadPlugin(pluginPath))
+                        .Where(plugin => plugin != null)
+                        .OrderBy(plugin => plugin.GetOrder());
+                    foreach (var plugin in plugins)
                     {
-                        var plugin = LoadPlugin(pluginPath);
                         plugin?.ConfigureHost(hostBuilderContext, serviceCollection);
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// Helper method to process the PluginOrder attribute
+        /// </summary>
+        /// <param name="plugin">IPlugin</param>
+        /// <returns>int</returns>
+        private static int GetOrder(this IPlugin plugin)
+        {
+            return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>()?.Order ?? 0;
         }
 
         /// <summary>
@@ -181,12 +195,16 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                 // TODO: Log an error, how to get a logger here?
                 return null;
             }
+            
             // TODO: Log verbose that we are loading a plugin
             var pluginName = Path.GetFileNameWithoutExtension(pluginLocation);
-            var loadContext = new PluginLoadContext(pluginLocation, pluginName);
             // TODO: Decide if we rather have this to come up with the name: AssemblyName.GetAssemblyName(pluginLocation)
             var pluginAssemblyName = new AssemblyName(pluginName);
-            // Only the 
+            if (AssemblyLoadContext.Default.TryGetAssembly(pluginAssemblyName, out _))
+            {
+                return null;
+            }
+            var loadContext = new PluginLoadContext(pluginLocation, pluginName);
             var assembly = loadContext.LoadFromAssemblyName(pluginAssemblyName);
 
             // TODO: Check if we want to scan all assemblies, or have a specify class on a predetermined location?
