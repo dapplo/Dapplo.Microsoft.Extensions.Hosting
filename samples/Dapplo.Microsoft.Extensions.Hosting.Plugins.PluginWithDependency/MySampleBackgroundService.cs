@@ -34,9 +34,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
 
         private void DoWork(object state)
         {
+            _logger.LogInformation("Known registered Services {0}", string.Join(", ", SomeStaticExampleClass.RegisteredServices));
             _logger.LogInformation("Retrieving something.");
-            _logger.LogInformation("Current Services {0}", string.Join(", ", SomeStaticExampleClass.RegisteredServices));
-
             Task.Run(async () =>
             {
                 try

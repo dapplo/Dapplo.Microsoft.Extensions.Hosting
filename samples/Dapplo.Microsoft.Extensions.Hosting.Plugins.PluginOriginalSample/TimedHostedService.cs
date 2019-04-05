@@ -31,6 +31,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
         private void DoWork(object state)
         {
             _logger.LogInformation("Timed Background Service is working.");
+            _logger.LogInformation("Known registered Services {0}", string.Join(", ", SomeStaticExampleClass.RegisteredServices));
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
