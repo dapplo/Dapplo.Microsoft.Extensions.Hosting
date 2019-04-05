@@ -2,13 +2,11 @@
 
 [![Build Status](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_apis/build/status/dapplo.Dapplo.Microsoft.Extensions.Hosting?branchName=master)](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_build/latest?definitionId=6&branchName=master)
 
-This repository contains extensions which work with the Microsoft.Extensions.Hosting 
+This repository contains extensions for Microsoft.Extensions.Hosting
 
 
 Dapplo.Microsoft.Extensions.Hosting.Plugins
 --------------------------------------------
-Extend generic host based application with plugins
-
 ![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.Plugins.svg)
 
 This extension adds plug-in support to generic host based dotnet core 3.0 application.
