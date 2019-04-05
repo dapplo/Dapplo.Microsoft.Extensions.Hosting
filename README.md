@@ -15,25 +15,9 @@ You can simply add the location of plug-ins by specifying globs to find your plu
 This can be both files to include and / or exclude.
 Each located plug-ins is loaded into it's own AssemblyLoadContext, dependencies are found and loaded in the same AssemblyLoadContext via an AssemblyDependencyResolver (which was introduced in dotnet core 3.0).
 
-Here is an example how to use the loading:
-```
-    public static async Task Main(string[] args)
-    {
-        var host = new HostBuilder()
-            // Specify the location from where the dll's are "globbed"
-            .UseContentRoot(@"..\..\..\..\")
-            // Add the plugins which can be found with the specified globs
-            .AddPlugins(@"**\bin\**\*.Plugin*.dll")
-            // Files can be excluded
-            .AddPlugins(matcher => matcher.AddExclude("*Demo*"))
-            .UseConsoleLifetime()
-            .Build();
-
-        Console.WriteLine("Run!");
-        await host.RunAsync();
-    }
-```
-
+[Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo/Program.cs#L27)
+ is an example how to use the loading, and also how to handle framework assemblies.
+ 
 The DLL which is your plugin should have at least one class which implements IPlugin, this implementation can configure the HostBuilderContext.
 ```
     /// <summary>
