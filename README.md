@@ -9,7 +9,9 @@ Dapplo.Microsoft.Extensions.Hosting.Plugins
 --------------------------------------------
 Extend generic host based application with plugins
 
-This extension adds plug-in support to generic host based application.
+![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.Plugins.svg)
+
+This extension adds plug-in support to generic host based dotnet core 3.0 application.
 
 You can simply add the location of plug-ins by specifying globs to find your plug-in assemblies.
 This can be both files to include and / or exclude.
