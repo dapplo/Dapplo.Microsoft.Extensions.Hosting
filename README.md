@@ -7,7 +7,7 @@ This repository contains extensions for Microsoft.Extensions.Hosting
 
 Dapplo.Microsoft.Extensions.Hosting.Plugins
 --------------------------------------------
-![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.Plugins.svg)
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.Plugins.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.Plugins/)
 
 This extension adds plug-in support to generic host based dotnet core 3.0 application.
 
