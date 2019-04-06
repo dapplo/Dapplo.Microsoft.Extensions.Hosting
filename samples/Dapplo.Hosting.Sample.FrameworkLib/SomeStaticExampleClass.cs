@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.FrameworkLib
+namespace Dapplo.Hosting.Sample.FrameworkLib
 {
     /// <summary>
     /// A bad example, but it will demonstrate if the framework lib is correctly loaded

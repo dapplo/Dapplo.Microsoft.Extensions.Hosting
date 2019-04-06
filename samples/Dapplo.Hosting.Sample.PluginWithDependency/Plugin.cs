@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Dapplo.Microsoft.Extensions.Hosting.Plugins;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
+namespace Dapplo.Hosting.Sample.PluginWithDependency
 {
     /// <summary>
     /// A simple plugin definition, registering the BackgroundService

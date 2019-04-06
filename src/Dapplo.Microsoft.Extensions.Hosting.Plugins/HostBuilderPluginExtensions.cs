@@ -36,96 +36,43 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
     /// </summary>
     public static class HostBuilderPluginExtensions
     {
-        private const string PluginMatcherKey = "PluginMatcher";
+        private const string PluginBuilderKey = "PluginBuilder";
         private const string FrameworkMatcherKey = "FrameworkMatcher";
 
         /// <summary>
-        /// Helper method to retrieve a matcher
+        /// Helper method to retrieve the plugin builder
         /// </summary>
         /// <param name="properties">IDictionary</param>
-        /// <param name="propertyName">string</param>
-        /// <param name="matcher">Matcher out value</param>
-        /// <param name="create">bool specifying if a new Matcher needs to be created</param>
+        /// <param name="pluginBuilder">IPluginBuilder out value</param>
         /// <returns>bool if there was a matcher</returns>
-        private static bool TryGetMatcher(this IDictionary<object, object> properties, string propertyName, out Matcher matcher, bool create = true)
+        private static bool TryRetrievePluginBuilder(this IDictionary<object, object> properties, out IPluginBuilder pluginBuilder)
         {
-            if (properties.TryGetValue(propertyName, out var matcherObject))
+            if (properties.TryGetValue(PluginBuilderKey, out var pluginBuilderObject))
             {
-                matcher = matcherObject as Matcher;
+                pluginBuilder = pluginBuilderObject as IPluginBuilder;
                 return true;
+
             }
-            if (create)
-            {
-                matcher = new Matcher();
-                properties[propertyName] = matcher;
-            } else
-            {
-                matcher = null;
-            }
+            pluginBuilder = new PluginBuilder();
+            properties[PluginBuilderKey] = pluginBuilder;
             return false;
         }
 
         /// <summary>
-        /// Specify what assemblies to load into the host, this is needed for frameworks used over multiple plug-ins
+        /// Configure the plugins
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="configureAction">Action to configure where the framework assemblies come from</param>
-        /// <returns>IHostBuilder for fluently calling</returns>
-        public static IHostBuilder AddFrameworkAssemblies(this IHostBuilder hostBuilder, Action<Matcher> configureAction)
+        /// <param name="configurePlugin">Action to configure the IPluginBuilder</param>
+        /// <returns>IHostBuilder</returns>
+        public static IHostBuilder ConfigurePlugins(this IHostBuilder hostBuilder, Action<IPluginBuilder> configurePlugin)
         {
-            if (!hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher) && !hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher))
+            if (!hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder))
             {
+                // Configure a single time
                 ConfigurePluginScanAndLoad(hostBuilder);
             }
-            configureAction?.Invoke(frameworkMatcher);
-            return hostBuilder;
-        }
+            configurePlugin(pluginBuilder);
 
-        /// <summary>
-        /// Specify what assemblies to load into the host, this is needed for frameworks used over multiple plug-ins
-        /// </summary>
-        /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="globs">The glob patterns to match framework assemblies with, they are located from the ContentRoot</param>
-        /// <returns>IHostBuilder for fluently calling</returns>
-        public static IHostBuilder AddFrameworkAssemblies(this IHostBuilder hostBuilder, params string[] globs)
-        {
-            if (!hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher) && !hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher))
-            {
-                ConfigurePluginScanAndLoad(hostBuilder);
-            }
-            frameworkMatcher.AddIncludePatterns(globs);
-            return hostBuilder;
-        }
-        
-        /// <summary>
-        /// Specify what plug-ins assemblies to load
-        /// </summary>
-        /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="configureAction">Action to configure where the plugins come from</param>
-        /// <returns>IHostBuilder for fluently calling</returns>
-        public static IHostBuilder AddPluginAssemblies(this IHostBuilder hostBuilder, Action<Matcher> configureAction)
-        {
-            if (!hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher) && !hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher))
-            {
-                ConfigurePluginScanAndLoad(hostBuilder);
-            }
-            configureAction?.Invoke(pluginMatcher);
-            return hostBuilder;
-        }
-
-        /// <summary>
-        /// Specify what plug-ins to load
-        /// </summary>
-        /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="globs">The glob patterns to match plug-in assemblies, they are located from the ContentRoot</param>
-        /// <returns>IHostBuilder for fluently calling</returns>
-        public static IHostBuilder AddPluginAssemblies(this IHostBuilder hostBuilder, params string[] globs)
-        {
-            if (!hostBuilder.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher) && !hostBuilder.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher))
-            {
-                ConfigurePluginScanAndLoad(hostBuilder);
-            }
-            pluginMatcher.AddIncludePatterns(globs);
             return hostBuilder;
         }
 
@@ -138,36 +85,47 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             // Configure the actual scanning & loading
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                // Figure out the root from which we scan
-                var scanRoot = hostBuilderContext.HostingEnvironment.ContentRootPath ?? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder);
 
-                if (hostBuilderContext.Properties.TryGetMatcher(FrameworkMatcherKey, out var frameworkMatcher, false))
+                if (pluginBuilder.UseContentRoot)
                 {
-                    // Do the globbing and try to load the framework files into the default AssemblyLoadContext
-                    foreach (var frameworkAssemblyPath in frameworkMatcher.GetResultsInFullPath(scanRoot))
+                    var conentRootPath = hostBuilderContext.HostingEnvironment.ContentRootPath;
+                    pluginBuilder.AddScanDirectories(conentRootPath);
+                }
+
+                if (pluginBuilder.FrameworkDirectories.Count > 0)
+                {
+                    foreach (var frameworkScanRoot in pluginBuilder.FrameworkDirectories)
                     {
-                        var frameworkAssemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(frameworkAssemblyPath));
-                        if (AssemblyLoadContext.Default.TryGetAssembly(frameworkAssemblyName, out _)) 
+                        // Do the globbing and try to load the framework files into the default AssemblyLoadContext
+                        foreach (var frameworkAssemblyPath in pluginBuilder.FrameworkMatcher.GetResultsInFullPath(frameworkScanRoot))
                         {
-                            continue;
+                            var frameworkAssemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(frameworkAssemblyPath));
+                            if (AssemblyLoadContext.Default.TryGetAssembly(frameworkAssemblyName, out _))
+                            {
+                                continue;
+                            }
+
+                            // TODO: Log the loading?
+                            AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
                         }
-                    
-                        // TODO: Log the loading?
-                        AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
                     }
                 }
 
-                if (hostBuilderContext.Properties.TryGetMatcher(PluginMatcherKey, out var pluginMatcher, false))
+                if (pluginBuilder.PluginDirectories.Count > 0)
                 {
-                    // Do the globbing and try to load the plug-ins
-                    var pluginPaths = pluginMatcher.GetResultsInFullPath(scanRoot);
-                    var plugins = pluginPaths
-                        .Select(pluginPath => LoadPlugin(pluginPath))
-                        .Where(plugin => plugin != null)
-                        .OrderBy(plugin => plugin.GetOrder());
-                    foreach (var plugin in plugins)
+                    foreach (var pluginScanRootPath in pluginBuilder.PluginDirectories)
                     {
-                        plugin?.ConfigureHost(hostBuilderContext, serviceCollection);
+                        // Do the globbing and try to load the plug-ins
+                        var pluginPaths = pluginBuilder.PluginMatcher.GetResultsInFullPath(pluginScanRootPath);
+                        var plugins = pluginPaths
+                            .Select(pluginPath => LoadPlugin(pluginPath))
+                            .Where(plugin => plugin != null)
+                            .OrderBy(plugin => plugin.GetOrder());
+                        foreach (var plugin in plugins)
+                        {
+                            plugin?.ConfigureHost(hostBuilderContext, serviceCollection);
+                        }
                     }
                 }
             });

@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Dapplo.Microsoft.Extensions.Hosting.FrameworkLib;
+using Dapplo.Hosting.Sample.FrameworkLib;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample
+namespace Dapplo.Hosting.Sample.PluginOriginalSample
 {
     /// <summary>
     /// Example for a IHostedService which tracks LivetimeEvents

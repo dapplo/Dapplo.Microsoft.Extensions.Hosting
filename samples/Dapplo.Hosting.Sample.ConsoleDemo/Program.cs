@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo
+namespace Dapplo.Hosting.Sample.ConsoleDemo
 {
     /// <summary>
     /// This demonstrates loading plugins
@@ -21,16 +21,20 @@ namespace Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo
             var host = new HostBuilder()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
-                // Specify the location from where the dll's are "globbed"
-                .UseContentRoot(@"..\..\..\..\")
-                // Add the framework libraries which can be found with the specified globs
-                .AddFrameworkAssemblies(@"**\bin\**\*.FrameworkLib.dll")
-                // Add the plugins which can be found with the specified globs
-                .AddPluginAssemblies(@"**\bin\**\*.Plugin*.dll")
+                .ConfigurePlugins(pluginBuilder =>
+                {
+                    // Specify the location from where the dll's are "globbed"
+                    pluginBuilder.AddScanDirectories(@"..\..\..\..\");
+                    // Add the framework libraries which can be found with the specified globs
+                    pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");
+                    // Add the plugins which can be found with the specified globs
+                    pluginBuilder.IncludePlugins(@"**\bin\**\*.Plugin*.dll");
+                })
                 .UseConsoleLifetime()
                 .Build();
 
             Console.WriteLine("Run!");
+
             await host.RunAsync();
         }
 
@@ -47,7 +51,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo
                 configLogging.AddDebug();
             });
         }
-        
+
         /// <summary>
         /// Configure the configuration
         /// </summary>

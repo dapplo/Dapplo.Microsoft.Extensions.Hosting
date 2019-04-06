@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.28711.60
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins", "..\src\Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj", "{021F054E-F3E0-44AB-AF4A-042A7513B2D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample", "Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample\Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginOriginalSample.csproj", "{32B89840-E40B-4530-A454-CF1B4C5CA2EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.PluginOriginalSample", "Dapplo.Hosting.Sample.PluginOriginalSample\Dapplo.Hosting.Sample.PluginOriginalSample.csproj", "{32B89840-E40B-4530-A454-CF1B4C5CA2EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo", "Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo\Dapplo.Microsoft.Extensions.Hosting.ConsoleDemo.csproj", "{EA9149C7-5B38-4522-AD58-901AFFDCE588}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.ConsoleDemo", "Dapplo.Hosting.Sample.ConsoleDemo\Dapplo.Hosting.Sample.ConsoleDemo.csproj", "{EA9149C7-5B38-4522-AD58-901AFFDCE588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency", "Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency\Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency.csproj", "{617F6E42-23CB-45C4-AC52-6A44E492E59A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.PluginWithDependency", "Dapplo.Hosting.Sample.PluginWithDependency\Dapplo.Hosting.Sample.PluginWithDependency.csproj", "{617F6E42-23CB-45C4-AC52-6A44E492E59A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.FrameworkLib", "Dapplo.Microsoft.Extensions.Hosting.FrameworkLib\Dapplo.Microsoft.Extensions.Hosting.FrameworkLib.csproj", "{B6C058AA-82D5-47E8-A55F-C879C1B39CE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.FrameworkLib", "Dapplo.Hosting.Sample.FrameworkLib\Dapplo.Hosting.Sample.FrameworkLib.csproj", "{B6C058AA-82D5-47E8-A55F-C879C1B39CE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

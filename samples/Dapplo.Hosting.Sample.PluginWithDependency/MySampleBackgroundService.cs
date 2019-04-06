@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Dapplo.Microsoft.Extensions.Hosting.FrameworkLib;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Flurl.Http;
+using Dapplo.Hosting.Sample.FrameworkLib;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.PluginWithDependency
+namespace Dapplo.Hosting.Sample.PluginWithDependency
 {
     /// <summary>
     /// Just some service to run in the background and use a dependency
