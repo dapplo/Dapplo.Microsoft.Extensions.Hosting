@@ -16,7 +16,6 @@ namespace Dapplo.Hosting.Sample.PluginOriginalSample
         {
             _logger = logger;
             SomeStaticExampleClass.RegisteredServices.Add(nameof(TimedHostedService));
-
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
