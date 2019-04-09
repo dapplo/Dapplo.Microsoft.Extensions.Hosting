@@ -5,9 +5,9 @@ using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// A simple example WPF window
     /// </summary>
-    public partial class MainWindow : Window, IShell
+    public partial class MainWindow : IShell
     {
         private readonly ILogger<MainWindow> _logger;
 

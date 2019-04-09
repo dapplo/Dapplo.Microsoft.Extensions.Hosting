@@ -37,7 +37,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
     public static class HostBuilderPluginExtensions
     {
         private const string PluginBuilderKey = "PluginBuilder";
-        private const string FrameworkMatcherKey = "FrameworkMatcher";
 
         /// <summary>
         /// Helper method to retrieve the plugin builder
@@ -89,8 +88,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
 
                 if (pluginBuilder.UseContentRoot)
                 {
-                    var conentRootPath = hostBuilderContext.HostingEnvironment.ContentRootPath;
-                    pluginBuilder.AddScanDirectories(conentRootPath);
+                    var contentRootPath = hostBuilderContext.HostingEnvironment.ContentRootPath;
+                    pluginBuilder.AddScanDirectories(contentRootPath);
                 }
 
                 if (pluginBuilder.FrameworkDirectories.Count > 0)
@@ -119,12 +118,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                         // Do the globbing and try to load the plug-ins
                         var pluginPaths = pluginBuilder.PluginMatcher.GetResultsInFullPath(pluginScanRootPath);
                         var plugins = pluginPaths
-                            .Select(pluginPath => LoadPlugin(pluginPath))
+                            .Select(LoadPlugin)
                             .Where(plugin => plugin != null)
                             .OrderBy(plugin => plugin.GetOrder());
                         foreach (var plugin in plugins)
                         {
-                            plugin?.ConfigureHost(hostBuilderContext, serviceCollection);
+                            plugin.ConfigureHost(hostBuilderContext, serviceCollection);
                         }
                     }
                 }
