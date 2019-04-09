@@ -31,22 +31,21 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
     /// </summary>
     public class WpfHostedService : IHostedService
     {
-        private readonly Window _shell;
         private readonly IApplicationLifetime _applicationLifetime;
-        private Application _application;
-        private readonly TaskScheduler _taskScheduler;
+        private readonly IWpfBuilder _wpfBuilder;
+        private readonly Window _shell;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="applicationLifetime"></param>
-        /// <param name="shell"></param>
-        public WpfHostedService(IApplicationLifetime applicationLifetime, IShell shell = null)
+        /// <param name="wpfBuilder">IWpfBuilder</param>
+        /// <param name="shell">IShell optional</param>
+        public WpfHostedService(IApplicationLifetime applicationLifetime, IWpfBuilder wpfBuilder, IShell shell = null)
         {
-            _shell = shell as Window;
             _applicationLifetime = applicationLifetime;
-            
-            _taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            _wpfBuilder = wpfBuilder;
+            _shell = shell as Window;
         }
 
         /// <inheritdoc />
@@ -55,34 +54,27 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             // Register to the application lifetime ApplicationStopping to shutdown the application
             _applicationLifetime.ApplicationStopping.Register(()  =>
             {
-                _application.Dispatcher.Invoke(() => _application.Shutdown());
+                _wpfBuilder.WpfApplication.Dispatcher.Invoke(() => _wpfBuilder.WpfApplication.Shutdown());
             });
-
-            // Create the application
-            _application = new Application
-            {
-                ShutdownMode = ShutdownMode.OnLastWindowClose
-            };
             
             // Register to the application exit to stop the application
-            _application.Exit += (s,e) =>
+            _wpfBuilder.WpfApplication.Exit += (s,e) =>
             {
                 _applicationLifetime.StopApplication();
             };
 
             // Run the application
-            Task.Factory.StartNew(() =>
+            _wpfBuilder.WpfApplication.Dispatcher.Invoke(() =>
             {
                 if (_shell != null)
                 {
-                    _application.Run(_shell);
+                    _wpfBuilder.WpfApplication.Run(_shell);
                 }
                 else
                 {
-                    _application.Run();
+                    _wpfBuilder.WpfApplication.Run();
                 }
-            }, default, TaskCreationOptions.DenyChildAttach, _taskScheduler);
-            
+            });
             
             return Task.CompletedTask;
         }
@@ -90,10 +82,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <inheritdoc />
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            Task.Factory.StartNew(() =>
-            {
-                _application.Shutdown();
-            }, default, TaskCreationOptions.DenyChildAttach, _taskScheduler);
+            _wpfBuilder.WpfApplication.Dispatcher.Invoke(() => _wpfBuilder.WpfApplication.Shutdown());
             return Task.CompletedTask;
         }
     }

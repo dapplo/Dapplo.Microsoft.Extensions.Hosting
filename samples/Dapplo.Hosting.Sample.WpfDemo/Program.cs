@@ -16,15 +16,19 @@ namespace Dapplo.Hosting.Sample.WpfDemo
         private const string Prefix = "PREFIX_";
 
         [STAThread]
-        public static void Main(string[]args)
+        public static void Main(string[] args)
         {
             var host = new HostBuilder()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
-                .ForceSingleInstance("{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}", (hostingEnvironment) => {
-                    // This is called when a second instance is started
-                    Console.WriteLine($"Application {hostingEnvironment.ApplicationName} already running.");
-                    Console.ReadKey();
+                .ConfigureSingleInstance(builder =>
+                {
+                    builder.MutexId = "{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}";
+                    builder.WhenNotFirstInstance = (hostingEnvironment, logger) =>
+                    {
+                        // This is called when a second instance is started
+                        logger.LogWarning("Application {0} already running.", hostingEnvironment.ApplicationName);
+                    };
                 })
                 .ConfigurePlugins(pluginBuilder =>
                 {
@@ -41,6 +45,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
 
             Console.WriteLine("Run!");
 
+            // This makes it possible to use RunAsync
             SingleThreadedSynchronizationContext.Await(async () =>
             {
                 await host.RunAsync();

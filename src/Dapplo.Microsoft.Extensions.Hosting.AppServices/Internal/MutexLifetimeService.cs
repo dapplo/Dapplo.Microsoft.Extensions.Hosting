@@ -34,25 +34,25 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices.Internal
         private readonly ILogger _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IApplicationLifetime _appLifetime;
-        private readonly MutexConfig _mutexConfig;
+        private readonly IMutexBuilder _mutexBuilder;
         private ResourceMutex _resourceMutex;
 
-        public MutexLifetimeService(ILogger<MutexLifetimeService> logger, IHostingEnvironment hostingEnvironment, IApplicationLifetime appLifetime, MutexConfig mutexConfig)
+        public MutexLifetimeService(ILogger<MutexLifetimeService> logger, IHostingEnvironment hostingEnvironment, IApplicationLifetime appLifetime, IMutexBuilder mutexBuilder)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _appLifetime = appLifetime;
-            _mutexConfig = mutexConfig;
+            _mutexBuilder = mutexBuilder;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _resourceMutex = ResourceMutex.Create(null, _mutexConfig.MutexId, _hostingEnvironment.ApplicationName, _mutexConfig.IsGlobal);
+            _resourceMutex = ResourceMutex.Create(null, _mutexBuilder.MutexId, _hostingEnvironment.ApplicationName, _mutexBuilder.IsGlobal);
 
             _appLifetime.ApplicationStopping.Register(OnStopping);
             if (!_resourceMutex.IsLocked)
             {
-                _mutexConfig.WhenNotFirstInstance?.Invoke(_hostingEnvironment);
+                _mutexBuilder.WhenNotFirstInstance?.Invoke(_hostingEnvironment, _logger);
                 _logger.LogDebug("Application {0} already running, stopping application.", _hostingEnvironment.ApplicationName);
                 _appLifetime.StopApplication();
             }
