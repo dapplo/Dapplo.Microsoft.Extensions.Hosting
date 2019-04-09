@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj" />
+    <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj" />
   </ItemGroup>
 
 </Project>

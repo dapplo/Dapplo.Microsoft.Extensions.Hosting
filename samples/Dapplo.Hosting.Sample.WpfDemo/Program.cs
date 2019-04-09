@@ -1,12 +1,10 @@
 ﻿using Dapplo.Microsoft.Extensions.Hosting.Plugins;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using System.Threading.Tasks;
-using System.Windows;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
@@ -25,7 +23,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 .ConfigurePlugins(pluginBuilder =>
                 {
                     // Specify the location from where the dll's are "globbed"
-                    pluginBuilder.AddScanDirectories(@"..\..\..\..\");
+                    pluginBuilder.AddScanDirectories(Path.Combine(Directory.GetCurrentDirectory(), @"..\.."));
                     // Add the framework libraries which can be found with the specified globs
                     pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");
                     // Add the plugins which can be found with the specified globs
@@ -41,16 +39,6 @@ namespace Dapplo.Hosting.Sample.WpfDemo
             {
                 await host.RunAsync();
             });
-        }
-
-        private static IHostBuilder ConfigureWpf<TShell>(this IHostBuilder hostbuilder) where TShell : Window, IShell
-        {
-            hostbuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
-            {
-                serviceCollection.AddSingleton<IShell, TShell>();
-                serviceCollection.AddHostedService<WpfHostedService>();
-            });
-            return hostbuilder;
         }
 
         /// <summary>

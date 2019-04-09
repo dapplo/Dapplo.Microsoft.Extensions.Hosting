@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Windows;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
