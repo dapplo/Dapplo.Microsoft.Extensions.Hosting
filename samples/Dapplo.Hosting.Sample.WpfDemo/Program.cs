@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
@@ -20,9 +21,14 @@ namespace Dapplo.Hosting.Sample.WpfDemo
             var host = new HostBuilder()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
+                .ForceSingleInstance("{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}", (hostingEnvironment) => {
+                    // This is called when a second instance is started
+                    Console.WriteLine($"Application {hostingEnvironment.ApplicationName} already running.");
+                    Console.ReadKey();
+                })
                 .ConfigurePlugins(pluginBuilder =>
                 {
-                    // Specify the location from where the dll's are "globbed"
+                    // Specify the location from where the Dll's are "globbed"
                     pluginBuilder.AddScanDirectories(Path.Combine(Directory.GetCurrentDirectory(), @"..\.."));
                     // Add the framework libraries which can be found with the specified globs
                     pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");

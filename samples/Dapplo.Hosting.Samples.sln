@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Hosting.Sample.WpfDe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Wpf", "..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj", "{829D5E93-A422-4DE6-8913-A15FA93FA46F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.AppServices", "..\src\Dapplo.Microsoft.Extensions.Hosting.AppServices\Dapplo.Microsoft.Extensions.Hosting.AppServices.csproj", "{E2932805-248E-4171-8F2A-E01915FE309A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{829D5E93-A422-4DE6-8913-A15FA93FA46F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{829D5E93-A422-4DE6-8913-A15FA93FA46F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{829D5E93-A422-4DE6-8913-A15FA93FA46F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2932805-248E-4171-8F2A-E01915FE309A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2932805-248E-4171-8F2A-E01915FE309A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2932805-248E-4171-8F2A-E01915FE309A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2932805-248E-4171-8F2A-E01915FE309A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
