@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
@@ -26,7 +27,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                     builder.MutexId = "{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}";
                     builder.WhenNotFirstInstance = (hostingEnvironment, logger) =>
                     {
-                        // This is called when a second instance is started
+                        // This is called when an instance was already started, this is in the second instance
                         logger.LogWarning("Application {0} already running.", hostingEnvironment.ApplicationName);
                     };
                 })
@@ -39,13 +40,20 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                     // Add the plugins which can be found with the specified globs
                     pluginBuilder.IncludePlugins(@"**\bin\**\*.Plugin*.dll");
                 })
+                .ConfigureServices(serviceCollection =>
+                {
+                    // Make OtherWindow available
+                    serviceCollection.AddTransient<OtherWindow>();
+                })
                 .ConfigureWpf<MainWindow>()
+                .UseWpfLifetime()
                 .UseConsoleLifetime()
                 .Build();
 
             Console.WriteLine("Run!");
 
-            // This makes it possible to use RunAsync
+            // This makes it possible to use RunAsync in the STA Thread
+            // TODO: I'm not happy with this, might consider spending time for a different way
             SingleThreadedSynchronizationContext.Await(async () =>
             {
                 await host.RunAsync();

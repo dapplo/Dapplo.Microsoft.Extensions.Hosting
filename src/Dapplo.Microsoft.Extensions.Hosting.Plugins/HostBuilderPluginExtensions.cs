@@ -92,6 +92,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                     pluginBuilder.AddScanDirectories(contentRootPath);
                 }
 
+                var scannedAssemblies = new HashSet<Assembly>();
+
                 if (pluginBuilder.FrameworkDirectories.Count > 0)
                 {
                     foreach (var frameworkScanRoot in pluginBuilder.FrameworkDirectories)
@@ -100,13 +102,18 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                         foreach (var frameworkAssemblyPath in pluginBuilder.FrameworkMatcher.GetResultsInFullPath(frameworkScanRoot))
                         {
                             var frameworkAssemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(frameworkAssemblyPath));
-                            if (AssemblyLoadContext.Default.TryGetAssembly(frameworkAssemblyName, out _))
+                            if (AssemblyLoadContext.Default.TryGetAssembly(frameworkAssemblyName, out var alreadyLoadedAssembly))
                             {
+                                scannedAssemblies.Add(alreadyLoadedAssembly);
                                 continue;
                             }
 
                             // TODO: Log the loading?
-                            AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
+                            var loadedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
+                            if (loadedAssembly != null)
+                            {
+                                scannedAssemblies.Add(loadedAssembly);
+                            }
                         }
                     }
                 }
@@ -117,15 +124,21 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                     {
                         // Do the globbing and try to load the plug-ins
                         var pluginPaths = pluginBuilder.PluginMatcher.GetResultsInFullPath(pluginScanRootPath);
-                        var plugins = pluginPaths
+                        // Use the globbed files, and load the assemblies
+                        var pluginAssemblies = pluginPaths
                             .Select(LoadPlugin)
-                            .Where(plugin => plugin != null)
-                            .OrderBy(plugin => plugin.GetOrder());
-                        foreach (var plugin in plugins)
+                            .Where(plugin => plugin != null);
+                        foreach (var pluginAssembly in pluginAssemblies)
                         {
-                            plugin.ConfigureHost(hostBuilderContext, serviceCollection);
+                            scannedAssemblies.Add(pluginAssembly);
                         }
                     }
+                }
+                var plugins = scannedAssemblies.SelectMany(ScanForPlugins).OrderBy(plugin => plugin.GetOrder());
+                
+                foreach (var plugin in plugins)
+                {
+                    plugin.ConfigureHost(hostBuilderContext, serviceCollection);
                 }
             });
         }
@@ -139,43 +152,50 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>()?.Order ?? 0;
         }
-
+        
         /// <summary>
-        /// Helper method to load an assembly which contains a single plugin
+        /// Helper method to load an assembly which contains plugins
         /// </summary>
-        /// <param name="pluginLocation">string</param>
+        /// <param name="pluginAssemblyLocation">string</param>
         /// <returns>IPlugin</returns>
-        private static IPlugin LoadPlugin(string pluginLocation)
+        private static Assembly LoadPlugin(string pluginAssemblyLocation)
         {
-            if (!File.Exists(pluginLocation))
+            if (!File.Exists(pluginAssemblyLocation))
             {
                 // TODO: Log an error, how to get a logger here?
                 return null;
             }
             
             // TODO: Log verbose that we are loading a plugin
-            var pluginName = Path.GetFileNameWithoutExtension(pluginLocation);
+            var pluginName = Path.GetFileNameWithoutExtension(pluginAssemblyLocation);
             // TODO: Decide if we rather have this to come up with the name: AssemblyName.GetAssemblyName(pluginLocation)
             var pluginAssemblyName = new AssemblyName(pluginName);
             if (AssemblyLoadContext.Default.TryGetAssembly(pluginAssemblyName, out _))
             {
                 return null;
             }
-            var loadContext = new PluginLoadContext(pluginLocation, pluginName);
-            var assembly = loadContext.LoadFromAssemblyName(pluginAssemblyName);
+            var loadContext = new PluginLoadContext(pluginAssemblyLocation, pluginName);
+            return loadContext.LoadFromAssemblyName(pluginAssemblyName);
+        }
 
+        /// <summary>
+        /// Create instances of IPlugin found in the assembly
+        /// </summary>
+        /// <param name="pluginAssembly">pluginAssembly</param>
+        /// <returns>IEnumerable of IPlugin</returns>
+        private static IEnumerable<IPlugin> ScanForPlugins(Assembly pluginAssembly)
+        {
             // TODO: Check if we want to scan all assemblies, or have a specify class on a predetermined location?
             var interfaceType = typeof(IPlugin);
-            foreach (var type in assembly.GetExportedTypes())
+            foreach (var type in pluginAssembly.GetExportedTypes())
             {
                 if (!type.GetInterfaces().Contains(interfaceType))
                 {
                     continue;
                 }
                 var plugin = Activator.CreateInstance(type) as IPlugin;
-                return plugin;
+                yield return plugin;
             }
-            return null;
         }
     }
 }

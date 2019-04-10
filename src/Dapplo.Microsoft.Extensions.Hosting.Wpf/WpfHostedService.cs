@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
 {
@@ -31,48 +32,62 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
     /// </summary>
     public class WpfHostedService : IHostedService
     {
+        private readonly ILogger<WpfHostedService> _logger;
         private readonly IApplicationLifetime _applicationLifetime;
-        private readonly IWpfBuilder _wpfBuilder;
+        private readonly IWpfContext _wpfContext;
         private readonly Window _shell;
 
         /// <summary>
-        /// 
+        /// The constructor which takes all the DI objects
         /// </summary>
+        /// <param name="logger">ILogger</param>
         /// <param name="applicationLifetime"></param>
-        /// <param name="wpfBuilder">IWpfBuilder</param>
-        /// <param name="shell">IShell optional</param>
-        public WpfHostedService(IApplicationLifetime applicationLifetime, IWpfBuilder wpfBuilder, IShell shell = null)
+        /// <param name="wpfContext">IWpfContext</param>
+        /// <param name="wpfShell">IShell optional</param>
+        public WpfHostedService(ILogger<WpfHostedService> logger, IApplicationLifetime applicationLifetime, IWpfContext wpfContext, IWpfShell wpfShell = null)
         {
+            _logger = logger;
             _applicationLifetime = applicationLifetime;
-            _wpfBuilder = wpfBuilder;
-            _shell = shell as Window;
+            _wpfContext = wpfContext;
+            _shell = wpfShell as Window;
         }
 
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            // Register to the application lifetime ApplicationStopping to shutdown the application
+            // Register to the host application lifetime ApplicationStopping to shutdown the WPF application
             _applicationLifetime.ApplicationStopping.Register(()  =>
             {
-                _wpfBuilder.WpfApplication.Dispatcher.Invoke(() => _wpfBuilder.WpfApplication.Shutdown());
+                if (_wpfContext.IsRunning)
+                {
+                    _logger.LogDebug("Stopping WPF application.");
+                    _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
+                }
             });
-            
-            // Register to the application exit to stop the application
-            _wpfBuilder.WpfApplication.Exit += (s,e) =>
+
+            // Register to the WPF application exit to stop the host application
+            _wpfContext.WpfApplication.Exit += (s,e) =>
             {
-                _applicationLifetime.StopApplication();
+                _wpfContext.IsRunning = false;
+                if (_wpfContext.IsLifetimeLinked)
+                {
+                    _logger.LogDebug("Stopping host application due to WPF application exit.");
+                    _applicationLifetime.StopApplication();
+                }
             };
 
+
             // Run the application
-            _wpfBuilder.WpfApplication.Dispatcher.Invoke(() =>
+            _wpfContext.WpfApplication.Dispatcher.Invoke(() =>
             {
+                _wpfContext.IsRunning = true;
                 if (_shell != null)
                 {
-                    _wpfBuilder.WpfApplication.Run(_shell);
+                    _wpfContext.WpfApplication.Run(_shell);
                 }
                 else
                 {
-                    _wpfBuilder.WpfApplication.Run();
+                    _wpfContext.WpfApplication.Run();
                 }
             });
             
@@ -82,7 +97,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <inheritdoc />
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _wpfBuilder.WpfApplication.Dispatcher.Invoke(() => _wpfBuilder.WpfApplication.Shutdown());
+            _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
             return Task.CompletedTask;
         }
     }

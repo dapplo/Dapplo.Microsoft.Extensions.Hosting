@@ -27,7 +27,8 @@ using System.Threading.Tasks;
 namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
 {
     /// <summary>
-    /// This is a helper to implement STA "Threading"
+    /// This is a helper to implement STA "Threading", which is a modified version of <see href="https://devblogs.microsoft.com/pfxteam/await-synchronizationcontext-and-console-apps/">this</see>
+    /// The class was found <see href="https://github.com/nunit/nunit/issues/1200#issuecomment-312120851">here</see>.
     /// </summary>
     public sealed class SingleThreadedSynchronizationContext : SynchronizationContext
     {

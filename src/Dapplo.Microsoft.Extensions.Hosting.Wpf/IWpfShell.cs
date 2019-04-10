@@ -1,4 +1,4 @@
-//  Dapplo - building blocks for desktop applications
+﻿//  Dapplo - building blocks for desktop applications
 //  Copyright (C) 2019 Dapplo
 // 
 //  For more information see: http://dapplo.net/
@@ -19,18 +19,12 @@
 //  You should have a copy of the GNU Lesser General Public License
 //  along with Dapplo.Microsoft.Extensions.Hosting. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
-using System.Windows;
-
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
+namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
 {
-    /// <inheritdoc />
-    public class WpfBuilder : IWpfBuilder
+    /// <summary>
+    /// This marker interface defines the shell of the WPF application
+    /// </summary>
+    public interface IWpfShell
     {
-        /// <inheritdoc />
-        public Application WpfApplication { get; } = new Application
-        {
-            // Default value
-            ShutdownMode = ShutdownMode.OnLastWindowClose
-        };
     }
 }

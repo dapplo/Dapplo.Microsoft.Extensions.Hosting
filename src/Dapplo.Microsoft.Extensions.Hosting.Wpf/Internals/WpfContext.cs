@@ -21,16 +21,34 @@
 
 using System.Windows;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
+namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
 {
-    /// <summary>
-    /// This is the builder for the WPF settings
-    /// </summary>
-    public interface IWpfBuilder
+    /// <inheritdoc />
+    public class WpfContext : IWpfContext
     {
-        /// <summary>
-        /// The Application
-        /// </summary>
-        Application WpfApplication { get; }
+        private Application _wpfApplication; 
+
+        /// <inheritdoc />
+        public ShutdownMode ShutdownMode { get; set; } = ShutdownMode.OnLastWindowClose;
+
+        /// <inheritdoc />
+        public bool IsLifetimeLinked { get; set; }
+
+        /// <inheritdoc />
+        public bool IsRunning { get; set; }
+
+        /// <inheritdoc />
+        public Application WpfApplication
+        {
+            get
+            {
+                _wpfApplication = _wpfApplication ?? new Application
+                {
+                    // Default value
+                    ShutdownMode = ShutdownMode
+                };
+                return _wpfApplication;
+            }
+        }
     }
 }
