@@ -34,6 +34,31 @@ The DLL which is your plugin should have at least one class which implements IPl
 ```
 
 
+Dapplo.Microsoft.Extensions.Hosting.AppServices
+-----------------------------------------------
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.AppServices.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.AppServices/)
+
+This extension adds some application services for Win32 applications, currently only the mutex functionality is included.
+
+[Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.WinFormsDemo/Program.cs#L25) is an example how to make sure your application only runs once.
+
+In general you call hostBuilder.ConfigureSingleInstance and supply a mutex id.
+
+
+
+Dapplo.Microsoft.Extensions.Hosting.WinForms
+--------------------------------------------
+
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.WinForms.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.WinForms/)
+
+This extension adds WinForms support to generic host based dotnet core 3.0 applications.
+With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc.
+
+[Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.WinFormsDemo/Program.cs#L48) is an example how to start your application with a Form1 and have the application automatically shutdown whenever you exit the Form1. To make this possible Form1 must implement a marker interface, which currently has no methods, called IWinFormsShell. The IWinFormsShell is considered the main entry point of your UI. You only specify the type, the instance will be created at a later time by the generic host and will automatically go through the DI process.
+
+This means you can have a constructor which requests a logger, or other windows.
+
+
 Dapplo.Microsoft.Extensions.Hosting.Wpf
 ---------------------------------------
 
@@ -45,5 +70,3 @@ With this you can enhance your application with a UI, and use all the services p
 [Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.WpfDemo/Program.cs#L48) is an example how to start your application with a MainWindow and have the application automatically shutdown whenever you exit the MainWindow. To make this possible MainWindow must implement a marker interface, which currently has no methods, called IWpfShell. The IWpfShell is considered the main entry point of your UI. You only specify the type, the instance will be created at a later time by the generic host and will automatically go through the DI process.
 
 This means you can have a constructor which requests a logger, or other windows.
-
-Other ways of showing WPF windows etc will be added later.

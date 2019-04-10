@@ -21,73 +21,73 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
+namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
 {
     /// <summary>
-    /// This hosts a WPF service, making sure the lifecycle is managed
+    /// This hosts a WinForms service, making sure the lifecycle is managed
     /// </summary>
-    public class WpfHostedService : IHostedService
+    public class WinFormsHostedService : IHostedService
     {
-        private readonly ILogger<WpfHostedService> _logger;
+        private readonly ILogger<WinFormsHostedService> _logger;
         private readonly IApplicationLifetime _applicationLifetime;
-        private readonly IWpfContext _wpfContext;
-        private readonly Window _shell;
+        private readonly IWinFormsContext _winFormsContext;
+        private readonly Form _shell;
 
         /// <summary>
         /// The constructor which takes all the DI objects
         /// </summary>
         /// <param name="logger">ILogger</param>
         /// <param name="applicationLifetime"></param>
-        /// <param name="wpfContext">IWpfContext</param>
-        /// <param name="wpfShell">IWpfShell optional</param>
-        public WpfHostedService(ILogger<WpfHostedService> logger, IApplicationLifetime applicationLifetime, IWpfContext wpfContext, IWpfShell wpfShell = null)
+        /// <param name="winFormsContext">IWinFormsContext</param>
+        /// <param name="winFormsShell">IWinFormsShell optional</param>
+        public WinFormsHostedService(ILogger<WinFormsHostedService> logger, IApplicationLifetime applicationLifetime, IWinFormsContext winFormsContext, IWinFormsShell winFormsShell = null)
         {
             _logger = logger;
             _applicationLifetime = applicationLifetime;
-            _wpfContext = wpfContext;
-            _shell = wpfShell as Window;
+            _winFormsContext = winFormsContext;
+            _shell = winFormsShell as Form;
         }
 
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            // Register to the host application lifetime ApplicationStopping to shutdown the WPF application
+            // Register to the host application lifetime ApplicationStopping to shutdown the WinForms application
             _applicationLifetime.ApplicationStopping.Register(()  =>
             {
-                if (_wpfContext.IsRunning)
+                if (_winFormsContext.IsRunning)
                 {
-                    _logger.LogDebug("Stopping WPF application.");
-                    _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
+                    _logger.LogDebug("Stopping WinForms application.");
+                    _winFormsContext.FormsDispatcher.Invoke(Application.Exit);
                 }
             });
 
-            // Register to the WPF application exit to stop the host application
-            _wpfContext.WpfApplication.Exit += (s,e) =>
+            // Register to the WinForms application exit to stop the host application
+            Application.ApplicationExit += (s,e) =>
             {
-                _wpfContext.IsRunning = false;
-                if (_wpfContext.IsLifetimeLinked)
+                _winFormsContext.IsRunning = false;
+                if (_winFormsContext.IsLifetimeLinked)
                 {
-                    _logger.LogDebug("Stopping host application due to WPF application exit.");
+                    _logger.LogDebug("Stopping host application due to WinForms application exit.");
                     _applicationLifetime.StopApplication();
                 }
             };
 
 
             // Run the application
-            _wpfContext.WpfApplication.Dispatcher.Invoke(() =>
+            _winFormsContext.FormsDispatcher.Invoke(() =>
             {
-                _wpfContext.IsRunning = true;
+                _winFormsContext.IsRunning = true;
                 if (_shell != null)
                 {
-                    _wpfContext.WpfApplication.Run(_shell);
+                    Application.Run(_shell);
                 }
                 else
                 {
-                    _wpfContext.WpfApplication.Run();
+                    Application.Run();
                 }
             });
             
@@ -97,7 +97,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <inheritdoc />
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
+            _winFormsContext.FormsDispatcher.Invoke(Application.Exit);
             return Task.CompletedTask;
         }
     }

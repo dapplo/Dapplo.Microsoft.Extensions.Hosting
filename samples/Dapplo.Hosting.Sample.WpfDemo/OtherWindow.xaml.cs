@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Windows;
-using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
@@ -19,6 +18,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
 
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
+            _logger.LogDebug("Closing OtherWindow");
             Close();
         }
     }

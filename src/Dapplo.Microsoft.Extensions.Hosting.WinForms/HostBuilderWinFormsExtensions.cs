@@ -22,102 +22,102 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals;
+using System.Windows.Forms;
+using Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
+namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
 {
     /// <summary>
-    /// This contains the WPF extensions for Microsoft.Extensions.Hosting 
+    /// This contains the WinForms extensions for Microsoft.Extensions.Hosting 
     /// </summary>
-    public static class HostBuilderWpfExtensions
+    public static class HostBuilderWinFormsExtensions
     {
-        private const string WpfContextKey = "WpfContext";
+        private const string WinFormsContextKey = "WinFormsContext";
         
         /// <summary>
-        /// Helper method to retrieve the IWpfContext
+        /// Helper method to retrieve the IWinFormsContext
         /// </summary>
         /// <param name="properties">IDictionary</param>
-        /// <param name="wpfContext">IWpfContext out value</param>
-        /// <returns>bool if there was already an IWpfContext</returns>
-        private static bool TryRetrieveWpfContext(this IDictionary<object, object> properties, out IWpfContext wpfContext)
+        /// <param name="winFormsContext">IWinFormsContext out value</param>
+        /// <returns>bool if there was already an IWinFormsContext</returns>
+        private static bool TryRetrieveWinFormsContext(this IDictionary<object, object> properties, out IWinFormsContext winFormsContext)
         {
-            if (properties.TryGetValue(WpfContextKey, out var wpfContextAsObject))
+            if (properties.TryGetValue(WinFormsContextKey, out var winFormsContextAsObject))
             {
-                wpfContext = wpfContextAsObject as IWpfContext;
+                winFormsContext = winFormsContextAsObject as IWinFormsContext;
                 return true;
 
             }
-            wpfContext = new WpfContext();
-            properties[WpfContextKey] = wpfContext;
+            winFormsContext = new WinFormsContext();
+            properties[WinFormsContextKey] = winFormsContext;
             return false;
         }
 
         /// <summary>
-        /// Defines that stopping the WPF application also stops the host (application) 
+        /// Defines that stopping the WinForms application also stops the host (application) 
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="shutdownMode">ShutdownMode default is OnLastWindowClose</param>
         /// <returns>IHostBuilder</returns>
-        public static IHostBuilder UseWpfLifetime(this IHostBuilder hostBuilder, ShutdownMode shutdownMode = ShutdownMode.OnLastWindowClose)
+        public static IHostBuilder UseWinFormsLifetime(this IHostBuilder hostBuilder, ShutdownMode shutdownMode = ShutdownMode.OnLastWindowClose)
         {
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext);
-                wpfContext.ShutdownMode = shutdownMode;
-                wpfContext.IsLifetimeLinked = true;
+                TryRetrieveWinFormsContext(hostBuilder.Properties, out var winFormsContext);
+                winFormsContext.IsLifetimeLinked = true;
             });
             return hostBuilder;
         }
         
         /// <summary>
-        /// Configure an WPF application
+        /// Configure an WinForms application
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="configureAction">Action to configure the Application</param>
         /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpf(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null)
+        public static IHostBuilder ConfigureWinForms(this IHostBuilder hostBuilder, Action<IWinFormsContext> configureAction = null)
         {
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                if (!TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext))
+                if (!TryRetrieveWinFormsContext(hostBuilder.Properties, out var winFormsContext))
                 {
-                    serviceCollection.AddSingleton(wpfContext);
-                    serviceCollection.AddHostedService<WpfHostedService>();
+                    serviceCollection.AddSingleton(winFormsContext);
+                    serviceCollection.AddHostedService<WinFormsHostedService>();
                 }
-                configureAction?.Invoke(wpfContext);
+                configureAction?.Invoke(winFormsContext);
             });
             return hostBuilder;
         }
         
         /// <summary>
-        /// Configure an WPF application
+        /// Configure an WinForms application
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="configureAction">Action to configure the Application</param>
-        /// <typeparam name="TShell">Type for the shell, must derive from Window and implement IWpfShell</typeparam>
+        /// <typeparam name="TShell">Type for the shell, must derive from Form and implement IWinFormsShell</typeparam>
         /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpf<TShell>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null) where TShell : Window, IWpfShell
+        public static IHostBuilder ConfigureWinForms<TShell>(this IHostBuilder hostBuilder, Action<IWinFormsContext> configureAction = null) where TShell : Form, IWinFormsShell
         {
-            hostBuilder.ConfigureWpf(configureAction);
+            hostBuilder.ConfigureWinForms(configureAction);
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                serviceCollection.AddSingleton<IWpfShell, TShell>();
+                serviceCollection.AddSingleton<IWinFormsShell, TShell>();
             });
             return hostBuilder;
         }
 
         
         /// <summary>
-        /// Specify the shell, the primary window, to start
+        /// Specify the shell, the primary Form, to start
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
-        /// <typeparam name="TShell">Type for the shell, must derive from Window and implement IWpfShell</typeparam>
+        /// <typeparam name="TShell">Type for the shell, must derive from Form and implement IWinFormsShell</typeparam>
         /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpfShell<TShell>(this IHostBuilder hostBuilder) where TShell : Window, IWpfShell
+        public static IHostBuilder ConfigureWinFormsShell<TShell>(this IHostBuilder hostBuilder) where TShell : Form, IWinFormsShell
         {
-            return hostBuilder.ConfigureWpf<TShell>();
+            return hostBuilder.ConfigureWinForms<TShell>();
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using Dapplo.Microsoft.Extensions.Hosting.Plugins;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.IO;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
-using Dapplo.Microsoft.Extensions.Hosting.Wpf;
+using Dapplo.Microsoft.Extensions.Hosting.Plugins;
+using Dapplo.Microsoft.Extensions.Hosting.WinForms;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Hosting.Sample.WpfDemo
+namespace Dapplo.Hosting.Sample.WinFormsDemo
 {
     public static class Program
     {
@@ -42,15 +42,15 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make OtherWindow available for DI to MainWindow
-                    serviceCollection.AddTransient<OtherWindow>();
+                    // Make Form2 available for DI to Form1
+                    serviceCollection.AddTransient<Form2>();
                 })
-                .ConfigureWpf<MainWindow>()
-                .UseWpfLifetime()
+                .ConfigureWinForms<Form1>()
+                .UseWinFormsLifetime()
                 .UseConsoleLifetime()
                 .Build();
 
-            Console.WriteLine("Run!");
+            Console.WriteLine(@"Run!");
 
             // This makes it possible to use RunAsync in the STA Thread
             // TODO: I'm not happy with this, might consider spending time for a different way
