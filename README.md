@@ -2,7 +2,8 @@
 
 [![Build Status](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_apis/build/status/dapplo.Dapplo.Microsoft.Extensions.Hosting?branchName=master)](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_build/latest?definitionId=6&branchName=master)
 
-This repository contains extensions for Microsoft.Extensions.Hosting
+This repository contains extensions for Microsoft.Extensions.Hosting, there is a solution with samples in the samples directory and one which is used on the build server in the src.
+
 
 Dapplo.Microsoft.Extensions.Hosting.Plugins
 --------------------------------------------
@@ -38,7 +39,7 @@ Dapplo.Microsoft.Extensions.Hosting.AppServices
 -----------------------------------------------
 [![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.AppServices.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.AppServices/)
 
-This extension adds some application services for Win32 applications, currently only the mutex functionality is included.
+This extension adds some generic application services for desktop applications, currently only the mutex functionality is included but more are coming.
 
 [Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.WinFormsDemo/Program.cs#L25) is an example how to make sure your application only runs once.
 
