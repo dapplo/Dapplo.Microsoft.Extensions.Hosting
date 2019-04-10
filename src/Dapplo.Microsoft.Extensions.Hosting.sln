@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.28711.60
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins", "Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj", "{021F054E-F3E0-44AB-AF4A-042A7513B2D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.AppServices", "Dapplo.Microsoft.Extensions.Hosting.AppServices\Dapplo.Microsoft.Extensions.Hosting.AppServices.csproj", "{96D8DB4A-BB5A-48C9-A8CB-19E413447CBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Wpf", "Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj", "{FFD1428E-A035-44DF-A6D4-5882118F6C9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{021F054E-F3E0-44AB-AF4A-042A7513B2D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021F054E-F3E0-44AB-AF4A-042A7513B2D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021F054E-F3E0-44AB-AF4A-042A7513B2D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96D8DB4A-BB5A-48C9-A8CB-19E413447CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96D8DB4A-BB5A-48C9-A8CB-19E413447CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96D8DB4A-BB5A-48C9-A8CB-19E413447CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96D8DB4A-BB5A-48C9-A8CB-19E413447CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFD1428E-A035-44DF-A6D4-5882118F6C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFD1428E-A035-44DF-A6D4-5882118F6C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFD1428E-A035-44DF-A6D4-5882118F6C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFD1428E-A035-44DF-A6D4-5882118F6C9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
