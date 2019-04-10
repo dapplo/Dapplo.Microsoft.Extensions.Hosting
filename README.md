@@ -56,7 +56,7 @@ With this you can enhance your application with a UI, and use all the services p
 
 [Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.WinFormsDemo/Program.cs#L48) is an example how to start your application with a Form1 and have the application automatically shutdown whenever you exit the Form1. To make this possible Form1 must implement a marker interface, which currently has no methods, called IWinFormsShell. The IWinFormsShell is considered the main entry point of your UI. You only specify the type, the instance will be created at a later time by the generic host and will automatically go through the DI process.
 
-This means you can have a constructor which requests a logger, or other windows.
+This means you can have a constructor which requests a logger, or other forms.
 
 
 Dapplo.Microsoft.Extensions.Hosting.Wpf

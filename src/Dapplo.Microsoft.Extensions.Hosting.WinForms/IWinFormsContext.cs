@@ -34,6 +34,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         bool IsLifetimeLinked { get; set; }
         
         /// <summary>
+        /// Specify if the visual styles need to be set, default is true
+        /// </summary>
+        bool EnableVisualStyles { get; set; }
+        
+        /// <summary>
         /// Is the WinForms application started and still running? 
         /// </summary>
         bool IsRunning { get; set; }

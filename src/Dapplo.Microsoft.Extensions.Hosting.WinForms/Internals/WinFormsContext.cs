@@ -31,6 +31,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
         public bool IsLifetimeLinked { get; set; }
 
         /// <inheritdoc />
+        public bool EnableVisualStyles { get; set; } = true;
+
+        /// <inheritdoc />
         public bool IsRunning { get; set; }
 
         /// <inheritdoc />

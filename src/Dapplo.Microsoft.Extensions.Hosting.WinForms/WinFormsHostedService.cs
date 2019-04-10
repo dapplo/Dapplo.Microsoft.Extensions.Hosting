@@ -55,6 +55,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            if (_winFormsContext.EnableVisualStyles)
+            {
+                Application.EnableVisualStyles();
+            }
             // Register to the host application lifetime ApplicationStopping to shutdown the WinForms application
             _applicationLifetime.ApplicationStopping.Register(()  =>
             {
