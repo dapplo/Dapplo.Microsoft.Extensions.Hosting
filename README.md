@@ -2,9 +2,9 @@
 
 [![Build Status](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_apis/build/status/dapplo.Dapplo.Microsoft.Extensions.Hosting?branchName=master)](https://dev.azure.com/Dapplo/Dapplo.Microsoft.Extensions.Hosting/_build/latest?definitionId=6&branchName=master)
 
-Ever wondered if it's possible to have a nice modular way to develop a .NET application, being able to reuse services and logic between ASP.NET core, Service workers, Console application or even a UI application? Maybe even have the possibility to combine them all in one application? This is possible, the [generic host](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host) makes it partly possible. This might look like it's for ASP.NET core, but it's not and it will probably move elsewhere.
+Ever wondered if it's possible to have a nice modular way to develop a .NET application, being able to reuse services and logic between ASP.NET core, Service workers, Console application or even a UI application? Maybe even have the possibility to combine them all in one application? The [generic host](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host) makes this (partly) possible, although it might look like it's for ASP.NET core it's not and it will probably move elsewhere.
 
-This repository brings you a few extensions which will help you on your way to quick build a new application:
+This repository brings you a few extensions on the generic host which will help you on your way to quickly build a new application with extra functionality:
 - Dapplo.Microsoft.Extensions.Hosting.AppServices - Simple services, e.g. make sure you application runs only once!
 - Dapplo.Microsoft.Extensions.Hosting.WinForms - Have a way to bootstrap Windows Forms with all the possible generic host functionality, and manage the lifetime.
 - Dapplo.Microsoft.Extensions.Hosting.Wpf -   Have a way to bootstrap WPF with all the possible generic host functionality, and manage the lifetime.
