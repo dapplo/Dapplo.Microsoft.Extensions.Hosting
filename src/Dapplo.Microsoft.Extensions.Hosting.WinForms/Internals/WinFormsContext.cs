@@ -37,6 +37,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
         public bool IsRunning { get; set; }
 
         /// <inheritdoc />
-        public Dispatcher FormsDispatcher { get; } = Dispatcher.CurrentDispatcher;
+        public Dispatcher FormsDispatcher { get; set; }
     }
 }

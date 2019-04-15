@@ -19,9 +19,12 @@
 //  You should have a copy of the GNU Lesser General Public License
 //  along with Dapplo.Microsoft.Extensions.Hosting. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -34,39 +37,69 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
     {
         private readonly ILogger<WpfHostedService> _logger;
         private readonly IApplicationLifetime _applicationLifetime;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IWpfContext _wpfContext;
-        private readonly Window _shell;
 
         /// <summary>
         /// The constructor which takes all the DI objects
         /// </summary>
         /// <param name="logger">ILogger</param>
         /// <param name="applicationLifetime"></param>
+        /// <param name="serviceProvider">IServiceProvider</param>
         /// <param name="wpfContext">IWpfContext</param>
-        /// <param name="wpfShell">IWpfShell optional</param>
-        public WpfHostedService(ILogger<WpfHostedService> logger, IApplicationLifetime applicationLifetime, IWpfContext wpfContext, IWpfShell wpfShell = null)
+        public WpfHostedService(ILogger<WpfHostedService> logger, IApplicationLifetime applicationLifetime, IServiceProvider serviceProvider, IWpfContext wpfContext)
         {
             _logger = logger;
             _applicationLifetime = applicationLifetime;
+            _serviceProvider = serviceProvider;
             _wpfContext = wpfContext;
-            _shell = wpfShell as Window;
         }
 
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            // Register to the host application lifetime ApplicationStopping to shutdown the WPF application
-            _applicationLifetime.ApplicationStopping.Register(()  =>
+            // Create a thread which runs WPF
+            var newWpfThread = new Thread(WpfThreadStart)
             {
-                if (_wpfContext.IsRunning)
-                {
-                    _logger.LogDebug("Stopping WPF application.");
-                    _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
-                }
-            });
+                IsBackground = true
+            };
+            // Set the apartment state
+            newWpfThread.SetApartmentState(ApartmentState.STA);
+            // Start the new WPF thread
+            newWpfThread.Start();
+            
+            return Task.CompletedTask;
+        }
+
+        /// <inheritdoc />
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            if (_wpfContext.IsRunning)
+            {
+                _logger.LogDebug("Stopping WPF due to application exit.");
+                // Stop application
+                _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
+            }
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Start WPF
+        /// </summary>
+        private void WpfThreadStart()
+        {
+            // Create our SynchronizationContext, and install it:
+            SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
+
+            // Create the new WPF application
+            var wpfApplication = new Application()
+            {
+                ShutdownMode = _wpfContext.ShutdownMode
+            };
 
             // Register to the WPF application exit to stop the host application
-            _wpfContext.WpfApplication.Exit += (s,e) =>
+            wpfApplication.Exit += (s,e) =>
             {
                 _wpfContext.IsRunning = false;
                 if (_wpfContext.IsLifetimeLinked)
@@ -75,30 +108,21 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
                     _applicationLifetime.StopApplication();
                 }
             };
-
-
-            // Run the application
-            _wpfContext.WpfApplication.Dispatcher.Invoke(() =>
-            {
-                _wpfContext.IsRunning = true;
-                if (_shell != null)
-                {
-                    _wpfContext.WpfApplication.Run(_shell);
-                }
-                else
-                {
-                    _wpfContext.WpfApplication.Run();
-                }
-            });
             
-            return Task.CompletedTask;
-        }
+            // Store the application for others to interact
+            _wpfContext.WpfApplication = wpfApplication;
 
-        /// <inheritdoc />
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
-            return Task.CompletedTask;
+            // Mark the application as running
+            _wpfContext.IsRunning = true;
+            // Run the WPF application in this thread which was specifically created for it, with the specified shell
+            if (_serviceProvider.GetService<IWpfShell>() is Window wpfShell)
+            {
+                wpfApplication.Run(wpfShell);
+            }
+            else
+            {
+                wpfApplication.Run();
+            }
         }
     }
 }

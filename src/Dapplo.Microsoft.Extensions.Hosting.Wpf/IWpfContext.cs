@@ -46,6 +46,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <summary>
         /// The Application
         /// </summary>
-        Application WpfApplication { get; }
+        Application WpfApplication { get; set; }
     }
 }

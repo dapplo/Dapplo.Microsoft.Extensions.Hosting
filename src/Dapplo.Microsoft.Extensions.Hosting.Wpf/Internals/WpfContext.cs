@@ -26,8 +26,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
     /// <inheritdoc />
     public class WpfContext : IWpfContext
     {
-        private Application _wpfApplication; 
-
         /// <inheritdoc />
         public ShutdownMode ShutdownMode { get; set; } = ShutdownMode.OnLastWindowClose;
 
@@ -38,17 +36,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
         public bool IsRunning { get; set; }
 
         /// <inheritdoc />
-        public Application WpfApplication
-        {
-            get
-            {
-                _wpfApplication = _wpfApplication ?? new Application
-                {
-                    // Default value
-                    ShutdownMode = ShutdownMode
-                };
-                return _wpfApplication;
-            }
-        }
+        public Application WpfApplication { get; set; }
     }
 }

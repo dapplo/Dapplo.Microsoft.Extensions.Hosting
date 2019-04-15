@@ -46,6 +46,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <summary>
         /// The dispatcher to send information to forms
         /// </summary>
-        Dispatcher FormsDispatcher { get; }
+        Dispatcher FormsDispatcher { get; set; }
     }
 }

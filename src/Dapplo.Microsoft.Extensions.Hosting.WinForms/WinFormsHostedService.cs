@@ -19,9 +19,12 @@
 //  You should have a copy of the GNU Lesser General Public License
 //  along with Dapplo.Microsoft.Extensions.Hosting. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -34,40 +37,66 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
     {
         private readonly ILogger<WinFormsHostedService> _logger;
         private readonly IApplicationLifetime _applicationLifetime;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IWinFormsContext _winFormsContext;
-        private readonly Form _shell;
 
         /// <summary>
         /// The constructor which takes all the DI objects
         /// </summary>
         /// <param name="logger">ILogger</param>
-        /// <param name="applicationLifetime"></param>
+        /// <param name="applicationLifetime">IApplicationLifetime</param>
+        /// <param name="serviceProvider">IServiceProvider</param>
         /// <param name="winFormsContext">IWinFormsContext</param>
-        /// <param name="winFormsShell">IWinFormsShell optional</param>
-        public WinFormsHostedService(ILogger<WinFormsHostedService> logger, IApplicationLifetime applicationLifetime, IWinFormsContext winFormsContext, IWinFormsShell winFormsShell = null)
+        public WinFormsHostedService(ILogger<WinFormsHostedService> logger, IApplicationLifetime applicationLifetime, IServiceProvider serviceProvider, IWinFormsContext winFormsContext)
         {
             _logger = logger;
             _applicationLifetime = applicationLifetime;
+            _serviceProvider = serviceProvider;
             _winFormsContext = winFormsContext;
-            _shell = winFormsShell as Form;
         }
 
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            // Create a thread which runs windows forms
+            var newFormsThread = new Thread(FormsThreadStart)
+            {
+                IsBackground = true
+            };
+            // Set the apartment state
+            newFormsThread.SetApartmentState(ApartmentState.STA);
+            // Start the new Forms thread
+            newFormsThread.Start();
+          
+            return Task.CompletedTask;
+        }
+
+        /// <inheritdoc />
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            if (_winFormsContext.IsRunning)
+            {
+                _logger.LogDebug("Stopping WinForms application.");
+                _winFormsContext.FormsDispatcher.Invoke(Application.Exit);
+            }
+            return Task.CompletedTask;
+        }
+        
+        /// <summary>
+        /// Start Windows Forms
+        /// </summary>
+        private void FormsThreadStart()
+        {
+            var currentDispatcher = Dispatcher.CurrentDispatcher;
+            _winFormsContext.FormsDispatcher = currentDispatcher;
+
+            // Create our SynchronizationContext, and install it:
+            SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(currentDispatcher));
+
             if (_winFormsContext.EnableVisualStyles)
             {
                 Application.EnableVisualStyles();
             }
-            // Register to the host application lifetime ApplicationStopping to shutdown the WinForms application
-            _applicationLifetime.ApplicationStopping.Register(()  =>
-            {
-                if (_winFormsContext.IsRunning)
-                {
-                    _logger.LogDebug("Stopping WinForms application.");
-                    _winFormsContext.FormsDispatcher.Invoke(Application.Exit);
-                }
-            });
 
             // Register to the WinForms application exit to stop the host application
             Application.ApplicationExit += (s,e) =>
@@ -80,29 +109,17 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
                 }
             };
 
-
             // Run the application
-            _winFormsContext.FormsDispatcher.Invoke(() =>
-            {
-                _winFormsContext.IsRunning = true;
-                if (_shell != null)
-                {
-                    Application.Run(_shell);
-                }
-                else
-                {
-                    Application.Run();
-                }
-            });
+            _winFormsContext.IsRunning = true;
             
-            return Task.CompletedTask;
-        }
-
-        /// <inheritdoc />
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _winFormsContext.FormsDispatcher.Invoke(Application.Exit);
-            return Task.CompletedTask;
+            if (_serviceProvider.GetService<IWinFormsShell>() is Form formShell)
+            {
+                Application.Run(formShell);
+            }
+            else
+            {
+                Application.Run();
+            }
         }
     }
 }

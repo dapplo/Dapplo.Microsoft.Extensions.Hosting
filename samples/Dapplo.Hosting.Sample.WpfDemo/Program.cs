@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +17,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
         private const string HostSettingsFile = "hostsettings.json";
         private const string Prefix = "PREFIX_";
 
-        [STAThread]
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = new HostBuilder()
                 .ConfigureLogging()
@@ -52,12 +52,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
 
             Console.WriteLine("Run!");
 
-            // This makes it possible to use RunAsync in the STA Thread
-            // TODO: I'm not happy with this, might consider spending time for a different way
-            SingleThreadedSynchronizationContext.Await(async () =>
-            {
-                await host.RunAsync();
-            });
+            await host.RunAsync();
         }
 
         /// <summary>
