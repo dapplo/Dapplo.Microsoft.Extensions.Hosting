@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <LangVersion>7.3</LangVersion>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+	<UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj" />
+  </ItemGroup>
+
+</Project>

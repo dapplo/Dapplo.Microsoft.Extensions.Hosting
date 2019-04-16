@@ -13,15 +13,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.Plugi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.FrameworkLib", "Dapplo.Hosting.Sample.FrameworkLib\Dapplo.Hosting.Sample.FrameworkLib.csproj", "{B6C058AA-82D5-47E8-A55F-C879C1B39CE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Hosting.Sample.WpfDemo", "Dapplo.Hosting.Sample.WpfDemo\Dapplo.Hosting.Sample.WpfDemo.csproj", "{4D3535D7-EE32-43DF-A30C-6E9C58A8F969}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.WpfDemo", "Dapplo.Hosting.Sample.WpfDemo\Dapplo.Hosting.Sample.WpfDemo.csproj", "{4D3535D7-EE32-43DF-A30C-6E9C58A8F969}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.Wpf", "..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj", "{829D5E93-A422-4DE6-8913-A15FA93FA46F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.Wpf", "..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj", "{829D5E93-A422-4DE6-8913-A15FA93FA46F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.AppServices", "..\src\Dapplo.Microsoft.Extensions.Hosting.AppServices\Dapplo.Microsoft.Extensions.Hosting.AppServices.csproj", "{E2932805-248E-4171-8F2A-E01915FE309A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.AppServices", "..\src\Dapplo.Microsoft.Extensions.Hosting.AppServices\Dapplo.Microsoft.Extensions.Hosting.AppServices.csproj", "{E2932805-248E-4171-8F2A-E01915FE309A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Hosting.Sample.WinFormsDemo", "Dapplo.Hosting.Sample.WinFormsDemo\Dapplo.Hosting.Sample.WinFormsDemo.csproj", "{ECD1ACC3-79B4-4761-B1EA-10425CE25659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.WinFormsDemo", "Dapplo.Hosting.Sample.WinFormsDemo\Dapplo.Hosting.Sample.WinFormsDemo.csproj", "{ECD1ACC3-79B4-4761-B1EA-10425CE25659}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.WinForms", "..\src\Dapplo.Microsoft.Extensions.Hosting.WinForms\Dapplo.Microsoft.Extensions.Hosting.WinForms.csproj", "{780E4523-2EBF-46B2-AF05-7CC9AFE1B9D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.WinForms", "..\src\Dapplo.Microsoft.Extensions.Hosting.WinForms\Dapplo.Microsoft.Extensions.Hosting.WinForms.csproj", "{780E4523-2EBF-46B2-AF05-7CC9AFE1B9D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.CaliburnMicroDemo", "Dapplo.Hosting.Sample.CaliburnMicroDemo\Dapplo.Hosting.Sample.CaliburnMicroDemo.csproj", "{E2DAE159-D2A9-4E00-894D-EBC74BEB0D92}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro", "..\src\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.csproj", "{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{780E4523-2EBF-46B2-AF05-7CC9AFE1B9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{780E4523-2EBF-46B2-AF05-7CC9AFE1B9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{780E4523-2EBF-46B2-AF05-7CC9AFE1B9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2DAE159-D2A9-4E00-894D-EBC74BEB0D92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2DAE159-D2A9-4E00-894D-EBC74BEB0D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2DAE159-D2A9-4E00-894D-EBC74BEB0D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2DAE159-D2A9-4E00-894D-EBC74BEB0D92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

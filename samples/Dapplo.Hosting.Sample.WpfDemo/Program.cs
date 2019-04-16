@@ -34,7 +34,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 .ConfigurePlugins(pluginBuilder =>
                 {
                     // Specify the location from where the Dll's are "globbed"
-                    pluginBuilder.AddScanDirectories(Path.Combine(Directory.GetCurrentDirectory(), @"..\.."));
+                    pluginBuilder.AddScanDirectories(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\..\"));
                     // Add the framework libraries which can be found with the specified globs
                     pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");
                     // Add the plugins which can be found with the specified globs

@@ -58,6 +58,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
             // Create a thread which runs windows forms
             var newFormsThread = new Thread(FormsThreadStart)
             {
@@ -66,9 +68,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             // Set the apartment state
             newFormsThread.SetApartmentState(ApartmentState.STA);
             // Start the new Forms thread
-            newFormsThread.Start();
+            newFormsThread.Start(taskCompletionSource);
           
-            return Task.CompletedTask;
+            return taskCompletionSource.Task;
         }
 
         /// <inheritdoc />
@@ -77,7 +79,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             if (_winFormsContext.IsRunning)
             {
                 _logger.LogDebug("Stopping WinForms application.");
-                _winFormsContext.FormsDispatcher.Invoke(Application.Exit);
+                _winFormsContext.FormsDispatcher.Invoke(() =>
+                {
+                    Application.Exit();
+                });
             }
             return Task.CompletedTask;
         }
@@ -85,8 +90,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <summary>
         /// Start Windows Forms
         /// </summary>
-        private void FormsThreadStart()
+        private void FormsThreadStart(object taskCompletionSourceAsObject)
         {
+            TaskCompletionSource<bool> taskCompletionSource = taskCompletionSourceAsObject as TaskCompletionSource<bool>;
+
             var currentDispatcher = Dispatcher.CurrentDispatcher;
             _winFormsContext.FormsDispatcher = currentDispatcher;
 
@@ -99,19 +106,13 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             }
 
             // Register to the WinForms application exit to stop the host application
-            Application.ApplicationExit += (s,e) =>
-            {
-                _winFormsContext.IsRunning = false;
-                if (_winFormsContext.IsLifetimeLinked)
-                {
-                    _logger.LogDebug("Stopping host application due to WinForms application exit.");
-                    _applicationLifetime.StopApplication();
-                }
-            };
+            Application.ApplicationExit += OnApplicationExit;
+
+            // Signal that the startup is pretty much finished
+            taskCompletionSource.SetResult(true);
 
             // Run the application
             _winFormsContext.IsRunning = true;
-            
             if (_serviceProvider.GetService<IWinFormsShell>() is Form formShell)
             {
                 Application.Run(formShell);
@@ -119,6 +120,17 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             else
             {
                 Application.Run();
+            }
+        }
+
+        private void OnApplicationExit(object sender, EventArgs eventArgs)
+        {
+            Application.ApplicationExit -= OnApplicationExit;
+            _winFormsContext.IsRunning = false;
+            if (_winFormsContext.IsLifetimeLinked)
+            {
+                _logger.LogDebug("Stopping host application due to WinForms application exit.");
+                _applicationLifetime.StopApplication();
             }
         }
     }

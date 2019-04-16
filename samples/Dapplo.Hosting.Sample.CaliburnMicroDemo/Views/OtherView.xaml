@@ -1,0 +1,12 @@
+﻿<Window x:Class="Dapplo.Hosting.Sample.CaliburnMicroDemo.Views.OtherView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="OtherWindow" Height="200" Width="200">
+    <StackPanel>
+        <Label Content="Hello again" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <Button Name="Exit" Content="Exit" FontSize="10"/>
+    </StackPanel>
+</Window>

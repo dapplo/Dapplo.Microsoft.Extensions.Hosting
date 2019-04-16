@@ -1,15 +1,17 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Dapplo.Microsoft.Extensions.Hosting.AppServices;
-using Dapplo.Microsoft.Extensions.Hosting.Plugins;
-using Dapplo.Microsoft.Extensions.Hosting.WinForms;
+﻿using Dapplo.Microsoft.Extensions.Hosting.Plugins;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using Dapplo.Microsoft.Extensions.Hosting.AppServices;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf;
+using Microsoft.Extensions.DependencyInjection;
+using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
+using Dapplo.Hosting.Sample.CaliburnMicroDemo.ViewModels;
+using System.Threading.Tasks;
 
-namespace Dapplo.Hosting.Sample.WinFormsDemo
+namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
 {
     public static class Program
     {
@@ -42,16 +44,16 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make Form2 available for DI to Form1
-                    serviceCollection.AddTransient<Form2>();
+                    // Make OtherWindow available for DI to MainWindow
+                    serviceCollection.AddTransient<OtherViewModel>();
                 })
-                .ConfigureWinForms<Form1>()
-                .UseWinFormsLifetime()
+                .ConfigureWpf()
+                .UseWpfLifetime()
+                .ConfigureCaliburnMicro<MainViewModel>()
                 .UseConsoleLifetime()
                 .Build();
 
-            Console.WriteLine(@"Run!");
-
+            Console.WriteLine("Run!");
             await host.RunAsync();
         }
 

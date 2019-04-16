@@ -58,6 +58,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             // Create a thread which runs WPF
             var newWpfThread = new Thread(WpfThreadStart)
             {
@@ -66,29 +67,28 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             // Set the apartment state
             newWpfThread.SetApartmentState(ApartmentState.STA);
             // Start the new WPF thread
-            newWpfThread.Start();
+            newWpfThread.Start(taskCompletionSource);
             
-            return Task.CompletedTask;
+            return taskCompletionSource.Task;
         }
 
         /// <inheritdoc />
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
             if (_wpfContext.IsRunning)
             {
                 _logger.LogDebug("Stopping WPF due to application exit.");
                 // Stop application
-                _wpfContext.WpfApplication.Dispatcher.Invoke(() => _wpfContext.WpfApplication.Shutdown());
+                await _wpfContext.WpfApplication.Dispatcher.InvokeAsync(() => _wpfContext.WpfApplication.Shutdown());
             }
-
-            return Task.CompletedTask;
         }
 
         /// <summary>
         /// Start WPF
         /// </summary>
-        private void WpfThreadStart()
+        private void WpfThreadStart(object taskCompletionSourceAsObject)
         {
+            TaskCompletionSource<bool> taskCompletionSource = taskCompletionSourceAsObject as TaskCompletionSource<bool>;
             // Create our SynchronizationContext, and install it:
             SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
 
@@ -114,6 +114,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
 
             // Mark the application as running
             _wpfContext.IsRunning = true;
+
+            // Signal that we can continue
+            taskCompletionSource.SetResult(true);
             // Run the WPF application in this thread which was specifically created for it, with the specified shell
             if (_serviceProvider.GetService<IWpfShell>() is Window wpfShell)
             {
