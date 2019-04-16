@@ -40,7 +40,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <returns>bool if there was already an </returns>
         private static bool TryRetrieveWpfContext(this IDictionary<object, object> properties)
         {
-            if (properties.TryGetValue(CaliburnMicroContextKey, out var wpfContextAsObject))
+            if (properties.TryGetValue(CaliburnMicroContextKey, out var caliburnContextAsObject))
             {
                 return true;
 
@@ -58,11 +58,13 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         {
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                if (!TryRetrieveWpfContext(hostBuilder.Properties))
+                if (TryRetrieveWpfContext(hostBuilder.Properties))
                 {
-                    serviceCollection.AddSingleton<IWindowManager, DapploWindowManager>();
-                    serviceCollection.AddHostedService<CaliburnMicroBootstrapper>();
+                    return;
                 }
+
+                serviceCollection.AddSingleton<IWindowManager, DapploWindowManager>();
+                serviceCollection.AddHostedService<CaliburnMicroBootstrapper>();
             });
             return hostBuilder;
         }
@@ -82,6 +84,5 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
 
             return hostBuilder;
         }
-
     }
 }

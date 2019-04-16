@@ -60,7 +60,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
             IServiceProvider serviceProvider,
             ILoggerFactory loggerFactory,
             IWindowManager windowManager,
-            IWpfContext wpfContext) : base(true)
+            IWpfContext wpfContext)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;

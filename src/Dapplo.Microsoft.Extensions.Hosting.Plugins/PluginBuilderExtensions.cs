@@ -19,6 +19,8 @@
 //  You should have a copy of the GNU Lesser General Public License
 //  along with Dapplo.Microsoft.Extensions.Hosting. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
+using System.IO;
+
 namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
 {
     /// <summary>
@@ -35,8 +37,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             foreach (var directory in directories)
             {
-                pluginBuilder.FrameworkDirectories.Add(directory);
-                pluginBuilder.PluginDirectories.Add(directory);
+                var normalizedDirectory = Path.GetFullPath(directory);
+                pluginBuilder.FrameworkDirectories.Add(normalizedDirectory);
+                pluginBuilder.PluginDirectories.Add(normalizedDirectory);
             }
         }
 
@@ -75,7 +78,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             foreach (var glob in frameworkGlobs)
             {
-                pluginBuilder.PluginMatcher.AddInclude(glob);
+                pluginBuilder.FrameworkMatcher.AddInclude(glob);
             }
         }
 

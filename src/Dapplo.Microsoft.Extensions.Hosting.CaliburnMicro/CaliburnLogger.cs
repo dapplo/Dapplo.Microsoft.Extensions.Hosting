@@ -19,18 +19,14 @@
 //  You should have a copy of the GNU Lesser General Public License
 //  along with Dapplo.CaliburnMicro. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
-#region using
-
 using System;
 using Caliburn.Micro;
 using Microsoft.Extensions.Logging;
 
-#endregion
-
 namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
 {
     /// <summary>
-    ///     A logger for Caliburn
+    ///     A logger for Caliburn which logs to Microsoft.Extensions.Logger.ILogger
     /// </summary>
     public class CaliburnLogger : ILog
     {

@@ -150,8 +150,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
             return IsLocked;
         }
 
-        #region IDisposable Support
-
         //  To detect redundant Dispose calls
         private bool _disposedValue;
 
@@ -185,8 +183,5 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
             }
             _applicationMutex = null;
         }
-
-        #endregion
     }
-
 }

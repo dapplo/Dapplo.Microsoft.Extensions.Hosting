@@ -20,6 +20,7 @@
 //  along with Dapplo.Microsoft.Extensions.Hosting. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,6 +34,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
     /// <summary>
     /// This hosts a WinForms service, making sure the lifecycle is managed
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class WinFormsHostedService : IHostedService
     {
         private readonly ILogger<WinFormsHostedService> _logger;
@@ -56,9 +58,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         }
 
         /// <inheritdoc />
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var taskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             // Create a thread which runs windows forms
             var newFormsThread = new Thread(FormsThreadStart)
@@ -70,21 +72,33 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             // Start the new Forms thread
             newFormsThread.Start(taskCompletionSource);
           
-            return taskCompletionSource.Task;
+            await taskCompletionSource.Task;
         }
 
         /// <inheritdoc />
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
             if (_winFormsContext.IsRunning)
             {
                 _logger.LogDebug("Stopping WinForms application.");
-                _winFormsContext.FormsDispatcher.Invoke(() =>
+                await _winFormsContext.FormsDispatcher.InvokeAsync(()=>
                 {
-                    Application.Exit();
+                    // Graceful close, otherwise finalizes try to dispose forms.
+                    foreach (var form in Application.OpenForms.Cast<Form>().ToList())
+                    {
+                        try
+                        {
+                            form.Close();
+                            form.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Couldn't cleanup a Form");
+                        }
+                    }
+                    Application.ExitThread();
                 });
             }
-            return Task.CompletedTask;
         }
         
         /// <summary>
@@ -92,7 +106,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// </summary>
         private void FormsThreadStart(object taskCompletionSourceAsObject)
         {
-            TaskCompletionSource<bool> taskCompletionSource = taskCompletionSourceAsObject as TaskCompletionSource<bool>;
+            var taskCompletionSource = taskCompletionSourceAsObject as TaskCompletionSource<bool>;
 
             var currentDispatcher = Dispatcher.CurrentDispatcher;
             _winFormsContext.FormsDispatcher = currentDispatcher;
@@ -109,7 +123,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             Application.ApplicationExit += OnApplicationExit;
 
             // Signal that the startup is pretty much finished
-            taskCompletionSource.SetResult(true);
+            taskCompletionSource?.SetResult(true);
 
             // Run the application
             _winFormsContext.IsRunning = true;
@@ -121,6 +135,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             {
                 Application.Run();
             }
+            _logger.LogDebug("Windows Forms Application stopped.");
         }
 
         private void OnApplicationExit(object sender, EventArgs eventArgs)

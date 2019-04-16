@@ -19,6 +19,7 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
 
         public static async Task Main(string[] args)
         {
+            var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             var host = new HostBuilder()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
@@ -34,7 +35,7 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
                 .ConfigurePlugins(pluginBuilder =>
                 {
                     // Specify the location from where the Dll's are "globbed"
-                    pluginBuilder.AddScanDirectories(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\..\"));
+                    pluginBuilder.AddScanDirectories(Path.Combine(executableLocation, @"..\..\..\..\"));
                     // Add the framework libraries which can be found with the specified globs
                     pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");
                     // Add the plugins which can be found with the specified globs

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.WinForms", "Dapplo.Microsoft.Extensions.Hosting.WinForms\Dapplo.Microsoft.Extensions.Hosting.WinForms.csproj", "{58DB9ECE-0D61-401D-9937-C90C2088E04A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro", "Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.csproj", "{48F59C69-B095-49D6-9C8C-9770C7F8FCCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{58DB9ECE-0D61-401D-9937-C90C2088E04A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58DB9ECE-0D61-401D-9937-C90C2088E04A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58DB9ECE-0D61-401D-9937-C90C2088E04A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48F59C69-B095-49D6-9C8C-9770C7F8FCCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48F59C69-B095-49D6-9C8C-9770C7F8FCCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48F59C69-B095-49D6-9C8C-9770C7F8FCCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48F59C69-B095-49D6-9C8C-9770C7F8FCCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

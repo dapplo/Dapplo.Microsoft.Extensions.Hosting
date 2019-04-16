@@ -18,13 +18,14 @@ namespace Dapplo.Hosting.Sample.ConsoleDemo
         private const string Prefix = "PREFIX_";
         public static async Task Main(string[] args)
         {
+            var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             var host = new HostBuilder()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
                 .ConfigurePlugins(pluginBuilder =>
                 {
                     // Specify the location from where the dll's are "globbed"
-                    pluginBuilder.AddScanDirectories(@"..\..\..\..\");
+                    pluginBuilder.AddScanDirectories(Path.Combine(executableLocation, @"..\..\..\..\"));
                     // Add the framework libraries which can be found with the specified globs
                     pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");
                     // Add the plugins which can be found with the specified globs

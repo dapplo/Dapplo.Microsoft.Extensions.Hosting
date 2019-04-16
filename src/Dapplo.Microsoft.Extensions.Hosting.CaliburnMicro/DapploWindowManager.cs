@@ -167,7 +167,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
             // Just in case, make sure it's activated
             window.Activate();
             return window;
-
         }
     }
 }

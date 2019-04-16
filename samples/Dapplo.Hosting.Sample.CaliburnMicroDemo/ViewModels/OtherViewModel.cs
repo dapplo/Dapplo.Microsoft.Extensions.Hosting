@@ -6,7 +6,7 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo.ViewModels
     {
         public void Exit()
         {
-            TryClose(true);
+            TryClose();
         }
     }
 }

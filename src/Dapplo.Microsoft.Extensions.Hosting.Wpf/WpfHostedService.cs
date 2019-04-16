@@ -116,7 +116,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             _wpfContext.IsRunning = true;
 
             // Signal that we can continue
-            taskCompletionSource.SetResult(true);
+            taskCompletionSource?.SetResult(true);
             // Run the WPF application in this thread which was specifically created for it, with the specified shell
             if (_serviceProvider.GetService<IWpfShell>() is Window wpfShell)
             {
