@@ -6,7 +6,7 @@
     <RepositoryUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</PackageProjectUrl>
-    <PackageLicense>MIT</PackageLicense>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
