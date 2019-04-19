@@ -1,23 +1,22 @@
 // Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Windows;
+using System;
+using System.Collections.Generic;
+using Dapplo.Microsoft.Extensions.Hosting.Metro;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
 {
     /// <inheritdoc />
-    public class WpfContext : IWpfContext
+    public class MetroContext : IMetroContext
     {
         /// <inheritdoc />
-        public ShutdownMode ShutdownMode { get; set; } = ShutdownMode.OnLastWindowClose;
+        public List<Uri> Resources { get; } = new List<Uri>();
 
         /// <inheritdoc />
-        public bool IsLifetimeLinked { get; set; }
+        public List<string> Styles { get; } = new List<string>();
 
         /// <inheritdoc />
-        public bool IsRunning { get; set; }
-
-        /// <inheritdoc />
-        public Application WpfApplication { get; set; }
+        public string Theme { get; set; } = "Light.Blue";
     }
 }

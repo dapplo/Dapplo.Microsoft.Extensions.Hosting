@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Dapplo.Microsoft.Extensions.Hosting.Plugins;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
-using Dapplo.Microsoft.Extensions.Hosting.Plugins;
-using Dapplo.Microsoft.Extensions.Hosting.WinForms;
-using Microsoft.Extensions.Configuration;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Dapplo.Microsoft.Extensions.Hosting.Metro;
 
-namespace Dapplo.Hosting.Sample.WinFormsDemo
+namespace Dapplo.Hosting.Sample.WpfDemo
 {
     public static class Program
     {
@@ -46,15 +47,16 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make Form2 available for DI to Form1
-                    serviceCollection.AddTransient<Form2>();
+                    // Make OtherWindow available for DI to MainWindow
+                    serviceCollection.AddTransient<OtherWindow>();
                 })
-                .ConfigureWinForms<Form1>()
-                .UseWinFormsLifetime()
+                .ConfigureWpf<MainWindow>()
+                .ConfigureMetro("Light.Orange")
+                .UseWpfLifetime()
                 .UseConsoleLifetime()
                 .Build();
 
-            Console.WriteLine(@"Run!");
+            Console.WriteLine("Run!");
 
             await host.RunAsync();
         }

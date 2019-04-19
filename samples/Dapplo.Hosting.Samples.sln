@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.Calib
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro", "..\src\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.csproj", "{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.Metro", "..\src\Dapplo.Microsoft.Extensions.Hosting.Metro\Dapplo.Microsoft.Extensions.Hosting.Metro.csproj", "{95AD7405-77F0-4493-85F8-1534214BE8F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.MetroDemo", "Dapplo.Hosting.Sample.MetroDemo\Dapplo.Hosting.Sample.MetroDemo.csproj", "{5EFDEEB2-8D32-4917-93A2-6272C168CA97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,14 @@ Global
 		{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33C19DA9-3914-4A75-BA87-D6AA4D56DDF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95AD7405-77F0-4493-85F8-1534214BE8F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AD7405-77F0-4493-85F8-1534214BE8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AD7405-77F0-4493-85F8-1534214BE8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AD7405-77F0-4493-85F8-1534214BE8F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EFDEEB2-8D32-4917-93A2-6272C168CA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EFDEEB2-8D32-4917-93A2-6272C168CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EFDEEB2-8D32-4917-93A2-6272C168CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EFDEEB2-8D32-4917-93A2-6272C168CA97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

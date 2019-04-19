@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
 

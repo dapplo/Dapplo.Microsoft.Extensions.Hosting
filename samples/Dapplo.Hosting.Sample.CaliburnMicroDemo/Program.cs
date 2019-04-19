@@ -1,4 +1,7 @@
-﻿using Dapplo.Microsoft.Extensions.Hosting.Plugins;
+﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using Dapplo.Microsoft.Extensions.Hosting.Plugins;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
