@@ -116,7 +116,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                         }
                     }
                 }
-                var plugins = scannedAssemblies.SelectMany(ScanForPlugins).OrderBy(plugin => plugin.GetOrder());
+                var plugins = scannedAssemblies.Select(CreatePluginInstance).Where(plugin => plugin != null).OrderBy(plugin => plugin.GetOrder());
                 
                 foreach (var plugin in plugins)
                 {
@@ -164,20 +164,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// Create instances of IPlugin found in the assembly
         /// </summary>
         /// <param name="pluginAssembly">pluginAssembly</param>
-        /// <returns>IEnumerable of IPlugin</returns>
-        private static IEnumerable<IPlugin> ScanForPlugins(Assembly pluginAssembly)
+        /// <returns>IPlugin</returns>
+        private static IPlugin CreatePluginInstance(Assembly pluginAssembly)
         {
-            // TODO: Check if we want to scan all assemblies, or have a specify class on a predetermined location?
-            var interfaceType = typeof(IPlugin);
-            foreach (var type in pluginAssembly.GetExportedTypes())
-            {
-                if (!type.GetInterfaces().Contains(interfaceType))
-                {
-                    continue;
-                }
-                var plugin = Activator.CreateInstance(type) as IPlugin;
-                yield return plugin;
-            }
+            var assemblyName = pluginAssembly.GetName().Name;
+            var type = pluginAssembly.GetType($"{assemblyName}.Plugin", false, false);
+            return type == null ? null : Activator.CreateInstance(type) as IPlugin;
         }
     }
 }

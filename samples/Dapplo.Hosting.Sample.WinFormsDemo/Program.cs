@@ -24,6 +24,7 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             var host = new HostBuilder()
+                .ConfigureWinForms<Form1>()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>
@@ -49,7 +50,6 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
                     // Make Form2 available for DI to Form1
                     serviceCollection.AddTransient<Form2>();
                 })
-                .ConfigureWinForms<Form1>()
                 .UseWinFormsLifetime()
                 .UseConsoleLifetime()
                 .Build();

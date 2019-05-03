@@ -9,6 +9,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Dapplo.Hosting.Sample.WinFormsDemo
 {
+    /// <summary>
+    /// Just a simple form
+    /// </summary>
     public partial class Form1 : Form, IWinFormsShell
     {
         private readonly ILogger<Form1> _logger;

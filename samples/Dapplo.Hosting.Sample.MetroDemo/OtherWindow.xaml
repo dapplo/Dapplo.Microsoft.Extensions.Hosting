@@ -1,4 +1,4 @@
-﻿<mahapps:MetroWindow x:Class="Dapplo.Hosting.Sample.WpfDemo.OtherWindow"
+﻿<mahapps:MetroWindow x:Class="Dapplo.Hosting.Sample.MetroDemo.OtherWindow"
         xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

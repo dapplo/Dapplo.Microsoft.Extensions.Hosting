@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using Caliburn.Micro;
 using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Internals;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -42,16 +43,14 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <returns>IHostBuilder</returns>
         public static IHostBuilder ConfigureCaliburnMicro(this IHostBuilder hostBuilder)
         {
-            hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+            if (!TryRetrieveCaliburnMicroContext(hostBuilder.Properties,out _))
             {
-                if (TryRetrieveCaliburnMicroContext(hostBuilder.Properties,out _))
+                hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
                 {
-                    return;
-                }
-
-                serviceCollection.AddSingleton<IWindowManager, CaliburnMicroWindowManager>();
-                serviceCollection.AddHostedService<CaliburnMicroBootstrapper>();
-            });
+                    serviceCollection.AddSingleton<IWindowManager, CaliburnMicroWindowManager>();
+                    serviceCollection.AddSingleton<IWpfService, CaliburnMicroBootstrapper>();
+                });
+            }
             return hostBuilder;
         }
 

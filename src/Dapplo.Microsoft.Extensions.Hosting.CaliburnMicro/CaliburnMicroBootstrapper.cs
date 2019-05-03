@@ -7,9 +7,6 @@ using System.Windows;
 using Caliburn.Micro;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using Microsoft.Extensions.Hosting;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +18,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
     ///     An implementation of the Caliburn Micro Bootstrapper which is started from
     ///     the generic host.
     /// </summary>
-    public class CaliburnMicroBootstrapper : BootstrapperBase, IHostedService
+    public class CaliburnMicroBootstrapper : BootstrapperBase, IWpfService
     {
         private readonly ILogger<CaliburnMicroBootstrapper> _logger;
         private readonly IServiceProvider _serviceProvider;
@@ -146,6 +143,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <inheritdoc />
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            base.OnStartup(sender, e);
+
             foreach (var shell in _serviceProvider.GetServices<ICaliburnMicroShell>())
             {
                 var viewModel = shell;
@@ -154,22 +153,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         }
 
         /// <inheritdoc />
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public void Initialize(Application application)
         {
-            await _wpfContext.WpfApplication.Dispatcher.InvokeAsync(() =>
-            {
-                // Make sure the Application from the IWpfContext is used
-                Application = _wpfContext.WpfApplication;
-                Initialize();
-                // Startup the bootstrapper
-                OnStartup(this, null);
-            });
-        }
-
-        /// <inheritdoc />
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            // Make sure the Application from the IWpfContext is used
+            Application = _wpfContext.WpfApplication;
+            Initialize();
         }
     }
 }

@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Dapplo.Microsoft.Extensions.Hosting.Plugins;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
-using Dapplo.Microsoft.Extensions.Hosting.Wpf;
-using Microsoft.Extensions.DependencyInjection;
 using Dapplo.Microsoft.Extensions.Hosting.Metro;
+using Dapplo.Microsoft.Extensions.Hosting.Plugins;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Hosting.Sample.WpfDemo
+namespace Dapplo.Hosting.Sample.MetroDemo
 {
     public static class Program
     {
@@ -25,6 +25,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             var host = new HostBuilder()
+                .ConfigureWpf<MainWindow>()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>
@@ -50,7 +51,6 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                     // Make OtherWindow available for DI to MainWindow
                     serviceCollection.AddTransient<OtherWindow>();
                 })
-                .ConfigureWpf<MainWindow>()
                 .ConfigureMetro("Light.Orange")
                 .UseWpfLifetime()
                 .UseConsoleLifetime()

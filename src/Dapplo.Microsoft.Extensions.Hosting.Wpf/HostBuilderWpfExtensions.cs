@@ -46,13 +46,17 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         {
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext);
+                if (!TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext))
+                {
+                    throw new NotSupportedException("Please configure WPF first!");
+                }
+
                 wpfContext.ShutdownMode = shutdownMode;
                 wpfContext.IsLifetimeLinked = true;
             });
             return hostBuilder;
         }
-        
+
         /// <summary>
         /// Configure an WPF application
         /// </summary>
@@ -89,7 +93,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             });
             return hostBuilder;
         }
-
         
         /// <summary>
         /// Specify the shell, the primary window, to start

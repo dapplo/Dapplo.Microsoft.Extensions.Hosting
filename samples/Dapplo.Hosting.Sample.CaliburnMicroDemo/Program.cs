@@ -27,6 +27,7 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             
             var host = new HostBuilder()
+                .ConfigureWpf()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>
@@ -40,22 +41,21 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
                 })
                 .ConfigurePlugins(pluginBuilder =>
                 {
-                    // Specify the location from where the Dll's are "globbed"
+                    // Specify the location from where the DLL's are "globbed"
                     pluginBuilder.AddScanDirectories(Path.Combine(executableLocation, @"..\..\..\..\"));
                     // Add the framework libraries which can be found with the specified globs
                     pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");
                     // Add the plugins which can be found with the specified globs
                     pluginBuilder.IncludePlugins(@"**\bin\**\*.Plugin*.dll");
                 })
+                .ConfigureCaliburnMicro<MainViewModel>()
                 .ConfigureServices(serviceCollection =>
                 {
                     // Make OtherWindow available for DI to MainWindow
                     serviceCollection.AddTransient<OtherViewModel>();
                 })
-                .ConfigureWpf()
-                .UseWpfLifetime()
-                .ConfigureCaliburnMicro<MainViewModel>()
                 .UseConsoleLifetime()
+                .UseWpfLifetime()
                 .Build();
 
             Console.WriteLine("Run!");

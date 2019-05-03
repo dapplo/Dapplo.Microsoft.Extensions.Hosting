@@ -1,7 +1,9 @@
 // Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
 {
@@ -29,5 +31,15 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// The Application
         /// </summary>
         Application WpfApplication { get; set; }
+
+        /// <summary>
+        /// This starts the UI Thread logic
+        /// </summary>
+        void StartUi(IServiceProvider serviceProvider);
+
+        /// <summary>
+        /// This WPF dispatcher
+        /// </summary>
+        Dispatcher Dispatcher { get; } 
     }
 }

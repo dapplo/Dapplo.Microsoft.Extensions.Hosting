@@ -9,6 +9,9 @@ using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
 
 namespace Dapplo.Hosting.Sample.CaliburnMicroDemo.ViewModels
 {
+    /// <summary>
+    /// Just a simple main view model
+    /// </summary>
     public class MainViewModel : Screen, ICaliburnMicroShell
     {
         private readonly IWpfContext _wpfContext;

@@ -4,7 +4,6 @@
 using System;
 using System.Windows;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
-using Microsoft.Extensions.Logging;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Metro
 {
@@ -13,17 +12,14 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Metro
     /// </summary>
     public class MetroWpfService : IWpfService
     {
-        private readonly ILogger<MetroWpfService> _logger;
         private readonly IMetroContext _metroContext;
 
         /// <summary>
         /// The constructor which takes all the DI objects
         /// </summary>
-        /// <param name="logger">ILogger</param>
         /// <param name="metroContext">IMetroContext</param>
-        public MetroWpfService(ILogger<MetroWpfService> logger, IMetroContext metroContext)
+        public MetroWpfService(IMetroContext metroContext)
         {
-            _logger = logger;
             _metroContext = metroContext;
         }
 

@@ -1,6 +1,7 @@
 // Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Windows.Threading;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
@@ -28,6 +29,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <summary>
         /// The dispatcher to send information to forms
         /// </summary>
-        Dispatcher FormsDispatcher { get; set; }
+        Dispatcher Dispatcher { get; set; }
+
+        /// <summary>
+        /// This starts the UI Thread logic
+        /// </summary>
+        /// <param name="serviceProvider">IServiceProvider</param>
+        void StartUi(IServiceProvider serviceProvider);
     }
 }

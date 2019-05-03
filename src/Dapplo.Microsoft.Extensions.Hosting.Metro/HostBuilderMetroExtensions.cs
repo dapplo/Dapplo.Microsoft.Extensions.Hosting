@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using Dapplo.Microsoft.Extensions.Hosting.Metro.Internals;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
-using Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -52,7 +52,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Metro
                     serviceCollection.AddSingleton<IWpfService,MetroWpfService>();
                 }
                 // Configure the default styles
-                metroContext.Styles.AddRange(new string[] { "Controls", "Fonts" });
+                metroContext.Styles.AddRange(new[] { "Controls", "Fonts" });
                 configureAction?.Invoke(metroContext);
             });
             return hostBuilder;

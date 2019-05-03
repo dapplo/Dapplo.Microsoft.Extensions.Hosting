@@ -3,9 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using Dapplo.Microsoft.Extensions.Hosting.Metro;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
+namespace Dapplo.Microsoft.Extensions.Hosting.Metro.Internals
 {
     /// <inheritdoc />
     public class MetroContext : IMetroContext
