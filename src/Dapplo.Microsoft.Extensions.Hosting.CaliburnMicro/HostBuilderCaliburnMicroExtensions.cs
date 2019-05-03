@@ -32,7 +32,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
 
             }
             caliburnMicroContext = new CaliburnMicroContext();
-            properties[CaliburnMicroContextKey] = null;
+            properties[CaliburnMicroContextKey] = caliburnMicroContext;
             return false;
         }
         
@@ -43,10 +43,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <returns>IHostBuilder</returns>
         public static IHostBuilder ConfigureCaliburnMicro(this IHostBuilder hostBuilder)
         {
-            if (!TryRetrieveCaliburnMicroContext(hostBuilder.Properties,out _))
+            if (!TryRetrieveCaliburnMicroContext(hostBuilder.Properties,out var caliburnMicroContext))
             {
                 hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
                 {
+                    serviceCollection.AddSingleton(caliburnMicroContext);
                     serviceCollection.AddSingleton<IWindowManager, CaliburnMicroWindowManager>();
                     serviceCollection.AddSingleton<IWpfService, CaliburnMicroBootstrapper>();
                 });

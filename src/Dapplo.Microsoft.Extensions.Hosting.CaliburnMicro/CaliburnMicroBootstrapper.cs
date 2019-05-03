@@ -25,6 +25,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         private readonly ILoggerFactory _loggerFactory;
         private readonly IWindowManager _windowManager;
         private readonly IWpfContext _wpfContext;
+        private readonly ICaliburnMicroContext _caliburnMicroContext;
 
         /// <summary>
         /// CaliburnMicroBootstrapper
@@ -34,18 +35,21 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <param name="loggerFactory">ILoggerFactory</param>
         /// <param name="windowManager">IWindowManager</param>
         /// <param name="wpfContext">IWpfContext</param>
+        /// <param name="caliburnMicroContext">ICaliburnMicroContext</param>
         public CaliburnMicroBootstrapper(
             ILogger<CaliburnMicroBootstrapper> logger,
             IServiceProvider serviceProvider,
             ILoggerFactory loggerFactory,
             IWindowManager windowManager,
-            IWpfContext wpfContext)
+            IWpfContext wpfContext,
+            ICaliburnMicroContext caliburnMicroContext)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
             _loggerFactory = loggerFactory;
             _windowManager = windowManager;
             _wpfContext = wpfContext ?? throw new ArgumentNullException(nameof(wpfContext));
+            _caliburnMicroContext = caliburnMicroContext;
         }
 
         /// <summary>
@@ -69,15 +73,15 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
             LogManager.GetLog = type => new CaliburnLogger(_loggerFactory.CreateLogger(type));
             ConfigureViewLocator();
 
-            // TODO: Documentation
-            // This make it possible to pass the data-context of the originally clicked object in the Message.Attach event bubbling.
-            // E.G. the parent Menu-Item Click will get the Child MenuItem that was actually clicked.
-            MessageBinder.SpecialValues.Add("$originalDataContext", context =>
+            if (_caliburnMicroContext.EnableOriginalDataContect)
             {
-                var routedEventArgs = context.EventArgs as RoutedEventArgs;
-                var frameworkElement = routedEventArgs?.OriginalSource as FrameworkElement;
-                return frameworkElement?.DataContext;
-            });
+                MessageBinder.SpecialValues.Add("$originalDataContext", context =>
+                {
+                    var routedEventArgs = context.EventArgs as RoutedEventArgs;
+                    var frameworkElement = routedEventArgs?.OriginalSource as FrameworkElement;
+                    return frameworkElement?.DataContext;
+                });
+            }
         }
 
         /// <summary>

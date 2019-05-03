@@ -6,5 +6,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Internals
     /// <inheritdoc />
     public class CaliburnMicroContext : ICaliburnMicroContext
     {
+        // <inheritdoc />
+        public bool EnableOriginalDataContect { get; set; }
     }
 }
