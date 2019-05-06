@@ -19,8 +19,12 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />
-
+<!--#if (EnableMutex) -->
     <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.AppServices" Version="0.1.39" />
+<!--#endif -->
+<!--#if (EnableMetro) -->
+    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.Metro" Version="0.1.39" />
+<!--#endif -->
     <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro" Version="0.1.39" />
   </ItemGroup>
 </Project>

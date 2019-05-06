@@ -17,6 +17,16 @@
             "parameters": {
               "format":"D"
             }
+        },
+        "EnableMetro":{
+            "type": "parameter",
+            "dataType":"bool",
+            "defaultValue": "true"
+        },
+        "EnableMutex":{
+            "type": "parameter",
+            "dataType":"bool",
+            "defaultValue": "true"
         }
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Dapplo.Hosting.Ui.Template.CSharp</id>
+    <version>1.0.0</version>
+    <description>Creates the Garcia Software console app.</description>
+    <authors>Dapplo</authors>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+  </metadata>
+</package>

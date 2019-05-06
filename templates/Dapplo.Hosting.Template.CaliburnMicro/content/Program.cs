@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+#if (EnableMutex)
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
+#endif
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
 using Dapplo.Hosting.CaliburnMicroTemplate.ViewModels;
@@ -24,6 +26,7 @@ namespace Dapplo.Hosting.CaliburnMicroTemplate
                 .ConfigureWpf()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
+#if (EnableMutex)
 				// Prevent this application from running multiple times
                 .ConfigureSingleInstance(builder =>
                 {
@@ -34,6 +37,7 @@ namespace Dapplo.Hosting.CaliburnMicroTemplate
                         logger.LogWarning("Application {0} already running.", hostingEnvironment.ApplicationName);
                     };
                 })
+#endif
 				// Setup CaliburnMicro
                 .ConfigureCaliburnMicro<MainViewModel>()
 				// Provide a view model
@@ -42,6 +46,9 @@ namespace Dapplo.Hosting.CaliburnMicroTemplate
                     // Make OtherWindow available for DI to MainWindow
                     serviceCollection.AddTransient<OtherViewModel>();
                 })
+#if (EnableMetro)
+                .ConfigureMetro("Light.Orange")
+#endif
                 .UseConsoleLifetime()
 				// Make sure the application stops when the UI stops
                 .UseWpfLifetime()
