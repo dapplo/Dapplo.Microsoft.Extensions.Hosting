@@ -19,12 +19,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.AppServices\Dapplo.Microsoft.Extensions.Hosting.AppServices.csproj" />
-    <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.csproj" />
-    <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj" />
+    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.AppServices" Version="0.1.39" />
+    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro" Version="0.1.39" />
   </ItemGroup>
-
 </Project>
