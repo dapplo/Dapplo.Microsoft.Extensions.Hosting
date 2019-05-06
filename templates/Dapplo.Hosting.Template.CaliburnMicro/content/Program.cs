@@ -5,6 +5,9 @@ using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 #endif
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
+#if (EnableMetro)
+using Dapplo.Microsoft.Extensions.Hosting.Metro;
+#endif
 using Dapplo.Hosting.CaliburnMicroTemplate.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
