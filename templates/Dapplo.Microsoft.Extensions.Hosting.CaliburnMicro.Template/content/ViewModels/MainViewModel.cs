@@ -4,7 +4,7 @@ using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dapplo.Hosting.CaliburnMicroTemplate.ViewModels
+namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.ViewModels
 {
     /// <summary>
     /// A simple main view model

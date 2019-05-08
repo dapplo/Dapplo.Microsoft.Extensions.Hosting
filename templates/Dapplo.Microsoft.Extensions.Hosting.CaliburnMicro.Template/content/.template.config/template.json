@@ -2,13 +2,13 @@
     "$schema": "http://json.schemastore.org/template",
     "author": "Dapplo",
     "classifications": [ "Common", "WPF" ],
-    "identity": "Dapplo.Hosting.CaliburnMicro.CSharp",
+    "identity": "Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp",
     "name": "CaliburnMicro WPF application on generic host",
     "shortName": "caliburnmicrohost",
     "tags": {
         "language": "C#"
     },
-    "sourceName": "Dapplo.Hosting.CaliburnMicroTemplate",
+    "sourceName": "Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template",
     "symbols":{
         "applicationmutex":{
             "type": "generated",

@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 
-namespace Dapplo.Hosting.CaliburnMicroTemplate.ViewModels
+namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.ViewModels
 {
     public class OtherViewModel : Screen
     {

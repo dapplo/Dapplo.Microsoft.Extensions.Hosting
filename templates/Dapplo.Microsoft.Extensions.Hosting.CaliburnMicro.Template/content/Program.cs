@@ -8,13 +8,13 @@ using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
 #if (EnableMetro)
 using Dapplo.Microsoft.Extensions.Hosting.Metro;
 #endif
-using Dapplo.Hosting.CaliburnMicroTemplate.ViewModels;
+using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Hosting.CaliburnMicroTemplate
+namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template
 {
     public static class Program
     {
