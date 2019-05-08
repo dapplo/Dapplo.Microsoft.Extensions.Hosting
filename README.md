@@ -13,6 +13,16 @@ This repository brings you a few extensions on the generic host which will help 
 
 FYI: there is a solution with samples in the samples directory and one which is used on the build server in the src.
 
+I've created a dotnet new template on [![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp/) so to quickly start, you can type the following:
+```
+dotnet new --install Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp
+```
+
+After this you can create a new project by doing something like this (the enable metro and mutex arguments are optional, default is true):
+```
+dotnet new caliburnmicrohost --EnableMetro true --EnableMutex true
+```
+
 
 Dapplo.Microsoft.Extensions.Hosting.Plugins
 --------------------------------------------
