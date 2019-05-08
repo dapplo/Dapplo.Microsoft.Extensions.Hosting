@@ -28,7 +28,7 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
     feedsToUse: config
-	
+
 - task: VSBuild@1
   displayName: 'Build solution **\src\*.sln'
   inputs:
@@ -51,7 +51,7 @@ steps:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: |
      **\bin\$(BuildConfiguration)\*.nupkg
-     **\*Template.nupkg
+     *Template.nupkg
      **\TestResults\**\*.coverage
     TargetFolder: '$(build.artifactstagingdirectory)'
     flattenFolders: true
