@@ -52,7 +52,7 @@ steps:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: |
      **\bin\$(BuildConfiguration)\*.nupkg
-     *Template.nupkg
+     *Template*.nupkg
      **\TestResults\**\*.coverage
     TargetFolder: '$(build.artifactstagingdirectory)'
     flattenFolders: true
