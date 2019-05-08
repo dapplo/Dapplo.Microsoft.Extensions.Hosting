@@ -42,7 +42,7 @@ steps:
   inputs:
     folderPath: templates\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template\content
     fileType: xml
-    targetFiles: *.csproj
+    targetFiles: '*.csproj'
 
 - script: nuget pack templates\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.nuspec -Version $(Build.BuildNumber)
 
