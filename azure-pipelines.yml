@@ -15,12 +15,12 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Use .NET Core sdk 3.0'
   inputs:
-    version: '3.0.100-preview6-011690'
+    version: '3.0.100-preview6-011799'
 
 - task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.9.3'
+  displayName: 'Use NuGet 5.0.0'
   inputs:
-    versionSpec: 4.9.3
+    versionSpec: 5.0.0
     checkLatest: true
 
 - task: NuGetCommand@2
@@ -28,7 +28,7 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
     feedsToUse: config
-
+	
 - task: VSBuild@1
   displayName: 'Build solution **\src\*.sln'
   inputs:
@@ -37,12 +37,21 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: FileTransform@1
+  displayName: 'File Transform: '
+  inputs:
+    folderPath: templates\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template\content\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.csproj
+    fileType: xml
+	
+- script: nuget pack templates\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.nuspec -Version $(Build.BuildNumber)
+
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
     SourceFolder: '$(system.defaultworkingdirectory)'
     Contents: |
      **\bin\$(BuildConfiguration)\*.nupkg
+     **\*Template.nupkg
      **\TestResults\**\*.coverage
     TargetFolder: '$(build.artifactstagingdirectory)'
     flattenFolders: true
