@@ -20,11 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />
 <!--#if (EnableMutex) -->
-    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.AppServices" Version="__Build.BuildNumber__" />
+    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.AppServices" Version="#{Build.BuildNumber}#" />
 <!--#endif -->
 <!--#if (EnableMetro) -->
-    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.Metro" Version="__Build.BuildNumber__" />
+    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.Metro" Version="#{Build.BuildNumber}#" />
 <!--#endif -->
-    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro" Version="__Build.BuildNumber__" />
+    <PackageReference Include="Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro" Version="#{Build.BuildNumber}#" />
   </ItemGroup>
 </Project>

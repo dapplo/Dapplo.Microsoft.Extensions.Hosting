@@ -37,12 +37,16 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: FileTransform@1
-  displayName: 'File Transform: '
+- task: replacetokens@3
   inputs:
-    folderPath: templates\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template\content
-    fileType: xml
+    rootDirectory: 'templates\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template\content'
     targetFiles: '*.csproj'
+    encoding: 'auto'
+    writeBOM: true
+    actionOnMissing: 'fail'
+    keepToken: false
+    tokenPrefix: '#{'
+    tokenSuffix: '}#'
 
 - script: nuget pack templates\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template\Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.nuspec -Version $(Build.BuildNumber)
 
