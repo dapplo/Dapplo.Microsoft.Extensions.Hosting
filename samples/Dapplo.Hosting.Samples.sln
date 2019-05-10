@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.MetroDemo", "Dapplo.Hosting.Sample.MetroDemo\Dapplo.Hosting.Sample.MetroDemo.csproj", "{5EFDEEB2-8D32-4917-93A2-6272C168CA97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Hosting.Sample.ReactiveDemo", "Dapplo.Hosting.Sample.ReactiveDemo\Dapplo.Hosting.Sample.ReactiveDemo.csproj", "{1B008131-227B-4793-87A3-42E24536807E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{5EFDEEB2-8D32-4917-93A2-6272C168CA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EFDEEB2-8D32-4917-93A2-6272C168CA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EFDEEB2-8D32-4917-93A2-6272C168CA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B008131-227B-4793-87A3-42E24536807E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B008131-227B-4793-87A3-42E24536807E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B008131-227B-4793-87A3-42E24536807E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B008131-227B-4793-87A3-42E24536807E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
