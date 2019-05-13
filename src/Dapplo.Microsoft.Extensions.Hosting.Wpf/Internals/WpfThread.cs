@@ -20,6 +20,7 @@
 // along with Dapplo.Hosting.Samples. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -35,6 +36,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
         private readonly ManualResetEvent _serviceManualResetEvent = new ManualResetEvent(false);
         private readonly IWpfContext _wpfContext;
         private IServiceProvider _serviceProvider;
+        private readonly CultureInfo _currentCulture;
+        private readonly CultureInfo _currentUiCulture;
             
         /// <summary>
         /// Constructor which is called from the IWpfContext
@@ -42,6 +45,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
         /// <param name="wpfContext">IWpfContext</param>
         public WpfThread(IWpfContext wpfContext)
         {
+            _currentCulture = CultureInfo.CurrentCulture;
+            _currentUiCulture = CultureInfo.CurrentUICulture;
             _wpfContext = wpfContext;
             // Create a thread which runs WPF
             var newWpfThread = new Thread(WpfThreadStart)
@@ -71,6 +76,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
         /// </summary>
         private void WpfThreadStart()
         {
+            // TODO: This is a workaround while WPF somehow doesn't like the German (de-DE) culture and causes an ArgumentException value 'EINFG' was not found in System.Windows.Input.KeyConverter.GetKey
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            
             // Create our SynchronizationContext, and install it:
             SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
 

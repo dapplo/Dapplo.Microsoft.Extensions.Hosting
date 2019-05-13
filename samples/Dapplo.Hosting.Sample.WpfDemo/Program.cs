@@ -28,7 +28,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>
                 {
-                    builder.MutexId = "{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}";
+                    builder.MutexId = "{C3CC6C8F-B40C-4EC2-A540-1D4B8FFFB60D}";
                     builder.WhenNotFirstInstance = (hostingEnvironment, logger) =>
                     {
                         // This is called when an instance was already started, this is in the second instance

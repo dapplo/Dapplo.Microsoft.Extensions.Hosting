@@ -30,7 +30,7 @@ namespace Dapplo.Hosting.Sample.MetroDemo
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>
                 {
-                    builder.MutexId = "{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}";
+                    builder.MutexId = "{F91C7BE5-549F-409B-AFCC-0833375F045F}";
                     builder.WhenNotFirstInstance = (hostingEnvironment, logger) =>
                     {
                         // This is called when an instance was already started, this is in the second instance

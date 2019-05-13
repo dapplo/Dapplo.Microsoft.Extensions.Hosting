@@ -10,6 +10,7 @@ using System.IO;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using System.Threading.Tasks;
+using Dapplo.Microsoft.Extensions.Hosting.ReactiveUI;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
 
@@ -32,7 +33,7 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>
                 {
-                    builder.MutexId = "{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}";
+                    builder.MutexId = "{EDF77D19-3272-43FF-81E1-AB36D08397EE}";
                     builder.WhenNotFirstInstance = (hostingEnvironment, logger) =>
                     {
                         // This is called when an instance was already started, this is in the second instance

@@ -4,16 +4,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Dapplo.Hosting.Sample.ReactiveDemo
+namespace Dapplo.Microsoft.Extensions.Hosting.ReactiveUI
 {
     /// <summary>
     /// This contains the rReactiveUi extensions for Microsoft.Extensions.Hosting 
     /// </summary>
     public static class HostBuilderReactiveUiExtensions
     {
-
         /// <summary>
-        /// Configure a ReactiveUi application
+        /// Configure a ReactiveUI application
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <returns>IHostBuilder</returns>

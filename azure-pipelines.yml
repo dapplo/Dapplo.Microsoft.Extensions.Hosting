@@ -3,6 +3,13 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
+trigger:
+- master
+- feature/*
+
+pr:
+- master
+
 pool:
   vmImage: 'Windows-2019'
 
@@ -15,7 +22,7 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Use .NET Core sdk 3.0'
   inputs:
-    version: '3.0.100-preview6-011799'
+    version: '3.0.100-preview6-011854'
 
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet 5.0.0'
