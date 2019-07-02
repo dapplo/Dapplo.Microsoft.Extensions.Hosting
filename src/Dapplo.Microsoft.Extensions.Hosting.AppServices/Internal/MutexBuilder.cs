@@ -19,6 +19,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices.Internal
         public bool IsGlobal { get; set; }
 
         /// <inheritdoc />
-        public Action<IHostingEnvironment, ILogger> WhenNotFirstInstance { get; set; }
+        public Action<IHostEnvironment, ILogger> WhenNotFirstInstance { get; set; }
     }
 }

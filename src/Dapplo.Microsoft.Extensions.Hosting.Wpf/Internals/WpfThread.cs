@@ -87,7 +87,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
                 if (_wpfContext.IsLifetimeLinked)
                 {
                     //_logger.LogDebug("Stopping host application due to WPF application exit.");
-                    _serviceProvider.GetService<IApplicationLifetime>().StopApplication();
+                    _serviceProvider.GetService<IHostApplicationLifetime>().StopApplication();
                 }
             };
             

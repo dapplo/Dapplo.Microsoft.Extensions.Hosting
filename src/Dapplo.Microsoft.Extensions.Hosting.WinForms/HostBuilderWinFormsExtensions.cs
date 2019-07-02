@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Forms;
 using Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,9 +40,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// Defines that stopping the WinForms application also stops the host (application) 
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="shutdownMode">ShutdownMode default is OnLastWindowClose</param>
         /// <returns>IHostBuilder</returns>
-        public static IHostBuilder UseWinFormsLifetime(this IHostBuilder hostBuilder, ShutdownMode shutdownMode = ShutdownMode.OnLastWindowClose)
+        public static IHostBuilder UseWinFormsLifetime(this IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {

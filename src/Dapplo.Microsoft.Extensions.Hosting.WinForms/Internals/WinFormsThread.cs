@@ -123,7 +123,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
             }
 
             //_logger.LogDebug("Stopping host application due to WinForms application exit.");
-            _serviceProvider.GetService<IApplicationLifetime>().StopApplication();
+            _serviceProvider.GetService<IHostApplicationLifetime>().StopApplication();
         }
     }
 }

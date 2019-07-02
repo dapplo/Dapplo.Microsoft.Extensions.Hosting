@@ -53,7 +53,7 @@
             this.buttonForm2.TabIndex = 1;
             this.buttonForm2.Text = "Open Form2";
             this.buttonForm2.UseVisualStyleBackColor = true;
-            this.buttonForm2.Click += new System.EventHandler(this.buttonForm2_Click);
+            this.buttonForm2.Click += new System.EventHandler(this.ButtonForm2_Click);
             // 
             // buttonExit
             // 
@@ -64,7 +64,7 @@
             this.buttonExit.TabIndex = 1;
             this.buttonExit.Text = "E&xit";
             this.buttonExit.UseVisualStyleBackColor = true;
-            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
+            this.buttonExit.Click += new System.EventHandler(this.ButtonExit_Click);
             // 
             // Form1
             // 

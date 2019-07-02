@@ -24,14 +24,14 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
             InitializeComponent();
         }
 
-        private void buttonForm2_Click(object sender, EventArgs e)
+        private void ButtonForm2_Click(object sender, EventArgs e)
         {
             _logger.LogDebug("Show form2 clicked!");
             var form2 = _serviceProvider.GetService<Form2>();
             form2.Show();
         }
         
-        private void buttonExit_Click(object sender, EventArgs e)
+        private void ButtonExit_Click(object sender, EventArgs e)
         {
             _logger.LogDebug("Exit clicked!");
             Application.Exit();

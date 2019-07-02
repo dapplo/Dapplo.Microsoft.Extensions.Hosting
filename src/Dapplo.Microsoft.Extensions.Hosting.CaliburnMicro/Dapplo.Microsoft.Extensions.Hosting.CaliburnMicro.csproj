@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-	<UseWPF>true</UseWPF>
-	<Platforms>AnyCPU;x64</Platforms>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0-preview6.19304.6" />
   </ItemGroup>
 
   <ItemGroup>
