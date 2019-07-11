@@ -5,16 +5,17 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
+	<ApplicationManifest>application.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0-preview6.19304.6" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0-preview6.19304.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="3.0.0-preview8.19361.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0-preview8.19361.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0-preview8.19361.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0-preview8.19361.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0-preview8.19361.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0-preview8.19361.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0-preview8.19361.2" />
   </ItemGroup>
 
   <ItemGroup>

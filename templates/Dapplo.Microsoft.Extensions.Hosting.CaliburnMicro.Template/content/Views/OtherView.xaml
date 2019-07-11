@@ -12,10 +12,10 @@
         xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
 <!--#endif-->
         mc:Ignorable="d"
-        Title="OtherWindow" Height="200" Width="200">
+        Title="OtherWindow" Height="200" Width="300">
     <StackPanel>
-        <Label Content="Hello again" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-        <Button Name="Exit" Content="Exit" FontSize="10"/>
+        <Label Content="Hello again" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+        <Button Name="Exit" Content="Exit" FontSize="20"/>
     </StackPanel>
 <!--#if (EnableMetro) -->
 </mahapps:MetroWindow>

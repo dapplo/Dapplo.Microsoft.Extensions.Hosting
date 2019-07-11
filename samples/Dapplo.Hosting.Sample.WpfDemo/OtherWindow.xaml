@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="OtherWindow" Height="200" Width="200">
+        Title="OtherWindow" Height="200" Width="300">
     <StackPanel>
-        <Label Content="Hello again" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-        <Button Content="Exit" FontSize="10" Click="ButtonExit_Click"/>
+        <Label Content="Hello again" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+        <Button Content="Exit" FontSize="20" Click="ButtonExit_Click"/>
     </StackPanel>
 </Window>
