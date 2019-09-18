@@ -19,7 +19,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DotNetCoreInstaller@0
+- task: DotNetCoreInstaller@2
   displayName: 'Use .NET Core sdk 3.0'
   inputs:
     version: '3.0.100-rc2-014277'
