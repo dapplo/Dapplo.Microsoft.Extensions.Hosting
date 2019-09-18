@@ -38,6 +38,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.ReactiveUI
         }
 
         /// <inheritdoc />
+        public bool HasRegistration(Type serviceType)
+        {
+            return _serviceProvider.GetService(serviceType) != null;
+        }
+
+        /// <inheritdoc />
         public void Register(Func<object> factory, Type serviceType, string contract = null)
         {
             throw new NotImplementedException();
