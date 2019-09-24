@@ -11,7 +11,7 @@ pr:
 - master
 
 pool:
-  vmImage: 'Windows-2019'
+  vmImage: 'windows-latest'
 
 variables:
   solution: '**/src/*.sln'
