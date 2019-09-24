@@ -22,7 +22,7 @@ steps:
 - task: DotNetCoreInstaller@2
   displayName: 'Use .NET Core sdk 3.0'
   inputs:
-    version: '3.0.100-rc2-014277'
+    version: '3.0.100'
 
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet 5.2.0'

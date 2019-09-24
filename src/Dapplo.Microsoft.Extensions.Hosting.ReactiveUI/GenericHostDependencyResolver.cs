@@ -38,7 +38,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.ReactiveUI
         }
 
         /// <inheritdoc />
-        public bool HasRegistration(Type serviceType)
+        public bool HasRegistration(Type serviceType, string contract = null)
         {
             return _serviceProvider.GetService(serviceType) != null;
         }
