@@ -33,7 +33,7 @@ steps:
   inputs:
     command: build
     projects: '$(solution)'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration) /p:Platform="$(buildPlatform)"'
 
 - task: replacetokens@3
   inputs:
