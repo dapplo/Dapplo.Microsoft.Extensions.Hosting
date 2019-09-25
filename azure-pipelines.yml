@@ -19,30 +19,21 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DotNetCoreInstaller@2
+
+- task: NuGetToolInstaller@1
+
+- task: UseDotNet@2
   displayName: 'Use .NET Core sdk 3.0'
   inputs:
-    version: '3.0.100'
-
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 5.2.0'
+    packageType: sdk
+    version: 3.0.100
+	
+- task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
-    versionSpec: 5.2.0
-    checkLatest: true
-
-- task: NuGetCommand@2
-  displayName: NuGet restore
-  inputs:
-    restoreSolution: '$(solution)'
-    feedsToUse: config
-
-- task: VSBuild@1
-  displayName: 'Build solution **\src\*.sln'
-  inputs:
-    vsVersion: 'latest'
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: build
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration) /p:Platform:$(buildPlatform)'
 
 - task: replacetokens@3
   inputs:
