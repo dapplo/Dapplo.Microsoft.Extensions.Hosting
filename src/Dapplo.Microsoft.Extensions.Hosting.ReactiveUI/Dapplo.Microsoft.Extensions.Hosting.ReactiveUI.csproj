@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
+    <PackageDescription>This extension adds ReactiveUI support to generic host based dotnet core 3.0 WPF applications. With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this reactive MVVM framework.</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>

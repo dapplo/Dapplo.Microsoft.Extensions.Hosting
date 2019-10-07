@@ -3,8 +3,9 @@
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-	<UseWPF>true</UseWPF>
-	<Platforms>AnyCPU;x64</Platforms>
+	  <UseWPF>true</UseWPF>
+	  <Platforms>AnyCPU;x64</Platforms>
+    <PackageDescription>This extension adds MahApps.Metro support to generic host based dotnet core 3.0 WPF applications. With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this UI framework for WPF.</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>

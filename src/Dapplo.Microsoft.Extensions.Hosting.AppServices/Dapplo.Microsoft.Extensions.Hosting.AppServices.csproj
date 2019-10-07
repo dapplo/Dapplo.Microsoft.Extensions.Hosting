@@ -4,6 +4,7 @@
     <LangVersion>latest</LangVersion>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
+    <PackageDescription>This extension adds some generic application services for desktop applications.</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>
