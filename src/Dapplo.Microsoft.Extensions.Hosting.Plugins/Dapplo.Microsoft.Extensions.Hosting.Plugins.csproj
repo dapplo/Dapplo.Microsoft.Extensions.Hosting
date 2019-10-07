@@ -4,6 +4,7 @@
     <LangVersion>latest</LangVersion>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
+    <PackageDescription>This extension adds plug-in support to generic host based dotnet core 3.0 applications.</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>
