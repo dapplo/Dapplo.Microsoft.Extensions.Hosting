@@ -1,24 +1,3 @@
-// Dapplo - building blocks for desktop applications
-// Copyright (C) 2019 Dapplo
-// 
-// For more information see: http://dapplo.net/
-// Dapplo repositories are hosted on GitHub: https://github.com/dapplo
-// 
-// This file is part of Dapplo.Hosting.Samples
-// 
-// Dapplo.Hosting.Samples is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// Dapplo.Hosting.Samples is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
-// 
-// You should have a copy of the GNU Lesser General Public License
-// along with Dapplo.Hosting.Samples. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
-
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -36,7 +15,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
         private readonly ManualResetEvent _serviceManualResetEvent = new ManualResetEvent(false);
         private readonly IWinFormsContext _winFormsContext;
         private IServiceProvider _serviceProvider;
-            
+
         /// <summary>
         /// Constructor which is called from the IWinFormsContext
         /// </summary>
@@ -66,7 +45,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
             // Make the UI thread go
             _serviceManualResetEvent.Set();
         }
-        
+
         /// <summary>
         /// Start Windows Forms
         /// </summary>
@@ -88,10 +67,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
 
             // Wait for the startup
             _serviceManualResetEvent.WaitOne();
-            
+
             // Run the application
             _winFormsContext.IsRunning = true;
-            
+
             // Use the provided IWinFormsService
             var winFormServices = _serviceProvider.GetServices<IWinFormsService>();
             if (winFormServices != null)
@@ -101,7 +80,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
                     winFormService.Initialize();
                 }
             }
-            
+
             if (_serviceProvider.GetService<IWinFormsShell>() is Form formShell)
             {
                 Application.Run(formShell);
