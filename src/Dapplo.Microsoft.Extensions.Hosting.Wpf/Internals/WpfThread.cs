@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -91,6 +91,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
             // Run the WPF application in this thread which was specifically created for it, with the specified shell
             if (_serviceProvider.GetService<IWpfShell>() is Window wpfShell)
             {
+                // If provided, hook up the ViewModel
+                if (_serviceProvider.GetService<IWpfViewModel>() is IWpfViewModel wpfViewModel) {
+                    wpfShell.DataContext = wpfViewModel;
+                }
                 wpfApplication.Run(wpfShell);
             }
             else
