@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Microsoft.Extensions.DependencyInjection;
+using Dapplo.Hosting.Sample.WpfDemo.ViewModels;
+using Dapplo.Hosting.Sample.WpfDemo.Commands;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
@@ -48,8 +50,10 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 {
                     // Make OtherWindow available for DI to MainWindow
                     serviceCollection.AddTransient<OtherWindow>();
+                    serviceCollection.AddTransient<OtherWindowViewModel>();
+                    serviceCollection.AddTransient<OpenOtherWindowCommand>();
                 })
-                .ConfigureWpf<MainWindow>()
+                .ConfigureWpf<MainWindow, MainWindowViewModel>()
                 .UseWpfLifetime()
                 .UseConsoleLifetime()
                 .Build();

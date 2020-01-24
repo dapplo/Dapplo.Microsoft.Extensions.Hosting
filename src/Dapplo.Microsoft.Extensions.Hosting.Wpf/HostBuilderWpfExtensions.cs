@@ -1,4 +1,4 @@
-// Copyright (c) Dapplo and contributors. All rights reserved.
+﻿// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -93,14 +93,34 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             });
             return hostBuilder;
         }
-        
-        /// <summary>
-        /// Specify the shell, the primary window, to start
-        /// </summary>
-        /// <param name="hostBuilder">IHostBuilder</param>
-        /// <typeparam name="TShell">Type for the shell, must derive from Window and implement IWpfShell</typeparam>
-        /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpfShell<TShell>(this IHostBuilder hostBuilder) where TShell : Window, IWpfShell
+
+    /// <summary>
+    /// Configure an WPF application
+    /// </summary>
+    /// <param name="hostBuilder">IHostBuilder</param>
+    /// <param name="configureAction">Action to configure the Application</param>
+    /// <typeparam name="TShell">Type for the shell, must derive from Window and implement IWpfShell</typeparam>
+    /// <typeparam name="TViewModel">Type for the shell's ViewModel, must derive from <see cref="IWpfViewModel"/></typeparam>
+    /// <returns>IHostBuilder</returns>
+    public static IHostBuilder ConfigureWpf<TShell, TViewModel>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null)
+        where TShell : Window, IWpfShell
+        where TViewModel : class, IWpfViewModel
+    {
+        hostBuilder.ConfigureWpf<TShell>(configureAction);
+        hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+        {
+            serviceCollection.AddScoped<IWpfViewModel, TViewModel>();
+        });
+        return hostBuilder;
+    }
+
+    /// <summary>
+    /// Specify the shell, the primary window, to start
+    /// </summary>
+    /// <param name="hostBuilder">IHostBuilder</param>
+    /// <typeparam name="TShell">Type for the shell, must derive from Window and implement IWpfShell</typeparam>
+    /// <returns>IHostBuilder</returns>
+    public static IHostBuilder ConfigureWpfShell<TShell>(this IHostBuilder hostBuilder) where TShell : Window, IWpfShell
         {
             return hostBuilder.ConfigureWpf<TShell>();
         }
