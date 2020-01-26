@@ -20,7 +20,7 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
 
             var startInfo = new ProcessStartInfo(ProjectUrl?.ToString() ?? _defaultUrl.ToString())
             {
-                UseShellExecute = false
+                UseShellExecute = true
             };
             OpenPage = ReactiveCommand.Create( () => { Process.Start(startInfo); });
         }

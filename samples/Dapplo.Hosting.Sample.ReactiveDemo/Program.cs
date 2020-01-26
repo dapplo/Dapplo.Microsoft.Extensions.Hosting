@@ -8,11 +8,12 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
-using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using System.Threading.Tasks;
-using Dapplo.Microsoft.Extensions.Hosting.ReactiveUI;
 using Microsoft.Extensions.DependencyInjection;
 using ReactiveUI;
+using Splat.Microsoft.Extensions.DependencyInjection;
+using Splat;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 
 namespace Dapplo.Hosting.Sample.ReactiveDemo
 {
@@ -27,7 +28,6 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
 
             var host = new HostBuilder()
-                .ConfigureReactiveUi()
                 .ConfigureWpf<MainWindow>()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
@@ -51,9 +51,14 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make OtherWindow available for DI to MainWindow
-                    serviceCollection.AddSingleton<IViewFor<NugetDetailsViewModel>,NugetDetailsView>();
-                    serviceCollection.AddSingleton<IViewFor<NugetDetailsViewModel>, NugetDetailsView>();
+                    // Make szre we got all the ReactiveUI setup
+                    serviceCollection.UseMicrosoftDependencyResolver();
+                    var resolver = Locator.CurrentMutable;
+                    resolver.InitializeSplat();
+                    resolver.InitializeReactiveUI();
+
+                    // See https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI
+                    serviceCollection.AddTransient<IViewFor<NugetDetailsViewModel>, NugetDetailsView>();
                 })
                 .UseConsoleLifetime()
                 .UseWpfLifetime()
