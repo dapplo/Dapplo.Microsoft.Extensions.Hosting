@@ -11,12 +11,12 @@ using Microsoft.Extensions.Hosting;
 namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
 {
     /// <summary>
-    /// This contains the WinForms extensions for Microsoft.Extensions.Hosting 
+    /// This contains the WinForms extensions for Microsoft.Extensions.Hosting
     /// </summary>
     public static class HostBuilderWinFormsExtensions
     {
         private const string WinFormsContextKey = "WinFormsContext";
-        
+
         /// <summary>
         /// Helper method to retrieve the IWinFormsContext
         /// </summary>
@@ -37,7 +37,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         }
 
         /// <summary>
-        /// Defines that stopping the WinForms application also stops the host (application) 
+        /// Defines that stopping the WinForms application also stops the host (application)
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <returns>IHostBuilder</returns>
@@ -50,7 +50,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             });
             return hostBuilder;
         }
-        
+
         /// <summary>
         /// Configure an WinForms application
         /// </summary>
@@ -64,13 +64,14 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
                 if (!TryRetrieveWinFormsContext(hostBuilder.Properties, out var winFormsContext))
                 {
                     serviceCollection.AddSingleton(winFormsContext);
+                    serviceCollection.AddSingleton<WinFormsThread>(serviceProvider => new WinFormsThread(serviceProvider));
                     serviceCollection.AddHostedService<WinFormsHostedService>();
                 }
                 configureAction?.Invoke(winFormsContext);
             });
             return hostBuilder;
         }
-        
+
         /// <summary>
         /// Configure an WinForms application
         /// </summary>
@@ -88,7 +89,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             return hostBuilder;
         }
 
-        
         /// <summary>
         /// Specify the shell, the primary Form, to start
         /// </summary>

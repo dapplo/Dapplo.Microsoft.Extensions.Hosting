@@ -10,22 +10,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
     /// <inheritdoc />
     internal class WpfContext : IWpfContext
     {
-        private readonly WpfThread _wpfThread;
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public WpfContext()
-        {
-            _wpfThread = new WpfThread(this);
-        }
-
-        /// <inheritdoc />
-        public void StartUi(IServiceProvider serviceProvider)
-        {
-            _wpfThread.Start(serviceProvider);
-        }
-        
         /// <inheritdoc />
         public ShutdownMode ShutdownMode { get; set; } = ShutdownMode.OnLastWindowClose;
 
@@ -37,7 +21,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
 
         /// <inheritdoc />
         public Application WpfApplication { get; set; }
-        
+
         /// <inheritdoc />
         public Dispatcher Dispatcher => WpfApplication.Dispatcher;
     }

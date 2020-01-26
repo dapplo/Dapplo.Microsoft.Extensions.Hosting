@@ -117,7 +117,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                     }
                 }
                 var plugins = scannedAssemblies.Select(CreatePluginInstance).Where(plugin => plugin != null).OrderBy(plugin => plugin.GetOrder());
-                
+
                 foreach (var plugin in plugins)
                 {
                     plugin.ConfigureHost(hostBuilderContext, serviceCollection);
@@ -134,7 +134,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>()?.Order ?? 0;
         }
-        
+
         /// <summary>
         /// Helper method to load an assembly which contains plugins
         /// </summary>
@@ -147,7 +147,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                 // TODO: Log an error, how to get a logger here?
                 return null;
             }
-            
+
             // TODO: Log verbose that we are loading a plugin
             var pluginName = Path.GetFileNameWithoutExtension(pluginAssemblyLocation);
             // TODO: Decide if we rather have this to come up with the name: AssemblyName.GetAssemblyName(pluginLocation)

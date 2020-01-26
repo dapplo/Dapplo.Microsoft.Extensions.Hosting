@@ -11,12 +11,12 @@ using Microsoft.Extensions.Hosting;
 namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
 {
     /// <summary>
-    /// This contains the WPF extensions for Microsoft.Extensions.Hosting 
+    /// This contains the WPF extensions for Microsoft.Extensions.Hosting
     /// </summary>
     public static class HostBuilderWpfExtensions
     {
         private const string WpfContextKey = "WpfContext";
-        
+
         /// <summary>
         /// Helper method to retrieve the IWpfContext
         /// </summary>
@@ -37,7 +37,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         }
 
         /// <summary>
-        /// Defines that stopping the WPF application also stops the host (application) 
+        /// Defines that stopping the WPF application also stops the host (application)
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="shutdownMode">ShutdownMode default is OnLastWindowClose</param>
@@ -70,13 +70,14 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
                 if (!TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext))
                 {
                     serviceCollection.AddSingleton(wpfContext);
+                    serviceCollection.AddSingleton<WpfThread>(serviceProvider => new WpfThread(serviceProvider));
                     serviceCollection.AddHostedService<WpfHostedService>();
                 }
                 configureAction?.Invoke(wpfContext);
             });
             return hostBuilder;
         }
-        
+
         /// <summary>
         /// Configure an WPF application
         /// </summary>
@@ -93,7 +94,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             });
             return hostBuilder;
         }
-        
+
         /// <summary>
         /// Specify the shell, the primary window, to start
         /// </summary>

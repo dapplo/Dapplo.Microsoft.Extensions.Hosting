@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -15,19 +16,19 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
     public class WpfHostedService : IHostedService
     {
         private readonly ILogger<WpfHostedService> _logger;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly WpfThread _wpfThread;
         private readonly IWpfContext _wpfContext;
 
         /// <summary>
         /// The constructor which takes all the DI objects
         /// </summary>
         /// <param name="logger">ILogger</param>
-        /// <param name="serviceProvider">IServiceProvider</param>
+        /// <param name="wpfThread">WpfThread</param>
         /// <param name="wpfContext">IWpfContext</param>
-        public WpfHostedService(ILogger<WpfHostedService> logger, IServiceProvider serviceProvider, IWpfContext wpfContext)
+        public WpfHostedService(ILogger<WpfHostedService> logger, WpfThread wpfThread, IWpfContext wpfContext)
         {
             _logger = logger;
-            _serviceProvider = serviceProvider;
+            _wpfThread = wpfThread;
             _wpfContext = wpfContext;
         }
 
@@ -35,7 +36,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         public Task StartAsync(CancellationToken cancellationToken)
         {
             // Make the UI thread go
-            _wpfContext.StartUi(_serviceProvider);
+            _wpfThread.Start();
             return Task.CompletedTask;
         }
 
