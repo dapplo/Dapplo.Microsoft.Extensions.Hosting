@@ -35,6 +35,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return Task.CompletedTask;
+            }
+            
             // Make the UI thread go
             _wpfThread.Start();
             return Task.CompletedTask;
