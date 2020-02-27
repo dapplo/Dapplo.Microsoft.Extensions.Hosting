@@ -90,7 +90,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             hostBuilder.ConfigureWpf(configureAction);
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                serviceCollection.AddSingleton<IWpfShell, TShell>();
+                serviceCollection.AddSingleton<TShell>();
+                serviceCollection.AddSingleton<IWpfShell, TShell>(serviceProvider => serviceProvider.GetRequiredService<TShell>());
             });
             return hostBuilder;
         }
