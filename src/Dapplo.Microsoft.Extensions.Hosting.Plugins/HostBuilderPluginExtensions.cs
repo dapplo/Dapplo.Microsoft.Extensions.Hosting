@@ -92,10 +92,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
 
                             // TODO: Log the loading?
                             var loadedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
-                            if (loadedAssembly != null)
-                            {
-                                scannedAssemblies.Add(loadedAssembly);
-                            }
+                            scannedAssemblies.Add(loadedAssembly);
                         }
                     }
                 }

@@ -70,7 +70,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
                 if (!TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext))
                 {
                     serviceCollection.AddSingleton(wpfContext);
-                    serviceCollection.AddSingleton<WpfThread>(serviceProvider => new WpfThread(serviceProvider));
+                    serviceCollection.AddSingleton(serviceProvider => new WpfThread(serviceProvider));
                     serviceCollection.AddHostedService<WpfHostedService>();
                 }
                 configureAction?.Invoke(wpfContext);
@@ -83,28 +83,26 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="configureAction">Action to configure the Application</param>
-        /// <typeparam name="TShell">Type for the shell, must derive from Window and implement IWpfShell</typeparam>
+        /// <typeparam name="TView">
+        ///     Type for the view, must derive from Window.
+            /// If derived from IWpfShell, it automatically shown at start</typeparam>
         /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpf<TShell>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null) where TShell : Window, IWpfShell
+        public static IHostBuilder ConfigureWpf<TView>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null) where TView : Window
         {
             hostBuilder.ConfigureWpf(configureAction);
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                serviceCollection.AddSingleton<TShell>();
-                serviceCollection.AddSingleton<IWpfShell, TShell>(serviceProvider => serviceProvider.GetRequiredService<TShell>());
+                serviceCollection.AddSingleton<TView>();
+
+                // Check if it also implements IWpfShell so we can register it as this
+                var viewType = typeof(TView);
+                var shellInterfaceType = typeof(IWpfShell);
+                if (shellInterfaceType.IsAssignableFrom(viewType))
+                {
+                    serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService<TView>());
+                }
             });
             return hostBuilder;
-        }
-
-        /// <summary>
-        /// Specify the shell, the primary window, to start
-        /// </summary>
-        /// <param name="hostBuilder">IHostBuilder</param>
-        /// <typeparam name="TShell">Type for the shell, must derive from Window and implement IWpfShell</typeparam>
-        /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpfShell<TShell>(this IHostBuilder hostBuilder) where TShell : Window, IWpfShell
-        {
-            return hostBuilder.ConfigureWpf<TShell>();
         }
     }
 }

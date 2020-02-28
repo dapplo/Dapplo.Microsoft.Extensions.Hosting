@@ -38,6 +38,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <inheritdoc />
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return Task.CompletedTask;
+            }
             _winFormsThread.Start();
             return Task.CompletedTask;
         }

@@ -73,7 +73,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
             LogManager.GetLog = type => new CaliburnLogger(_loggerFactory.CreateLogger(type));
             ConfigureViewLocator();
 
-            if (_caliburnMicroContext.EnableOriginalDataContect)
+            if (_caliburnMicroContext.EnableOriginalDataContext)
             {
                 MessageBinder.SpecialValues.Add("$originalDataContext", context =>
                 {
@@ -85,7 +85,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         }
 
         /// <summary>
-        ///     Add logic to find the base viewtype if the default locator can't find a view.
+        ///     Add logic to find the base ViewType if the default locator can't find a view.
         /// </summary>
         [SuppressMessage("Sonar Code Smell", "S2696:Instance members should not write to static fields", Justification = "This is the only location where it makes sense.")]
         private void ConfigureViewLocator()

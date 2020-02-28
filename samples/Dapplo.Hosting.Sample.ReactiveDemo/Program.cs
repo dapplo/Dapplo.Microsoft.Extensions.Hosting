@@ -51,7 +51,7 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make szre we got all the ReactiveUI setup
+                    // Make sure we got all the ReactiveUI setup
                     serviceCollection.UseMicrosoftDependencyResolver();
                     var resolver = Locator.CurrentMutable;
                     resolver.InitializeSplat();

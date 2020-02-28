@@ -11,27 +11,27 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
     /// <summary>
     /// This contains the logic for the WinForms thread
     /// </summary>
-    public abstract class BaseUiThread<T> where T : IUiContext
+    public abstract class BaseUiThread<T> where T : class, IUiContext
     {
         private readonly ManualResetEvent _serviceManualResetEvent = new ManualResetEvent(false);
         /// <summary>
         /// The IUiContext
         /// </summary>
-        protected readonly T _uiContext;
+        protected T UiContext { get; }
 
         /// <summary>
-        /// The IServiceProvider used by all IUiContect implementations
+        /// The IServiceProvider used by all IUiContext implementations
         /// </summary>
-        protected readonly IServiceProvider _serviceProvider;
+        protected IServiceProvider ServiceProvider { get; }
 
         /// <summary>
         /// Constructor which is called from the IWinFormsContext
         /// </summary>
         /// <param name="serviceProvider">IServiceProvider</param>
-        public BaseUiThread(IServiceProvider serviceProvider)
+        protected BaseUiThread(IServiceProvider serviceProvider)
         {
-            _uiContext = serviceProvider.GetService<T>(); ;
-            _serviceProvider = serviceProvider;
+            UiContext = serviceProvider.GetService<T>();
+            ServiceProvider = serviceProvider;
             // Create a thread which runs the UI
             var newUiThread = new Thread(InternalUiThreadStart)
             {
@@ -62,8 +62,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
             // Wait for the startup
             _serviceManualResetEvent.WaitOne();
             // Run the application
-            _uiContext.IsRunning = true;
-            // Run the actuall code
+            UiContext.IsRunning = true;
+            // Run the actual code
             UiThreadStart();
         }
 
@@ -82,14 +82,14 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
         /// </summary>
         protected void HandleApplicationExit()
         {
-            _uiContext.IsRunning = false;
-            if (!_uiContext.IsLifetimeLinked)
+            UiContext.IsRunning = false;
+            if (!UiContext.IsLifetimeLinked)
             {
                 return;
             }
 
             //_logger.LogDebug("Stopping host application due to WinForms application exit.");
-            _serviceProvider.GetService<IHostApplicationLifetime>().StopApplication();
+            ServiceProvider.GetService<IHostApplicationLifetime>().StopApplication();
         }
     }
 }

@@ -19,23 +19,23 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
                 // This is an easy way of doing value conversion using ReactiveUI binding.
                 this.OneWayBind(ViewModel,
                     viewModel => viewModel.IconUrl,
-                    view => view.iconImage.Source,
+                    view => view.IconImage.Source,
                     url => url == null ? null : new BitmapImage(url))
                     .DisposeWith(disposableRegistration);
 
                 this.OneWayBind(ViewModel,
                     viewModel => viewModel.Title,
-                    view => view.titleRun.Text)
+                    view => view.TitleRun.Text)
                     .DisposeWith(disposableRegistration);
 
                 this.OneWayBind(ViewModel,
                     viewModel => viewModel.Description,
-                    view => view.descriptionRun.Text)
+                    view => view.DescriptionRun.Text)
                     .DisposeWith(disposableRegistration);
 
                 this.BindCommand(ViewModel,
                     viewModel => viewModel.OpenPage,
-                    view => view.openButton)
+                    view => view.OpenButton)
                     .DisposeWith(disposableRegistration);
             });
         }

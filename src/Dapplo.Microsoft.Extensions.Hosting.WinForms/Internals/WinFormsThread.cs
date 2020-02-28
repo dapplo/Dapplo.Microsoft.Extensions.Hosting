@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -27,12 +28,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
         protected override void PreUiThreadStart()
         {
             var currentDispatcher = Dispatcher.CurrentDispatcher;
-            _uiContext.Dispatcher = currentDispatcher;
+            UiContext.Dispatcher = currentDispatcher;
 
             // Create our SynchronizationContext, and install it:
             SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(currentDispatcher));
 
-            if (_uiContext.EnableVisualStyles)
+            if (UiContext.EnableVisualStyles)
             {
                 Application.EnableVisualStyles();
             }
@@ -47,7 +48,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
         protected override void UiThreadStart()
         {
             // Use the provided IWinFormsService
-            var winFormServices = _serviceProvider.GetServices<IWinFormsService>();
+            var winFormServices = ServiceProvider.GetServices<IWinFormsService>();
             if (winFormServices != null)
             {
                 foreach(var winFormService in winFormServices)
@@ -56,13 +57,21 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
                 }
             }
 
-            if (_serviceProvider.GetService<IWinFormsShell>() is Form formShell)
+            // Run the WPF application in this thread which was specifically created for it, with the specified shell
+            var shells = ServiceProvider.GetServices<IWinFormsShell>().Cast<Form>().ToArray();
+
+            switch (shells.Length)
             {
-                Application.Run(formShell);
-            }
-            else
-            {
-                Application.Run();
+                case 1:
+                    Application.Run(shells[0]);
+                    break;
+                case 0:
+                    Application.Run();
+                    break;
+                default:
+                    var multiShellContext = new MultiShellContext(shells);
+                    Application.Run(multiShellContext);
+                    break;
             }
         }
 
