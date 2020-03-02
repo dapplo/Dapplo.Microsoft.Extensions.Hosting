@@ -7,6 +7,6 @@
         Title="OtherWindow" Height="200" Width="300">
     <StackPanel>
         <Label Content="Hello again" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-        <Button Content="Exit" FontSize="20" Click="ButtonExit_Click"/>
+        <Button Content="Close" FontSize="20" Click="ButtonClose_Click"/>
     </StackPanel>
 </Window>
