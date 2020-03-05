@@ -26,5 +26,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
         /// The action which is called when the mutex cannot be locked
         /// </summary>
         Action<IHostEnvironment, ILogger> WhenNotFirstInstance { get; set; }
+
+        /// <summary>
+        /// The action which is called when another instance attempted to start
+        /// </summary>
+        Action<IHostEnvironment, ILogger> WhenOtherInstanceStarts { get; set; }
     }
 }
