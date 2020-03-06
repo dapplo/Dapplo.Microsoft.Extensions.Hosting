@@ -104,5 +104,45 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             });
             return hostBuilder;
         }
+
+        /// <summary>
+        /// Configure an WPF application
+        /// </summary>
+        /// <param name="hostBuilder">IHostBuilder</param>
+        /// <param name="configureAction">Action to configure the Application</param>
+        /// <typeparam name="TView">
+        ///     Type for the view, must derive from Window.
+        /// If derived from IWpfShell, it automatically shown at start</typeparam>
+        /// <typeparam name="TApplication">Type for the application, must derive form Application</typeparam>
+        /// <returns>IHostBuilder</returns>
+        public static IHostBuilder ConfigureWpf<TView, TApplication>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null) where TView : Window where TApplication : Application
+        {
+            hostBuilder.ConfigureWpf(configureAction);
+            hostBuilder.ConfigureWpfApplication<TApplication>();
+            hostBuilder.ConfigureWpf<TView>();
+            return hostBuilder;
+        }
+
+        /// <summary>
+        /// Configure an WPF application without initial window
+        /// </summary>
+        /// <param name="hostBuilder">IHostBuilder</param>
+        /// <param name="configureAction">Action to configure the Application</param>
+        /// <typeparam name="TApplication">Type for the application, must derive form Application</typeparam>
+        /// <returns>IHostBuilder</returns>
+        public static IHostBuilder ConfigureWpfApplication<TApplication>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null) where TApplication : Application
+        {
+            hostBuilder.ConfigureWpf(configureAction);
+            hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+            {
+                serviceCollection.AddSingleton<TApplication>();
+
+                if (typeof(TApplication) != typeof(Application))
+                {
+                    serviceCollection.AddSingleton<Application>(serviceProvider => serviceProvider.GetRequiredService<TApplication>());
+                }
+            });
+            return hostBuilder;
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                     // Make OtherWindow available for DI to MainWindow
                     serviceCollection.AddTransient<OtherWindow>();
                 })
-                .ConfigureWpf<MainWindow>()
+                .ConfigureWpf<MainWindow, MyApplication>()
                 .UseWpfLifetime()
                 .UseConsoleLifetime()
                 .Build();
