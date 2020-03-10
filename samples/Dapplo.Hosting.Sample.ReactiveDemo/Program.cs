@@ -28,7 +28,9 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
 
             var host = new HostBuilder()
-                .ConfigureWpf<MainWindow>()
+                .ConfigureWpf(wpfBuilder => {
+                    wpfBuilder.UseMainWindow<MainWindow>();
+                })
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>
