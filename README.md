@@ -48,7 +48,13 @@ Each located plug-ins is loaded into it's own AssemblyLoadContext, dependencies 
 	})
 ```
 
-The assembly (DLL) which is your plugin should follow a naming convention, this is for speed, but will be extended with other ways soon. Currently it should have a class named Plugin which implements IPlugin, in a package which has the same name as the assembly, this implementation can configure the HostBuilderContext.
+In the assembly (DLL) which is your plugin you should have a public class which implements IPlugin.
+
+If you want more speed, you can use the previous code and specify the AssemblyScanFunc to use PluginScanner.ByNamingConvention
+Now you will need to follow a naming convention, this is for speed so there is no need to scan all types. It should have a class named Plugin which implements IPlugin, in a package which has the same name as the assembly.
+
+Example for the IPlugin implementation, this can configure the HostBuilderContext:
+
 ```
     /// <summary>
     /// This plug-in configures the HostBuilderContext to have the hosted services from the online example
