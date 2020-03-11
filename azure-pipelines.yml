@@ -135,4 +135,4 @@ stages:
               command: push
               packagesToPush: '$(Pipeline.Workspace)/drop/*.nupkg;!$(Pipeline.Workspace)/drop/*.symbols.nupkg'
               nuGetFeedType: external
-              publishFeedCredentials: 'Dapplo NuGet push'
+              publishFeedCredentials: 'Dapplo.Microsoft.Extensions.Hosting'
