@@ -65,7 +65,6 @@ stages:
         Contents: |
         **\bin\$(BuildConfiguration)\*.nupkg
         *Template*.nupkg
-        **\TestResults\**\*.coverage
         TargetFolder: '$(build.artifactstagingdirectory)'
         flattenFolders: true
 
