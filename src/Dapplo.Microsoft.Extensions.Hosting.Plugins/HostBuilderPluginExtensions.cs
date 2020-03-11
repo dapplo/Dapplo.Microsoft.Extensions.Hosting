@@ -113,7 +113,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                         }
                     }
                 }
-                var plugins = scannedAssemblies.Select(CreatePluginInstance).Where(plugin => plugin != null).OrderBy(plugin => plugin.GetOrder());
+
+                var plugins = scannedAssemblies.SelectMany(pluginBuilder.AssemblyScanFunc).Where(plugin => plugin != null).OrderBy(plugin => plugin.GetOrder());
 
                 foreach (var plugin in plugins)
                 {
@@ -155,18 +156,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             }
             var loadContext = new PluginLoadContext(pluginAssemblyLocation, pluginName);
             return loadContext.LoadFromAssemblyName(pluginAssemblyName);
-        }
-
-        /// <summary>
-        /// Create instances of IPlugin found in the assembly
-        /// </summary>
-        /// <param name="pluginAssembly">pluginAssembly</param>
-        /// <returns>IPlugin</returns>
-        private static IPlugin CreatePluginInstance(Assembly pluginAssembly)
-        {
-            var assemblyName = pluginAssembly.GetName().Name;
-            var type = pluginAssembly.GetType($"{assemblyName}.Plugin", false, false);
-            return type == null ? null : Activator.CreateInstance(type) as IPlugin;
         }
     }
 }
