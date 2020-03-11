@@ -48,7 +48,7 @@ Each located plug-ins is loaded into it's own AssemblyLoadContext, dependencies 
 	})
 ```
 
-The DLL which is your plugin should have at least one class by the name of Plugin which implements IPlugin, this implementation can configure the HostBuilderContext.
+The assembly (DLL) which is your plugin should follow a naming convention, this is for speed, but will be extended with other ways soon. Currently it should have a class named Plugin which implements IPlugin, in a package which has the same name as the assembly, this implementation can configure the HostBuilderContext.
 ```
     /// <summary>
     /// This plug-in configures the HostBuilderContext to have the hosted services from the online example
