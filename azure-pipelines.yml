@@ -63,8 +63,8 @@ stages:
       inputs:
         SourceFolder: '$(system.defaultworkingdirectory)'
         Contents: |
-        **\bin\$(BuildConfiguration)\*.nupkg
-        *Template*.nupkg
+          **\bin\$(BuildConfiguration)\*.nupkg
+          *Template*.nupkg
         TargetFolder: '$(build.artifactstagingdirectory)'
         flattenFolders: true
 
