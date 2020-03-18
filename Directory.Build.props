@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Copyright>Copyright © Dapplo</Copyright>
     <Authors>Dapplo</Authors>
-    <PackageIconUrl>http://www.dapplo.net/favicon.ico</PackageIconUrl>
+    <PackageIcon>icon.ico</PackageIcon>
     <RepositoryUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</PackageProjectUrl>
@@ -44,5 +44,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <None Include="$(SolutionDir)\icon.ico" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>
