@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 	  <UseWPF>true</UseWPF>
 	  <Platforms>AnyCPU;x64</Platforms>
