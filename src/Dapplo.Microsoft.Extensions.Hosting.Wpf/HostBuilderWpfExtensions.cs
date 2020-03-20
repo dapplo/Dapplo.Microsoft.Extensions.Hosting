@@ -27,7 +27,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         {
             if (properties.TryGetValue(WpfContextKey, out var wpfContextAsObject))
             {
-                wpfContext = wpfContextAsObject as IWpfContext;
+                wpfContext = (IWpfContext)wpfContextAsObject;
                 return true;
 
             }

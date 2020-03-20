@@ -30,7 +30,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             if (properties.TryGetValue(PluginBuilderKey, out var pluginBuilderObject))
             {
-                pluginBuilder = pluginBuilderObject as IPluginBuilder;
+                pluginBuilder = (IPluginBuilder)pluginBuilderObject;
                 return true;
 
             }
