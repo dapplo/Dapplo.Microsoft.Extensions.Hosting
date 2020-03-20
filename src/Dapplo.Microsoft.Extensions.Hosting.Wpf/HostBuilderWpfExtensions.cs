@@ -84,8 +84,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="configureAction">Action to configure the Application</param>
         /// <typeparam name="TView">
-        ///     Type for the view, must derive from Window.
-            /// If derived from IWpfShell, it automatically shown at start</typeparam>
+        /// Type for the view, must derive from Window.
+        /// If derived from IWpfShell, it automatically shown at start</typeparam>
         /// <returns>IHostBuilder</returns>
         public static IHostBuilder ConfigureWpf<TView>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null) where TView : Window
         {
