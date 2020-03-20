@@ -130,7 +130,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <returns>int</returns>
         private static int GetOrder(this IPlugin plugin)
         {
-            return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>()?.Order ?? 0;
+            return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>(false)?.Order ?? 0;
         }
 
         /// <summary>
