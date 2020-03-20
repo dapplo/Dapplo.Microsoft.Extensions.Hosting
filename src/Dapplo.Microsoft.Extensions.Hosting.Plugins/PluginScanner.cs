@@ -24,7 +24,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             var type = pluginAssembly.GetType($"{assemblyName}.Plugin", false, false);
             if (type != null)
             {
-                yield return Activator.CreateInstance(type) as IPlugin;
+                yield return (IPlugin)Activator.CreateInstance(type);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             var pluginType = typeof(IPlugin);
             return pluginAssembly.ExportedTypes
                 .Where(type => pluginType.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract)
-                .Select(type => Activator.CreateInstance(type) as IPlugin);
+                .Select(type => (IPlugin)Activator.CreateInstance(type));
         }
     }
 }
