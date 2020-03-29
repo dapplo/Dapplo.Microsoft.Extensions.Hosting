@@ -20,6 +20,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         public Matcher PluginMatcher { get; } = new Matcher();
 
         /// <inheritdoc />
+        public Func<string, bool> ValidatePlugin { get; set; } = s => true;
+
+        /// <inheritdoc />
         public Func<Assembly, IEnumerable<IPlugin>> AssemblyScanFunc { get; set; } = PluginScanner.ScanForPluginInstances;
 
         /// <inheritdoc />

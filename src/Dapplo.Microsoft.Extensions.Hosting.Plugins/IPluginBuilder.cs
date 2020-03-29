@@ -39,6 +39,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         Matcher PluginMatcher { get; }
 
         /// <summary>
+        /// Specifies a way to validate the plugin file before it's being loaded 
+        /// </summary>
+        Func<string, bool> ValidatePlugin { get; set; }
+
+        /// <summary>
         /// Specify the Assembly scan function, which takes the Assembly and returns the IPlugin(s) for it.
         /// Available functions are:
         /// PluginScanner.ByNamingConvention which is fast, but finds only one IPlugin by convention

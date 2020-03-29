@@ -105,7 +105,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                         var pluginPaths = pluginBuilder.PluginMatcher.GetResultsInFullPath(pluginScanRootPath);
                         // Use the globbed files, and load the assemblies
                         var pluginAssemblies = pluginPaths
-                            .Select(LoadPlugin)
+                            .Select(s => LoadPlugin(pluginBuilder, s))
                             .Where(plugin => plugin != null);
                         foreach (var pluginAssembly in pluginAssemblies)
                         {
@@ -136,13 +136,20 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <summary>
         /// Helper method to load an assembly which contains plugins
         /// </summary>
+        /// <param name="pluginBuilder">IPluginBuilder</param>
         /// <param name="pluginAssemblyLocation">string</param>
         /// <returns>IPlugin</returns>
-        private static Assembly LoadPlugin(string pluginAssemblyLocation)
+        private static Assembly LoadPlugin(IPluginBuilder pluginBuilder, string pluginAssemblyLocation)
         {
             if (!File.Exists(pluginAssemblyLocation))
             {
                 // TODO: Log an error, how to get a logger here?
+                return null;
+            }
+
+            // This allows validation like AuthenticodeExaminer
+            if (!pluginBuilder.ValidatePlugin(pluginAssemblyLocation))
+            {
                 return null;
             }
 
