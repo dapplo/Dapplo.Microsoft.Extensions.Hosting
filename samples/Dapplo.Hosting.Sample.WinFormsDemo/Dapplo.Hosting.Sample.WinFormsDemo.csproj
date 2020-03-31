@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x64</Platforms>
-	<ApplicationManifest>application.manifest</ApplicationManifest>
+    <ApplicationManifest>application.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
