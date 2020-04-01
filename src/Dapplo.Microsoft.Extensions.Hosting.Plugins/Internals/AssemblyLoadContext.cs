@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+#if !NETCOREAPP
 
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using System.Reflection;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
 {
-#if !NETCOREAPP
     /// <summary>
     /// This is a wrapper class to simulate the behavior of the AssemblyLoadContext under the .NET Framework
     /// </summary>
@@ -55,10 +55,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         public Assembly LoadFromAssemblyName(AssemblyName assemblyName)
         {
             if (assemblyName == null)
+            {
                 throw new ArgumentNullException(nameof(assemblyName));
+            }
 
             // Attempt to load the assembly, using the same ordering as static load, in the current load context.
-            return Assembly.Load(assemblyName);
+            return Load(assemblyName);
         }
 
         /// <summary>
@@ -91,5 +93,5 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
             return IntPtr.Zero;
         }
     }
-#endif
 }
+#endif
