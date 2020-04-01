@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
-    <PackageDescription>This extension adds plug-in support to generic host based dapplications.</PackageDescription>
+    <PackageDescription>This extension adds plug-in support to generic host based applications.</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>

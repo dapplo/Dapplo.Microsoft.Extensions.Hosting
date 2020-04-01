@@ -5,6 +5,11 @@ using System;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 
+#if NET472
+using System.Security.AccessControl;
+using System.Security.Principal;
+#endif
+
 namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
 {
     /// <summary>
@@ -72,9 +77,20 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
             // check whether there's an local instance running already, but use local so this works in a multi-user environment
             try
             {
+#if NET472
+                // Added Mutex Security, hopefully this prevents the UnauthorizedAccessException more gracefully
+                var sid = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
+                var mutexsecurity = new MutexSecurity();
+                mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.FullControl, AccessControlType.Allow));
+                mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.ChangePermissions, AccessControlType.Deny));
+                mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.Delete, AccessControlType.Deny));
+
+                // 1) Create Mutex
+                _applicationMutex = new Mutex(true, _mutexId, out var createdNew, mutexsecurity);
+#else
                 // 1) Create Mutex
                 _applicationMutex = new Mutex(true, _mutexId, out var createdNew);
-
+#endif
                 // 2) if the mutex wasn't created new get the right to it, this returns false if it's already locked
                 if (!createdNew)
                 {
