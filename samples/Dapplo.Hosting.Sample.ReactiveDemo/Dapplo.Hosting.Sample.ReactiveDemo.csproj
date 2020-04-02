@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x64</Platforms>
-	<ApplicationManifest>application.manifest</ApplicationManifest>
+	  <ApplicationManifest>application.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,11 +16,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.3" />
-    <PackageReference Include="ReactiveUI.WPF" Version="11.2.3" />
-    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="9.3.11" />
+    <PackageReference Include="NuGet.Protocol" Version="5.5.0" />
+    <PackageReference Include="ReactiveUI.WPF" Version="11.3.1" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="9.4.1" />
     <PackageReference Include="System.Reactive" Version="4.3.2" />
-    <PackageReference Include="NuGet.Client" Version="4.2.0" />
-    <PackageReference Include="NuGet.Protocol.Core.v3" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>

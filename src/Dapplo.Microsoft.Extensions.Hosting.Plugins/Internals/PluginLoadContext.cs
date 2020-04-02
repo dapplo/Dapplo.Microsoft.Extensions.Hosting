@@ -3,7 +3,9 @@
 
 using System;
 using System.Reflection;
+#if NETCOREAPP
 using System.Runtime.Loader;
+#endif
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
 {

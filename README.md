@@ -99,7 +99,7 @@ Dapplo.Microsoft.Extensions.Hosting.WinForms
 
 [![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.WinForms.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.WinForms/)
 
-This extension adds WinForms support to generic host based dotnet core 3.0 applications.
+This extension adds WinForms support to generic host based applications.
 With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc.
 
 [Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.WinFormsDemo/Program.cs#L48) is an example how to start your application with a Form1 and have the application automatically shutdown whenever you exit the Form1. To make this possible Form1 must implement a marker interface, which currently has no methods, called IWinFormsShell. The IWinFormsShell is considered the main entry point of your UI. You only specify the type, the instance will be created at a later time by the generic host and will automatically go through the DI process.
@@ -137,7 +137,7 @@ Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
 
 [![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro/)
 
-This extension adds [Caliburn.Micro](https://caliburnmicro.com) support to generic host based dotnet core 3.0 applications.
+This extension adds [Caliburn.Micro](https://caliburnmicro.com) support to generic host based applications.
 With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this great MVVM framework.
 
 [Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.CaliburnMicroDemo/Program.cs#L54) is an example how to start your application with a MainWindowViewModel and have the application automatically shutdown whenever you exit the MainWindowViewModel. To make this possible MainWindowViewModel must implement a marker interface, which currently has no methods, called ICaliburnMicroShell. The ICaliburnMicroShell is considered the main entry point of your UI. You only specify the type, the instance will be created at a later time by the generic host and will automatically go through the DI process.

@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+#if NETCOREAPP
 using System.Runtime.Loader;
+#endif
 using Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Hosting;

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <PackageDescription>This extension adds some generic application services for desktop applications.</PackageDescription>
   </PropertyGroup>
