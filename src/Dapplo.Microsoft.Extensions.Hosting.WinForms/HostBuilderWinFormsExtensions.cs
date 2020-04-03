@@ -27,7 +27,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         {
             if (properties.TryGetValue(WinFormsContextKey, out var winFormsContextAsObject))
             {
-                winFormsContext = winFormsContextAsObject as IWinFormsContext;
+                winFormsContext = (IWinFormsContext)winFormsContextAsObject;
                 return true;
 
             }

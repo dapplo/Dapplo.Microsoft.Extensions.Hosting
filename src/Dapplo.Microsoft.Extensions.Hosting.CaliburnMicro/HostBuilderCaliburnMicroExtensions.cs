@@ -27,7 +27,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         {
             if (properties.TryGetValue(CaliburnMicroContextKey, out var caliburnContextAsObject))
             {
-                caliburnMicroContext = caliburnContextAsObject as ICaliburnMicroContext;
+                caliburnMicroContext = (ICaliburnMicroContext)caliburnContextAsObject;
                 return true;
 
             }

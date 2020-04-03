@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+#if NETCOREAPP
 using System.Runtime.Loader;
+#endif
 using Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Hosting;
@@ -30,7 +32,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             if (properties.TryGetValue(PluginBuilderKey, out var pluginBuilderObject))
             {
-                pluginBuilder = pluginBuilderObject as IPluginBuilder;
+                pluginBuilder = (IPluginBuilder)pluginBuilderObject;
                 return true;
 
             }
@@ -105,7 +107,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                         var pluginPaths = pluginBuilder.PluginMatcher.GetResultsInFullPath(pluginScanRootPath);
                         // Use the globbed files, and load the assemblies
                         var pluginAssemblies = pluginPaths
-                            .Select(LoadPlugin)
+                            .Select(s => LoadPlugin(pluginBuilder, s))
                             .Where(plugin => plugin != null);
                         foreach (var pluginAssembly in pluginAssemblies)
                         {
@@ -113,7 +115,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                         }
                     }
                 }
-                var plugins = scannedAssemblies.Select(CreatePluginInstance).Where(plugin => plugin != null).OrderBy(plugin => plugin.GetOrder());
+
+                var plugins = scannedAssemblies.SelectMany(pluginBuilder.AssemblyScanFunc).Where(plugin => plugin != null).OrderBy(plugin => plugin.GetOrder());
 
                 foreach (var plugin in plugins)
                 {
@@ -129,19 +132,26 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// <returns>int</returns>
         private static int GetOrder(this IPlugin plugin)
         {
-            return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>()?.Order ?? 0;
+            return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>(false)?.Order ?? 0;
         }
 
         /// <summary>
         /// Helper method to load an assembly which contains plugins
         /// </summary>
+        /// <param name="pluginBuilder">IPluginBuilder</param>
         /// <param name="pluginAssemblyLocation">string</param>
         /// <returns>IPlugin</returns>
-        private static Assembly LoadPlugin(string pluginAssemblyLocation)
+        private static Assembly LoadPlugin(IPluginBuilder pluginBuilder, string pluginAssemblyLocation)
         {
             if (!File.Exists(pluginAssemblyLocation))
             {
                 // TODO: Log an error, how to get a logger here?
+                return null;
+            }
+
+            // This allows validation like AuthenticodeExaminer
+            if (!pluginBuilder.ValidatePlugin(pluginAssemblyLocation))
+            {
                 return null;
             }
 
@@ -155,18 +165,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             }
             var loadContext = new PluginLoadContext(pluginAssemblyLocation, pluginName);
             return loadContext.LoadFromAssemblyName(pluginAssemblyName);
-        }
-
-        /// <summary>
-        /// Create instances of IPlugin found in the assembly
-        /// </summary>
-        /// <param name="pluginAssembly">pluginAssembly</param>
-        /// <returns>IPlugin</returns>
-        private static IPlugin CreatePluginInstance(Assembly pluginAssembly)
-        {
-            var assemblyName = pluginAssembly.GetName().Name;
-            var type = pluginAssembly.GetType($"{assemblyName}.Plugin", false, false);
-            return type == null ? null : Activator.CreateInstance(type) as IPlugin;
         }
     }
 }

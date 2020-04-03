@@ -27,7 +27,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Metro
         {
             if (properties.TryGetValue(MetroContextKey, out var metroContextAsObject))
             {
-                metroContext = metroContextAsObject as IMetroContext;
+                metroContext = (IMetroContext)metroContextAsObject;
                 return true;
 
             }

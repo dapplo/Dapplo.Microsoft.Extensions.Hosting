@@ -26,7 +26,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
         {
             if (properties.TryGetValue(MutexBuilderKey, out var mutexBuilderObject))
             {
-                mutexBuilder = mutexBuilderObject as IMutexBuilder;
+                mutexBuilder = (IMutexBuilder)mutexBuilderObject;
                 return true;
 
             }
