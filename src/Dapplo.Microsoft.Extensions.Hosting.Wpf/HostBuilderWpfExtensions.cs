@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,13 +59,16 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         }
 
         /// <summary>
-        /// Configure an WPF application
+        /// Configure an WPF application 
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="configureAction">Action to configure the Application</param>
-        /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpf(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null)
+        /// <param name="configureDelegate">Action to configure Wpf</param>
+        /// <returns></returns>
+        public static IHostBuilder ConfigureWpf(this IHostBuilder hostBuilder, Action<IWpfBuilder> configureDelegate = null)
         {
+            var wpfBuilder = new WpfBuilder();
+            configureDelegate?.Invoke(wpfBuilder);
+
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
                 if (!TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext))
@@ -73,35 +77,51 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
                     serviceCollection.AddSingleton(serviceProvider => new WpfThread(serviceProvider));
                     serviceCollection.AddHostedService<WpfHostedService>();
                 }
-                configureAction?.Invoke(wpfContext);
+                wpfBuilder.ConfigureContextAction?.Invoke(wpfContext);
             });
-            return hostBuilder;
-        }
 
-        /// <summary>
-        /// Configure an WPF application
-        /// </summary>
-        /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="configureAction">Action to configure the Application</param>
-        /// <typeparam name="TView">
-        /// Type for the view, must derive from Window.
-        /// If derived from IWpfShell, it automatically shown at start</typeparam>
-        /// <returns>IHostBuilder</returns>
-        public static IHostBuilder ConfigureWpf<TView>(this IHostBuilder hostBuilder, Action<IWpfContext> configureAction = null) where TView : Window
-        {
-            hostBuilder.ConfigureWpf(configureAction);
-            hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+            if (wpfBuilder.ApplicationType != null)
             {
-                serviceCollection.AddSingleton<TView>();
-
-                // Check if it also implements IWpfShell so we can register it as this
-                var viewType = typeof(TView);
-                var shellInterfaceType = typeof(IWpfShell);
-                if (shellInterfaceType.IsAssignableFrom(viewType))
+                // Check if the registered application does inherit System.Windows.Application
+                var baseApplicationType = typeof(Application);
+                if (!baseApplicationType.IsAssignableFrom(wpfBuilder.ApplicationType))
                 {
-                    serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService<TView>());
+                    throw new ArgumentException("The registered Application type inherit System.Windows.Application", nameof(configureDelegate));
                 }
-            });
+
+                hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+                {
+                    serviceCollection.AddSingleton(wpfBuilder.ApplicationType);
+
+                    if (wpfBuilder.ApplicationType != baseApplicationType)
+                    {
+                        serviceCollection.AddSingleton(serviceProvider => (Application)serviceProvider.GetRequiredService(wpfBuilder.ApplicationType));
+                    }
+                });
+            }
+
+            if (wpfBuilder.MainWindowType != null)
+            {
+                // Check if the registered window does inherit System.Windows.Window
+                var baseWindowType = typeof(Window);
+                if (!baseWindowType.IsAssignableFrom(wpfBuilder.MainWindowType))
+                {
+                    throw new ArgumentException("The registered MainWindow must inherit of System.Windows.Window", nameof(configureDelegate));
+                }
+
+                hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+                {
+                    serviceCollection.AddSingleton(wpfBuilder.MainWindowType);
+
+                    // Check if it also implements IWpfShell so we can register it as this
+                    var shellInterfaceType = typeof(IWpfShell);
+                    if (shellInterfaceType.IsAssignableFrom(wpfBuilder.MainWindowType))
+                    {
+                        serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService(wpfBuilder.MainWindowType));
+                    }
+                });
+            }
+
             return hostBuilder;
         }
     }
