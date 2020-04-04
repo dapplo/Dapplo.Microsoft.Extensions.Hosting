@@ -2,14 +2,20 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
 {
     /// <inheritdoc/>
     internal class WpfBuilder : IWpfBuilder
     {
+        /// <inheritdoc/>
         public Type ApplicationType { get; set; }
-        public Type MainWindowType { get; set; }
+
+        /// <inheritdoc/>
+        public IList<Type> WindowTypes { get; } = new List<Type>();
+
+        /// <inheritdoc/>
         public Action<IWpfContext> ConfigureContextAction { get; set; }
     }
 }

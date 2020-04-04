@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Windows;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals;
 using Microsoft.Extensions.DependencyInjection;
@@ -100,25 +99,22 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
                 });
             }
 
-            if (wpfBuilder.MainWindowType != null)
+            if (wpfBuilder.WindowTypes.Count > 0)
             {
-                // Check if the registered window does inherit System.Windows.Window
-                var baseWindowType = typeof(Window);
-                if (!baseWindowType.IsAssignableFrom(wpfBuilder.MainWindowType))
-                {
-                    throw new ArgumentException("The registered MainWindow must inherit of System.Windows.Window", nameof(configureDelegate));
-                }
-
                 hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
                 {
-                    serviceCollection.AddSingleton(wpfBuilder.MainWindowType);
-
-                    // Check if it also implements IWpfShell so we can register it as this
-                    var shellInterfaceType = typeof(IWpfShell);
-                    if (shellInterfaceType.IsAssignableFrom(wpfBuilder.MainWindowType))
+                    foreach (var wpfWindowType in wpfBuilder.WindowTypes)
                     {
-                        serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService(wpfBuilder.MainWindowType));
+                        serviceCollection.AddSingleton(wpfWindowType);
+
+                        // Check if it also implements IWpfShell so we can register it as this
+                        var shellInterfaceType = typeof(IWpfShell);
+                        if (shellInterfaceType.IsAssignableFrom(wpfWindowType))
+                        {
+                            serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService(wpfWindowType));
+                        }
                     }
+                    
                 });
             }
 

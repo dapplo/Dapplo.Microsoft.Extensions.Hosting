@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
 {
@@ -15,9 +16,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// </summary>
         Type ApplicationType { get; set; }
         /// <summary>
-        /// Type of the main window that will be used
+        /// Type of the windows that will be used
         /// </summary>
-        Type MainWindowType { get; set; }
+        IList<Type> WindowTypes { get; }
         /// <summary>
         /// Action to configure the Wpf context
         /// </summary>

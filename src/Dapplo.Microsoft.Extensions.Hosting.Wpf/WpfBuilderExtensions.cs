@@ -12,13 +12,13 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
     public static class WpfBuilderExtensions 
     {
         /// <summary>
-        /// Register a type for the main window
+        /// Register a window, as a singleton
         /// </summary>
-        /// <typeparam name="TMainWindow">Type of the main window, must inherit from Window</typeparam>
+        /// <typeparam name="TWindow">Type of the window, must inherit from Window</typeparam>
         /// <param name="wpfBuilder">IWpfBuilder</param>
         /// <returns>IWpfBuilder</returns>
-        public static IWpfBuilder UseMainWindow<TMainWindow>(this IWpfBuilder wpfBuilder) where TMainWindow : Window  {
-            wpfBuilder.MainWindowType = typeof(TMainWindow);
+        public static IWpfBuilder UseWindow<TWindow>(this IWpfBuilder wpfBuilder) where TWindow : Window  {
+            wpfBuilder.WindowTypes.Add(typeof(TWindow));
             return wpfBuilder;
         }
 

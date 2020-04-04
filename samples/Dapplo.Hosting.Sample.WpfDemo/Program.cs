@@ -23,6 +23,10 @@ namespace Dapplo.Hosting.Sample.WpfDemo
         public static async Task Main(string[] args)
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            if (executableLocation == null)
+            {
+                throw new NotSupportedException("Can't start without location.");
+            }
             var host = new HostBuilder()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
@@ -50,12 +54,12 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make OtherWindow available for DI to MainWindow
+                    // Make OtherWindow available for DI to the MainWindow, but not as singleton
                     serviceCollection.AddTransient<OtherWindow>();
                 })
                 .ConfigureWpf(wpfBuilder => {
                     wpfBuilder.UseApplication<MyApplication>();
-                    wpfBuilder.UseMainWindow<MainWindow>();
+                    wpfBuilder.UseWindow<MainWindow>();
                 })
                 .UseWpfLifetime()
                 .UseConsoleLifetime()
