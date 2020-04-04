@@ -24,8 +24,15 @@ namespace Dapplo.Hosting.Sample.MetroDemo
         public static async Task Main(string[] args)
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            if (executableLocation == null)
+            {
+                throw new NotSupportedException("Can't start without location.");
+            }
+
             var host = new HostBuilder()
-                .ConfigureWpf<MainWindow>()
+                .ConfigureWpf(wpfBuilder => {
+                    wpfBuilder.UseWindow<MainWindow>();
+                })
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
                 .ConfigureSingleInstance(builder =>

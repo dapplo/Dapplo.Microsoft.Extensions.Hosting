@@ -31,7 +31,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
             SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
 
             // Create the new WPF application
-            var wpfApplication = new Application()
+            var wpfApplication = ServiceProvider.GetService<Application>() ?? new Application()
             {
                 ShutdownMode = UiContext.ShutdownMode
             };
