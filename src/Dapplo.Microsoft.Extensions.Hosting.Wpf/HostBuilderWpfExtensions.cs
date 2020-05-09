@@ -29,7 +29,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             {
                 wpfContext = (IWpfContext)wpfContextAsObject;
                 return true;
-
             }
             wpfContext = new WpfContext();
             properties[WpfContextKey] = wpfContext;
@@ -58,7 +57,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         }
 
         /// <summary>
-        /// Configure an WPF application 
+        /// Configure an WPF application
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <param name="configureDelegate">Action to configure Wpf</param>
@@ -114,7 +113,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
                             serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService(wpfWindowType));
                         }
                     }
-                    
                 });
             }
 

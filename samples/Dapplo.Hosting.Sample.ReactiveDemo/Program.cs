@@ -14,6 +14,7 @@ using ReactiveUI;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Splat;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
+using Dapplo.Microsoft.Extensions.Hosting.ReactiveUI;
 
 namespace Dapplo.Hosting.Sample.ReactiveDemo
 {
@@ -31,7 +32,9 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
                 throw new NotSupportedException("Can't start without location.");
             }
             var host = new HostBuilder()
-                .ConfigureWpf(wpfBuilder => {
+                .ConfigureReactiveUi()
+                .ConfigureWpf(wpfBuilder =>
+                {
                     wpfBuilder.UseWindow<MainWindow>();
                 })
                 .ConfigureLogging()
@@ -60,18 +63,12 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make sure we got all the ReactiveUI setup
-                    serviceCollection.UseMicrosoftDependencyResolver();
-                    var resolver = Locator.CurrentMutable;
-                    resolver.InitializeSplat();
-                    resolver.InitializeReactiveUI();
-
-                    // See https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI
                     serviceCollection.AddTransient<IViewFor<NugetDetailsViewModel>, NugetDetailsView>();
                 })
                 .UseConsoleLifetime()
                 .UseWpfLifetime()
-                .Build();
+                .Build()
+                .MapSplatLocator(); // Optional with optional overload
 
             Console.WriteLine("Run!");
             await host.RunAsync();

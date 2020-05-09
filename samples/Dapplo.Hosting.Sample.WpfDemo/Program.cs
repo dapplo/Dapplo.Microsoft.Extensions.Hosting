@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Microsoft.Extensions.DependencyInjection;
+using Dapplo.Hosting.Sample.WpfDemo.ViewModels;
+using Dapplo.Hosting.Sample.WpfDemo.Commands;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
@@ -54,10 +56,14 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make OtherWindow available for DI to the MainWindow, but not as singleton
+                    // Make OtherWindow available for DI to MainWindow
                     serviceCollection.AddTransient<OtherWindow>();
+                    serviceCollection.AddTransient<OtherWindowViewModel>();
+                    serviceCollection.AddTransient<OpenOtherWindowCommand>();
+                    serviceCollection.AddScoped<MainWindowViewModel>();
                 })
-                .ConfigureWpf(wpfBuilder => {
+                .ConfigureWpf(wpfBuilder =>
+                {
                     wpfBuilder.UseApplication<MyApplication>();
                     wpfBuilder.UseWindow<MainWindow>();
                 })
