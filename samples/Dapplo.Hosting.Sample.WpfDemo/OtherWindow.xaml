@@ -3,12 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModel="clr-namespace:Dapplo.Hosting.Sample.WpfDemo.ViewModels"
         mc:Ignorable="d"
-        Title="OtherWindow" Height="200" Width="300"
-        d:DataContext="{d:DesignInstance {x:Type ViewModel:OtherWindowViewModel}, IsDesignTimeCreatable=True}">
+        Title="OtherWindow" Height="200" Width="300">
     <StackPanel>
-        <Label Content="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
-        <Button Content="Exit" FontSize="20" Click="ButtonExit_Click"/>
+        <Label Content="Hello again" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+        <Button Content="Close" FontSize="20" Click="ButtonClose_Click"/>
     </StackPanel>
 </Window>

@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Microsoft.Extensions.DependencyInjection;
-using Dapplo.Hosting.Sample.WpfDemo.ViewModels;
-using Dapplo.Hosting.Sample.WpfDemo.Commands;
 
 namespace Dapplo.Hosting.Sample.WpfDemo
 {
@@ -25,6 +23,10 @@ namespace Dapplo.Hosting.Sample.WpfDemo
         public static async Task Main(string[] args)
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+            if (executableLocation == null)
+            {
+                throw new NotSupportedException("Can't start without location.");
+            }
             var host = new HostBuilder()
                 .ConfigureLogging()
                 .ConfigureConfiguration(args)
@@ -39,21 +41,26 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                 })
                 .ConfigurePlugins(pluginBuilder =>
                 {
+                    var runtime = Path.GetFileName(executableLocation);
+                    var parentDirectory = Directory.GetParent(executableLocation).FullName;
+                    var configuration = Path.GetFileName(parentDirectory);
+                    var basePath = Path.Combine(executableLocation, @"..\..\..\..\");
                     // Specify the location from where the Dll's are "globbed"
-                    pluginBuilder.AddScanDirectories(Path.Combine(executableLocation, @"..\..\..\..\"));
+                    pluginBuilder.AddScanDirectories(basePath);
                     // Add the framework libraries which can be found with the specified globs
-                    pluginBuilder.IncludeFrameworks(@"**\bin\**\*.FrameworkLib.dll");
+                    pluginBuilder.IncludeFrameworks(@$"**\bin\{configuration}\netstandard2.0\*.FrameworkLib.dll");
                     // Add the plugins which can be found with the specified globs
-                    pluginBuilder.IncludePlugins(@"**\bin\**\*.Plugin*.dll");
+                    pluginBuilder.IncludePlugins(@$"**\bin\{configuration}\{runtime}\*.Sample.Plugin*.dll");
                 })
                 .ConfigureServices(serviceCollection =>
                 {
-                    // Make OtherWindow available for DI to MainWindow
+                    // Make OtherWindow available for DI to the MainWindow, but not as singleton
                     serviceCollection.AddTransient<OtherWindow>();
-                    serviceCollection.AddTransient<OtherWindowViewModel>();
-                    serviceCollection.AddTransient<OpenOtherWindowCommand>();
                 })
-                .ConfigureWpf<MainWindow, MainWindowViewModel>()
+                .ConfigureWpf(wpfBuilder => {
+                    wpfBuilder.UseApplication<MyApplication>();
+                    wpfBuilder.UseWindow<MainWindow>();
+                })
                 .UseWpfLifetime()
                 .UseConsoleLifetime()
                 .Build();

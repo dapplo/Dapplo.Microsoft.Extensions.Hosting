@@ -19,7 +19,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
             _logger = logger;
         }
 
-        private void ButtonExit_Click(object sender, RoutedEventArgs e)
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             _logger.LogDebug("Closing OtherWindow");
             Close();
