@@ -38,6 +38,11 @@ namespace Dapplo.Hosting.Sample.WpfDemo
                         // This is called when an instance was already started, this is in the second instance
                         logger.LogWarning("Application {0} already running.", hostingEnvironment.ApplicationName);
                     };
+
+                    builder.WhenOtherInstanceStarts = (hostingEnvironment, logger) =>
+                    {
+                        logger.LogInformation("Another instance of application {0} tries to start", hostingEnvironment.ApplicationName);
+                    };
                 })
                 .ConfigurePlugins(pluginBuilder =>
                 {

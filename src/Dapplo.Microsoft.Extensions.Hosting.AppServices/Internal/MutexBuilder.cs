@@ -20,5 +20,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices.Internal
 
         /// <inheritdoc />
         public Action<IHostEnvironment, ILogger> WhenNotFirstInstance { get; set; }
+
+        /// <inheritdoc />
+        public Action<IHostEnvironment, ILogger> WhenOtherInstanceStarts { get; set; }
     }
 }
