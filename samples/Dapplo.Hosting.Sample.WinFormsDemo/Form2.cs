@@ -9,17 +9,17 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
 {
     public partial class Form2 : Form
     {
-        private readonly ILogger<Form2> _logger;
+        private readonly ILogger<Form2> logger;
 
         public Form2(ILogger<Form2> logger)
         {
-            _logger = logger;
+            this.logger = logger;
             InitializeComponent();
         }
 
         private void ButtonClose_Click(object sender, EventArgs e)
         {
-            _logger.LogDebug("Closing form2");
+            this.logger.LogDebug("Closing form2");
             Close();
         }
     }

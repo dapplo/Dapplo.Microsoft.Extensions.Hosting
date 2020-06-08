@@ -22,12 +22,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
     /// </summary>
     public class CaliburnMicroBootstrapper : BootstrapperBase, IWpfService
     {
-        private readonly ILogger<CaliburnMicroBootstrapper> _logger;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly ILoggerFactory _loggerFactory;
-        private readonly IWindowManager _windowManager;
-        private readonly IWpfContext _wpfContext;
-        private readonly ICaliburnMicroContext _caliburnMicroContext;
+        private readonly ILogger<CaliburnMicroBootstrapper> logger;
+        private readonly IServiceProvider serviceProvider;
+        private readonly ILoggerFactory loggerFactory;
+        private readonly IWindowManager windowManager;
+        private readonly IWpfContext wpfContext;
+        private readonly ICaliburnMicroContext caliburnMicroContext;
 
         /// <summary>
         /// CaliburnMicroBootstrapper
@@ -46,12 +46,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
             IWpfContext wpfContext,
             ICaliburnMicroContext caliburnMicroContext)
         {
-            _logger = logger;
-            _serviceProvider = serviceProvider;
-            _loggerFactory = loggerFactory;
-            _windowManager = windowManager;
-            _wpfContext = wpfContext ?? throw new ArgumentNullException(nameof(wpfContext));
-            _caliburnMicroContext = caliburnMicroContext;
+            this.logger = logger;
+            this.serviceProvider = serviceProvider;
+            this.loggerFactory = loggerFactory;
+            this.windowManager = windowManager;
+            this.wpfContext = wpfContext ?? throw new ArgumentNullException(nameof(wpfContext));
+            this.caliburnMicroContext = caliburnMicroContext;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <param name="instance">some object to fill</param>
         protected override void BuildUp(object instance)
         {
-            _logger.LogDebug("Should buildup {0}", instance?.GetType().Name);
+            this.logger.LogDebug("Should buildup {0}", instance?.GetType().Name);
             // TODO: don't know how to fill imports yet?
             //_bootstrapper.Container.InjectProperties(instance);
         }
@@ -72,10 +72,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         protected override void Configure()
         {
             // Create a logger to log caliburn message
-            LogManager.GetLog = type => new CaliburnLogger(_loggerFactory.CreateLogger(type));
+            LogManager.GetLog = type => new CaliburnLogger(this.loggerFactory.CreateLogger(type));
             ConfigureViewLocator();
 
-            if (_caliburnMicroContext.EnableOriginalDataContext)
+            if (this.caliburnMicroContext.EnableOriginalDataContext)
             {
                 MessageBinder.SpecialValues.Add("$originalDataContext", context =>
                 {
@@ -102,7 +102,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
                 {
                     return viewType;
                 }
-                _logger.LogDebug("No view for {0}, looking into base types.", modelType);
+
+                this.logger.LogDebug("No view for {0}, looking into base types.", modelType);
                 var currentModelType = modelType;
                 while (viewType == null && currentModelType != null && currentModelType != typeof(object) && currentModelType != typeof(Screen))
                 {
@@ -111,7 +112,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
                 }
                 if (viewType != null)
                 {
-                    _logger.LogDebug("Found view for {0} in base type {1}, the view is {2}", modelType, currentModelType, viewType);
+                    this.logger.LogDebug("Found view for {0} in base type {1}, the view is {2}", modelType, currentModelType, viewType);
                 }
 
                 return viewType;
@@ -124,7 +125,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <param name="service">Type</param>
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return _serviceProvider.GetServices(service);
+            return this.serviceProvider.GetServices(service);
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         protected override object GetInstance(Type service, string contractName)
         {
             // There is no way to get the service by name
-            return _serviceProvider.GetService(service);
+            return this.serviceProvider.GetService(service);
         }
 
         /// <inheritdoc />
@@ -155,10 +156,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         {
             base.OnStartup(sender, e);
 
-            foreach (var shell in _serviceProvider.GetServices<ICaliburnMicroShell>())
+            foreach (var shell in this.serviceProvider.GetServices<ICaliburnMicroShell>())
             {
                 var viewModel = shell;
-                _windowManager.ShowWindow(viewModel);
+                this.windowManager.ShowWindow(viewModel);
             }
         }
 
@@ -166,7 +167,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         public void Initialize(Application application)
         {
             // Make sure the Application from the IWpfContext is used
-            Application = _wpfContext.WpfApplication;
+            Application = this.wpfContext.WpfApplication;
             Initialize();
         }
     }

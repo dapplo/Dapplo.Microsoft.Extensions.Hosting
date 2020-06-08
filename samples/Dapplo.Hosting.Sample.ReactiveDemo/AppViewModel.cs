@@ -5,7 +5,6 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NuGet.Configuration;
-using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using ReactiveUI;
 
@@ -21,11 +20,11 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
         // that will notify Observers, as well as WPF, that a property has 
         // changed. If we declared this as a normal property, we couldn't tell 
         // when it has changed!
-        private string _searchTerm;
+        private string searchTerm;
         public string SearchTerm
         {
-            get => _searchTerm;
-            set => this.RaiseAndSetIfChanged(ref _searchTerm, value);
+            get => this.searchTerm;
+            set => this.RaiseAndSetIfChanged(ref this.searchTerm, value);
         }
 
         // Here's the interesting part: In ReactiveUI, we can take IObservables
@@ -36,16 +35,16 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
         // class subscribes to an Observable and stores a copy of the latest value.
         // It also runs an action whenever the property changes, usually calling
         // ReactiveObject's RaisePropertyChanged.
-        private readonly ObservableAsPropertyHelper<IEnumerable<NugetDetailsViewModel>> _searchResults;
-        public IEnumerable<NugetDetailsViewModel> SearchResults => _searchResults.Value;
+        private readonly ObservableAsPropertyHelper<IEnumerable<NugetDetailsViewModel>> searchResults;
+        public IEnumerable<NugetDetailsViewModel> SearchResults => this.searchResults.Value;
 
         // Here, we want to create a property to represent when the application 
         // is performing a search (i.e. when to show the "spinner" control that 
         // lets the user know that the app is busy). We also declare this property
         // to be the result of an Observable (i.e. its value is derived from 
         // some other property)
-        private readonly ObservableAsPropertyHelper<bool> _isAvailable;
-        public bool IsAvailable => _isAvailable.Value;
+        private readonly ObservableAsPropertyHelper<bool> isAvailable;
+        public bool IsAvailable => this.isAvailable.Value;
 
         public AppViewModel()
         {
@@ -77,7 +76,7 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
             //
             // We then use a ObservableAsPropertyHelper and the ToProperty() method to allow
             // us to have the latest results that we can expose through the property to the View.
-            _searchResults = this
+            this.searchResults = this
                 .WhenAnyValue(x => x.SearchTerm)
                 .Throttle(TimeSpan.FromMilliseconds(800))
                 .Select(term => term?.Trim())
@@ -90,11 +89,11 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
             // We subscribe to the "ThrownExceptions" property of our OAPH, where ReactiveUI 
             // marshals any exceptions that are thrown in SearchNuGetPackages method. 
             // See the "Error Handling" section for more information about this.
-            _searchResults.ThrownExceptions.Subscribe(error => { /* Handle errors here */ });
+            this.searchResults.ThrownExceptions.Subscribe(error => { /* Handle errors here */ });
 
             // A helper method we can use for Visibility or Spinners to show if results are available.
             // We get the latest value of the SearchResults and make sure it's not null.
-            _isAvailable = this
+            this.isAvailable = this
                 .WhenAnyValue(x => x.SearchResults)
                 .Select(searchResults => searchResults != null)
                 .ToProperty(this, x => x.IsAvailable);

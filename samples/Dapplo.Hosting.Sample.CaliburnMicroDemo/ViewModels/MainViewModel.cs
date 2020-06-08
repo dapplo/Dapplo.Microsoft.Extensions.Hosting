@@ -14,26 +14,26 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo.ViewModels
     /// </summary>
     public class MainViewModel : Screen, ICaliburnMicroShell
     {
-        private readonly IWpfContext _wpfContext;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IWindowManager _windowManager;
+        private readonly IWpfContext wpfContext;
+        private readonly IServiceProvider serviceProvider;
+        private readonly IWindowManager windowManager;
 
         public MainViewModel(IWpfContext wpfContext, IServiceProvider serviceProvider, IWindowManager windowManager)
         {
-            _wpfContext = wpfContext;
-            _serviceProvider = serviceProvider;
-            _windowManager = windowManager;
+            this.wpfContext = wpfContext;
+            this.serviceProvider = serviceProvider;
+            this.windowManager = windowManager;
         }
 
         public void Open()
         {
-            var otherWindow = _serviceProvider.GetService<OtherViewModel>();
-            _windowManager.ShowWindow(otherWindow);
+            var otherWindow = this.serviceProvider.GetService<OtherViewModel>();
+            this.windowManager.ShowWindow(otherWindow);
         }
 
         public void Exit()
         {
-            _wpfContext.WpfApplication.Shutdown();
+            this.wpfContext.WpfApplication.Shutdown();
         }
     }
 }

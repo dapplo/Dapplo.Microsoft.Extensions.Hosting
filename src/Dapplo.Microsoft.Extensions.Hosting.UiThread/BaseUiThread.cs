@@ -13,7 +13,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
     /// </summary>
     public abstract class BaseUiThread<T> where T : class, IUiContext
     {
-        private readonly ManualResetEvent _serviceManualResetEvent = new ManualResetEvent(false);
+        private readonly ManualResetEvent serviceManualResetEvent = new ManualResetEvent(false);
         /// <summary>
         /// The IUiContext
         /// </summary>
@@ -49,7 +49,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
         public void Start()
         {
             // Make the UI thread go
-            _serviceManualResetEvent.Set();
+            this.serviceManualResetEvent.Set();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
             // Do the pre initialization, if any
             PreUiThreadStart();
             // Wait for the startup
-            _serviceManualResetEvent.WaitOne();
+            this.serviceManualResetEvent.WaitOne();
             // Run the application
             UiContext.IsRunning = true;
             // Run the actual code

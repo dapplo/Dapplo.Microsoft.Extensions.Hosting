@@ -47,9 +47,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
             {
                 hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
                 {
-                    serviceCollection.AddSingleton(caliburnMicroContext);
-                    serviceCollection.AddSingleton<IWindowManager, CaliburnMicroWindowManager>();
-                    serviceCollection.AddSingleton<IWpfService, CaliburnMicroBootstrapper>();
+                    serviceCollection
+                        .AddSingleton(caliburnMicroContext)
+                        .AddSingleton<IWindowManager, CaliburnMicroWindowManager>()
+                        .AddSingleton<IWpfService, CaliburnMicroBootstrapper>();
                 });
             }
             return hostBuilder;
@@ -62,11 +63,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <returns>IHostBuilder</returns>
         public static IHostBuilder ConfigureCaliburnMicro<TShell>(this IHostBuilder hostBuilder) where TShell : class, ICaliburnMicroShell
         {
-            hostBuilder.ConfigureCaliburnMicro();
-            hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
-            {
-                serviceCollection.AddSingleton<ICaliburnMicroShell, TShell>();
-            });
+            hostBuilder
+                .ConfigureCaliburnMicro()
+                .ConfigureServices((hostBuilderContext, serviceCollection) => {
+                    serviceCollection.AddSingleton<ICaliburnMicroShell, TShell>();
+                });
 
             return hostBuilder;
         }

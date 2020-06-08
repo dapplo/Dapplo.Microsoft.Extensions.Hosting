@@ -11,17 +11,17 @@ namespace Dapplo.Hosting.Sample.MetroDemo
     /// </summary>
     public partial class OtherWindow
     {
-        private readonly ILogger<OtherWindow> _logger;
+        private readonly ILogger<OtherWindow> logger;
 
         public OtherWindow(ILogger<OtherWindow> logger)
         {
             InitializeComponent();
-            _logger = logger;
+            this.logger = logger;
         }
 
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
-            _logger.LogDebug("Closing OtherWindow");
+            this.logger.LogDebug("Closing OtherWindow");
             Close();
         }
     }

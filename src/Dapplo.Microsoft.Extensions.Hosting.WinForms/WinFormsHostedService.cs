@@ -18,9 +18,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
     // ReSharper disable once ClassNeverInstantiated.Global
     public class WinFormsHostedService : IHostedService
     {
-        private readonly ILogger<WinFormsHostedService> _logger;
-        private readonly WinFormsThread _winFormsThread;
-        private readonly IWinFormsContext _winFormsContext;
+        private readonly ILogger<WinFormsHostedService> logger;
+        private readonly WinFormsThread winFormsThread;
+        private readonly IWinFormsContext winFormsContext;
 
         /// <summary>
         /// The constructor which takes all the DI objects
@@ -30,9 +30,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <param name="winFormsContext">IWinFormsContext</param>
         public WinFormsHostedService(ILogger<WinFormsHostedService> logger, WinFormsThread winFormsThread, IWinFormsContext winFormsContext)
         {
-            _logger = logger;
-            _winFormsThread = winFormsThread;
-            _winFormsContext = winFormsContext;
+            this.logger = logger;
+            this.winFormsThread = winFormsThread;
+            this.winFormsContext = winFormsContext;
         }
 
         /// <inheritdoc />
@@ -42,17 +42,17 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             {
                 return Task.CompletedTask;
             }
-            _winFormsThread.Start();
+            this.winFormsThread.Start();
             return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_winFormsContext.IsRunning)
+            if (this.winFormsContext.IsRunning)
             {
-                _logger.LogDebug("Stopping WinForms application.");
-                await _winFormsContext.Dispatcher.InvokeAsync(()=>
+                this.logger.LogDebug("Stopping WinForms application.");
+                await this.winFormsContext.Dispatcher.InvokeAsync(()=>
                 {
                     // Graceful close, otherwise finalizes try to dispose forms.
                     foreach (var form in Application.OpenForms.Cast<Form>().ToList())
@@ -64,7 +64,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogWarning(ex, "Couldn't cleanup a Form");
+                            this.logger.LogWarning(ex, "Couldn't cleanup a Form");
                         }
                     }
                     Application.ExitThread();

@@ -10,25 +10,25 @@ namespace Dapplo.Hosting.Sample.ReactiveDemo
     // us to have a ReactiveCommand to open the NuGet package URL.
     public class NugetDetailsViewModel : ReactiveObject
     {
-        private readonly IPackageSearchMetadata _metadata;
-        private readonly Uri _defaultUrl;
+        private readonly IPackageSearchMetadata metadata;
+        private readonly Uri defaultUrl;
 
         public NugetDetailsViewModel(IPackageSearchMetadata metadata)
         {
-            _metadata = metadata;
-            _defaultUrl = new Uri("https://git.io/fAlfh");
+            this.metadata = metadata;
+            this.defaultUrl = new Uri("https://git.io/fAlfh");
 
-            var startInfo = new ProcessStartInfo(ProjectUrl?.ToString() ?? _defaultUrl.ToString())
+            var startInfo = new ProcessStartInfo(ProjectUrl?.ToString() ?? this.defaultUrl.ToString())
             {
                 UseShellExecute = true
             };
             OpenPage = ReactiveCommand.Create( () => { Process.Start(startInfo); });
         }
 
-        public Uri IconUrl => _metadata.IconUrl ?? _defaultUrl;
-        public string Description => _metadata.Description;
-        public Uri ProjectUrl => _metadata.ProjectUrl;
-        public string Title => _metadata.Title;
+        public Uri IconUrl => this.metadata.IconUrl ?? this.defaultUrl;
+        public string Description => this.metadata.Description;
+        public Uri ProjectUrl => this.metadata.ProjectUrl;
+        public string Title => this.metadata.Title;
 
         // ReactiveCommand allows us to execute logic without exposing any of the
         // implementation details with the View. The generic parameters are the

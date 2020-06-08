@@ -20,7 +20,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
         private const string HostSettingsFile = "hostsettings.json";
         private const string Prefix = "PREFIX_";
 
-        public static async Task Main(string[] args)
+        public static Task Main(string[] args)
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             if (executableLocation == null)
@@ -67,7 +67,7 @@ namespace Dapplo.Hosting.Sample.WpfDemo
 
             Console.WriteLine("Run!");
 
-            await host.RunAsync();
+            return host.RunAsync();
         }
 
         /// <summary>

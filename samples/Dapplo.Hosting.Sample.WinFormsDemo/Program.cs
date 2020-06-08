@@ -20,7 +20,7 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
         private const string HostSettingsFile = "hostsettings.json";
         private const string Prefix = "PREFIX_";
 
-        public static async Task Main(string[] args)
+        public static Task Main(string[] args)
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             var host = new HostBuilder()
@@ -38,6 +38,11 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
                 })
                 .ConfigurePlugins(pluginBuilder =>
                 {
+                    if (executableLocation == null)
+                    {
+                        return;
+                    }
+
                     var runtime = Path.GetFileName(executableLocation);
                     var parentDirectory = Directory.GetParent(executableLocation).FullName;
                     var configuration = Path.GetFileName(parentDirectory);
@@ -60,7 +65,7 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
 
             Console.WriteLine(@"Run!");
 
-            await host.RunAsync();
+            return host.RunAsync();
         }
 
         /// <summary>
@@ -72,8 +77,9 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
         {
             return hostBuilder.ConfigureLogging((hostContext, configLogging) =>
             {
-                configLogging.AddConsole();
-                configLogging.AddDebug();
+                configLogging
+                    .AddConsole()
+                    .AddDebug();
             });
         }
 
@@ -87,20 +93,22 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
         {
             return hostBuilder.ConfigureHostConfiguration(configHost =>
             {
-                configHost.SetBasePath(Directory.GetCurrentDirectory());
-                configHost.AddJsonFile(HostSettingsFile, optional: true);
-                configHost.AddEnvironmentVariables(prefix: Prefix);
-                configHost.AddCommandLine(args);
+                configHost
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(HostSettingsFile, optional: true)
+                    .AddEnvironmentVariables(prefix: Prefix)
+                    .AddCommandLine(args);
             })
                 .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
-                    configApp.AddJsonFile(AppSettingsFilePrefix + ".json", optional: true);
+                    configApp
+                        .AddJsonFile(AppSettingsFilePrefix + ".json", optional: true)
+                        .AddEnvironmentVariables(prefix: Prefix)
+                        .AddCommandLine(args);
                     if (!string.IsNullOrEmpty(hostContext.HostingEnvironment.EnvironmentName))
                     {
                         configApp.AddJsonFile(AppSettingsFilePrefix + $".{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                     }
-                    configApp.AddEnvironmentVariables(prefix: Prefix);
-                    configApp.AddCommandLine(args);
                 });
         }
     }

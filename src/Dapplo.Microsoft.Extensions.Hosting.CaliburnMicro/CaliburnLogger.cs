@@ -12,7 +12,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
     /// </summary>
     public class CaliburnLogger : ILog
     {
-        private readonly ILogger _log;
+        private readonly ILogger log;
 
         /// <summary>
         ///     The constructor is called from the LogManager.GetLog function with the type to log for
@@ -20,7 +20,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <param name="logger">ILogger</param>
         public CaliburnLogger(ILogger logger)
         {
-            _log = logger;
+            this.log = logger;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         /// <param name="exception"></param>
         public void Error(Exception exception)
         {
-            _log.LogError(exception, null);
+            this.log.LogError(exception, null);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         public void Info(string format, params object[] args)
         {
             // Pre-format the message, otherwise we get problems with dependency objects etc
-            _log.LogDebug(format, args);
+            this.log.LogDebug(format, args);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         public void Warn(string format, params object[] args)
         {
             // Pre-format the message, otherwise we get problems with dependency objects etc
-            _log.LogWarning(format, args);
+            this.log.LogWarning(format, args);
         }
     }
 }

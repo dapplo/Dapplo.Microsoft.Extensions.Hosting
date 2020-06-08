@@ -47,8 +47,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
             {
                 if (!TryRetrieveMutexBuilder(hostBuilder.Properties, out var mutexBuilder))
                 {
-                    serviceCollection.AddSingleton(mutexBuilder);
-                    serviceCollection.AddHostedService<MutexLifetimeService>();
+                    serviceCollection
+                        .AddSingleton(mutexBuilder)
+                        .AddHostedService<MutexLifetimeService>();
                 }
                 configureAction?.Invoke(mutexBuilder);
             });

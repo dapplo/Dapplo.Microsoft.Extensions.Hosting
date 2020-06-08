@@ -24,7 +24,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         {
             foreach (var assembly in assemblyLoadContext.Assemblies)
             {
-                if (!assembly.GetName().Name.Equals(assemblyName.Name))
+                var name = assembly.GetName().Name;
+                if (name == null)
+                {
+                    continue;
+                }
+                if (!name.Equals(assemblyName.Name))
                 {
                     continue;
                 }

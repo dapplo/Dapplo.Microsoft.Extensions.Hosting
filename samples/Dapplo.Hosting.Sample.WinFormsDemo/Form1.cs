@@ -14,26 +14,26 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
     /// </summary>
     public partial class Form1 : Form, IWinFormsShell
     {
-        private readonly ILogger<Form1> _logger;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<Form1> logger;
+        private readonly IServiceProvider serviceProvider;
 
         public Form1(ILogger<Form1> logger, IServiceProvider serviceProvider)
         {
-            _logger = logger;
-            _serviceProvider = serviceProvider;
+            this.logger = logger;
+            this.serviceProvider = serviceProvider;
             InitializeComponent();
         }
 
         private void ButtonForm2_Click(object sender, EventArgs e)
         {
-            _logger.LogDebug("Show form2 clicked!");
-            var form2 = _serviceProvider.GetService<Form2>();
+            this.logger.LogDebug("Show form2 clicked!");
+            var form2 = this.serviceProvider.GetService<Form2>();
             form2.Show();
         }
         
         private void ButtonExit_Click(object sender, EventArgs e)
         {
-            _logger.LogDebug("Exit clicked!");
+            this.logger.LogDebug("Exit clicked!");
             Application.Exit();
         }
     }

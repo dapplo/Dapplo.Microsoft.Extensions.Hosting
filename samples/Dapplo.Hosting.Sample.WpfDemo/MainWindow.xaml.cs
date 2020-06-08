@@ -14,25 +14,25 @@ namespace Dapplo.Hosting.Sample.WpfDemo
     /// </summary>
     public partial class MainWindow : IWpfShell
     {
-        private readonly ILogger<MainWindow> _logger;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<MainWindow> logger;
+        private readonly IServiceProvider serviceProvider;
 
         public MainWindow(ILogger<MainWindow> logger, IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            _logger = logger;
-            _serviceProvider = serviceProvider;
+            this.logger = logger;
+            this.serviceProvider = serviceProvider;
         }
 
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
-            _logger.LogInformation("Exit-Button was clicked!");
+            this.logger.LogInformation("Exit-Button was clicked!");
             Application.Current.Shutdown();
         }
         
         private void ButtonAnotherWindow_Click(object sender, RoutedEventArgs e)
         {
-            var otherWindow = _serviceProvider.GetService<OtherWindow>();
+            var otherWindow = this.serviceProvider.GetService<OtherWindow>();
             otherWindow.Show();
         }
         

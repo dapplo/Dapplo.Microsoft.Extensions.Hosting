@@ -16,11 +16,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
     /// </summary>
     internal class PluginLoadContext : AssemblyLoadContext
     {
-        private readonly AssemblyDependencyResolver _resolver;
+        private readonly AssemblyDependencyResolver resolver;
 
         public PluginLoadContext(string pluginPath, string name) : base(name)
         {
-            _resolver = new AssemblyDependencyResolver(pluginPath);
+            this.resolver = new AssemblyDependencyResolver(pluginPath);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         /// <returns>string with the path</returns>
         public string ResolveAssemblyPath(AssemblyName assemblyName)
         {
-            return _resolver.ResolveAssemblyToPath(assemblyName);
+            return this.resolver.ResolveAssemblyToPath(assemblyName);
         }
 
         /// <inheritdoc />
@@ -54,7 +54,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         /// <inheritdoc />
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
-            var libraryPath = _resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+            var libraryPath = this.resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
             if (libraryPath == null)
             {
                 return IntPtr.Zero;

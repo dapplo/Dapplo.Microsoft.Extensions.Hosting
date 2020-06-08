@@ -12,7 +12,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Metro
     /// </summary>
     public class MetroWpfService : IWpfService
     {
-        private readonly IMetroContext _metroContext;
+        private readonly IMetroContext metroContext;
 
         /// <summary>
         /// The constructor which takes all the DI objects
@@ -20,7 +20,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Metro
         /// <param name="metroContext">IMetroContext</param>
         public MetroWpfService(IMetroContext metroContext)
         {
-            _metroContext = metroContext;
+            this.metroContext = metroContext;
         }
 
         /// <inheritdoc />
@@ -28,18 +28,18 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Metro
         {
             ResourceDictionary resourceDictionary = new ResourceDictionary();
 
-            foreach(var resource in _metroContext.Resources)
+            foreach(var resource in this.metroContext.Resources)
             {
                 resourceDictionary.Source = resource;
                 application.Resources.MergedDictionaries.Add(resourceDictionary);
             }
 
-            foreach (var style in _metroContext.Styles)
+            foreach (var style in this.metroContext.Styles)
             {
                 resourceDictionary.Source = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/{style}.xaml");
                 application.Resources.MergedDictionaries.Add(resourceDictionary);
             }
-            resourceDictionary.Source = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Themes/{_metroContext.Theme}.xaml");
+            resourceDictionary.Source = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Themes/{this.metroContext.Theme}.xaml");
             application.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 

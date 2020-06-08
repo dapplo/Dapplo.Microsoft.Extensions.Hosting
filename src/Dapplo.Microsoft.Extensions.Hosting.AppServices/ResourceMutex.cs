@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -19,11 +19,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
     /// </summary>
     public sealed class ResourceMutex : IDisposable
     {
-        private readonly ILogger _logger;
+        private readonly ILogger logger;
 
-        private readonly string _mutexId;
-        private readonly string _resourceName;
-        private Mutex _applicationMutex;
+        private readonly string mutexId;
+        private readonly string resourceName;
+        private Mutex applicationMutex;
 
         /// <summary>
         ///     Private constructor
@@ -33,9 +33,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
         /// <param name="resourceName">optional name for the resource</param>
         private ResourceMutex(ILogger logger, string mutexId, string resourceName = null)
         {
-            _logger = logger;
-            _mutexId = mutexId;
-            _resourceName = resourceName ?? mutexId;
+            this.logger = logger;
+            this.mutexId = mutexId;
+            this.resourceName = resourceName ?? mutexId;
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
         /// <returns>true if it worked, false if another instance is already running or something went wrong</returns>
         public bool Lock()
         {
-            if (_logger.IsEnabled(LogLevel.Debug))
+            if (this.logger.IsEnabled(LogLevel.Debug))
             {
-                _logger.LogDebug("{0} is trying to get Mutex {1}", _resourceName, _mutexId);
+                this.logger.LogDebug("{0} is trying to get Mutex {1}", this.resourceName, this.mutexId);
             }
 
             IsLocked = true;
@@ -86,66 +86,66 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
                 mutexsecurity.AddAccessRule(new MutexAccessRule(sid, MutexRights.Delete, AccessControlType.Deny));
 
                 // 1) Create Mutex
-                _applicationMutex = new Mutex(true, _mutexId, out var createdNew, mutexsecurity);
+                this.applicationMutex = new Mutex(true, this.mutexId, out var createdNew, mutexsecurity);
 #else
                 // 1) Create Mutex
-                _applicationMutex = new Mutex(true, _mutexId, out var createdNew);
+                this.applicationMutex = new Mutex(true, this.mutexId, out var createdNew);
 #endif
                 // 2) if the mutex wasn't created new get the right to it, this returns false if it's already locked
                 if (!createdNew)
                 {
-                    IsLocked = _applicationMutex.WaitOne(2000, false);
+                    IsLocked = this.applicationMutex.WaitOne(2000, false);
                     if (!IsLocked)
                     {
-                        _logger.LogWarning("Mutex {0} is already in use and couldn't be locked for the caller {1}", _mutexId, _resourceName);
+                        this.logger.LogWarning("Mutex {0} is already in use and couldn't be locked for the caller {1}", this.mutexId, this.resourceName);
                         // Clean up
-                        _applicationMutex.Dispose();
-                        _applicationMutex = null;
+                        this.applicationMutex.Dispose();
+                        this.applicationMutex = null;
                     }
                     else
                     {
-                        _logger.LogInformation("{0} has claimed the mutex {1}", _resourceName, _mutexId);
+                        this.logger.LogInformation("{0} has claimed the mutex {1}", this.resourceName, this.mutexId);
                     }
                 }
                 else
                 {
-                    _logger.LogInformation("{0} has created & claimed the mutex {1}", _resourceName, _mutexId);
+                    this.logger.LogInformation("{0} has created & claimed the mutex {1}", this.resourceName, this.mutexId);
                 }
             }
             catch (AbandonedMutexException e)
             {
                 // Another instance didn't cleanup correctly!
                 // we can ignore the exception, it happened on the "WaitOne" but still the mutex belongs to us
-                _logger.LogWarning(e, "{0} didn't cleanup correctly, but we got the mutex {1}.", _resourceName, _mutexId);
+                this.logger.LogWarning(e, "{0} didn't cleanup correctly, but we got the mutex {1}.", this.resourceName, this.mutexId);
             }
             catch (UnauthorizedAccessException e)
             {
-                _logger.LogError(e, "{0} is most likely already running for a different user in the same session, can't create/get mutex {1} due to error.",
-                    _resourceName, _mutexId);
+                this.logger.LogError(e, "{0} is most likely already running for a different user in the same session, can't create/get mutex {1} due to error.",
+                    this.resourceName, this.mutexId);
                 IsLocked = false;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Problem obtaining the Mutex {1} for {0}, assuming it was already taken!", _resourceName, _mutexId);
+                this.logger.LogError(ex, "Problem obtaining the Mutex {1} for {0}, assuming it was already taken!", this.resourceName, this.mutexId);
                 IsLocked = false;
             }
             return IsLocked;
         }
 
         //  To detect redundant Dispose calls
-        private bool _disposedValue;
+        private bool disposedValue;
 
         /// <summary>
         ///     Dispose the application mutex
         /// </summary>
         public void Dispose()
         {
-            if (_disposedValue)
+            if (this.disposedValue)
             {
                 return;
             }
-            _disposedValue = true;
-            if (_applicationMutex == null)
+            this.disposedValue = true;
+            if (this.applicationMutex == null)
             {
                 return;
             }
@@ -153,17 +153,17 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
             {
                 if (IsLocked)
                 {
-                    _applicationMutex.ReleaseMutex();
+                    this.applicationMutex.ReleaseMutex();
                     IsLocked = false;
-                    _logger.LogInformation("Released Mutex {0} for {1}", _mutexId, _resourceName);
+                    this.logger.LogInformation("Released Mutex {0} for {1}", this.mutexId, this.resourceName);
                 }
-                _applicationMutex.Dispose();
+                this.applicationMutex.Dispose();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error releasing Mutex {0} for {1}", _mutexId, _resourceName);
+                this.logger.LogError(ex, "Error releasing Mutex {0} for {1}", this.mutexId, this.resourceName);
             }
-            _applicationMutex = null;
+            this.applicationMutex = null;
         }
     }
 }

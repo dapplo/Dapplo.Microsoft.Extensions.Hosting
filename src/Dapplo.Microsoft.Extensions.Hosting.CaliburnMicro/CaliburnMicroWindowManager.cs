@@ -49,10 +49,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         public override bool? ShowDialog(object rootModel, object context = null, IDictionary<string, object> settings = null)
         {
             // Maybe the ViewModel supplies settings
-            if (settings == null)
-            {
-                settings = (rootModel as IHaveSettings)?.Settings;
-            }
+            settings ??= (rootModel as IHaveSettings)?.Settings;
             return base.ShowDialog(rootModel, context, settings);
         }
 
@@ -60,10 +57,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         public override void ShowWindow(object rootModel, object context = null, IDictionary<string, object> settings = null)
         {
             // Maybe the ViewModel supplies settings
-            if (settings == null)
-            {
-                settings = (rootModel as IHaveSettings)?.Settings;
-            }
+            settings ??= (rootModel as IHaveSettings)?.Settings;
             base.ShowWindow(rootModel, context, settings);
         }
 
@@ -71,10 +65,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         public override Page CreatePage(object rootModel, object context, IDictionary<string, object> settings)
         {
             // Maybe the ViewModel supplies settings
-            if (settings == null)
-            {
-                settings = (rootModel as IHaveSettings)?.Settings;
-            }
+            settings ??= (rootModel as IHaveSettings)?.Settings;
             return base.CreatePage(rootModel, context, settings);
         }
 
@@ -82,10 +73,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         protected override Popup CreatePopup(object rootModel, IDictionary<string, object> settings)
         {
             // Maybe the ViewModel supplies settings
-            if (settings == null)
-            {
-                settings = (rootModel as IHaveSettings)?.Settings;
-            }
+            settings ??= (rootModel as IHaveSettings)?.Settings;
             return base.CreatePopup(rootModel, settings);
         }
 
@@ -93,10 +81,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         protected override Window CreateWindow(object rootModel, bool isDialog, object context, IDictionary<string, object> settings)
         {
             // Maybe the ViewModel supplies settings
-            if (settings == null)
-            {
-                settings = (rootModel as IHaveSettings)?.Settings;
-            }
+            settings ??= (rootModel as IHaveSettings)?.Settings;
             return base.CreateWindow(rootModel, isDialog, context, settings);
         }
 

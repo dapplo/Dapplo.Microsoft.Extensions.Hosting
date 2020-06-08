@@ -11,7 +11,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
     /// </summary>
     internal class MultiShellContext : ApplicationContext
     {
-        private int _openForms;
+        private int openForms;
 
         /// <summary>
         /// Constructor which specified the 
@@ -19,7 +19,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
         /// <param name="forms"></param>
         public MultiShellContext(params Form[] forms)
         {
-            _openForms = forms.Length;
+            this.openForms = forms.Length;
             foreach (var form in forms)
             {
                 form.FormClosed += OnFormClosed;
@@ -35,7 +35,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
         private void OnFormClosed(object s, FormClosedEventArgs args)
         {
             //When we have closed the last of the "starting" forms, end the program.
-            if (Interlocked.Decrement(ref _openForms) == 0)
+            if (Interlocked.Decrement(ref this.openForms) == 0)
             {
                 ExitThread();
             }

@@ -14,9 +14,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
     /// </summary>
     public class WpfHostedService : IHostedService
     {
-        private readonly ILogger<WpfHostedService> _logger;
-        private readonly WpfThread _wpfThread;
-        private readonly IWpfContext _wpfContext;
+        private readonly ILogger<WpfHostedService> logger;
+        private readonly WpfThread wpfThread;
+        private readonly IWpfContext wpfContext;
 
         /// <summary>
         /// The constructor which takes all the DI objects
@@ -26,9 +26,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
         /// <param name="wpfContext">IWpfContext</param>
         public WpfHostedService(ILogger<WpfHostedService> logger, WpfThread wpfThread, IWpfContext wpfContext)
         {
-            _logger = logger;
-            _wpfThread = wpfThread;
-            _wpfContext = wpfContext;
+            this.logger = logger;
+            this.wpfThread = wpfThread;
+            this.wpfContext = wpfContext;
         }
 
         /// <inheritdoc />
@@ -40,18 +40,18 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
             }
             
             // Make the UI thread go
-            _wpfThread.Start();
+            this.wpfThread.Start();
             return Task.CompletedTask;
         }
 
         /// <inheritdoc />
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_wpfContext.IsRunning)
+            if (this.wpfContext.IsRunning)
             {
-                _logger.LogDebug("Stopping WPF due to application exit.");
+                this.logger.LogDebug("Stopping WPF due to application exit.");
                 // Stop application
-                await _wpfContext.Dispatcher.InvokeAsync(() => _wpfContext.WpfApplication.Shutdown());
+                await this.wpfContext.Dispatcher.InvokeAsync(() => this.wpfContext.WpfApplication.Shutdown());
             }
         }
     }

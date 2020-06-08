@@ -63,9 +63,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
             {
                 if (!TryRetrieveWinFormsContext(hostBuilder.Properties, out var winFormsContext))
                 {
-                    serviceCollection.AddSingleton(winFormsContext);
-                    serviceCollection.AddSingleton(serviceProvider => new WinFormsThread(serviceProvider));
-                    serviceCollection.AddHostedService<WinFormsHostedService>();
+                    serviceCollection
+                        .AddSingleton(winFormsContext)
+                        .AddSingleton(serviceProvider => new WinFormsThread(serviceProvider))
+                        .AddHostedService<WinFormsHostedService>();
                 }
                 configureAction?.Invoke(winFormsContext);
             });
@@ -81,19 +82,19 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinForms
         /// <returns>IHostBuilder</returns>
         public static IHostBuilder ConfigureWinForms<TView>(this IHostBuilder hostBuilder, Action<IWinFormsContext> configureAction = null) where TView : Form
         {
-            hostBuilder.ConfigureWinForms(configureAction);
-            hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
-            {
-                serviceCollection.AddSingleton<TView>();
+            hostBuilder
+                .ConfigureWinForms(configureAction)
+                .ConfigureServices((hostBuilderContext, serviceCollection) => {
+                    serviceCollection.AddSingleton<TView>();
 
-                // Check if it also implements IWinFormsShell so we can register it as this
-                var viewType = typeof(TView);
-                var shellInterfaceType = typeof(IWinFormsShell);
-                if (shellInterfaceType.IsAssignableFrom(viewType))
-                {
-                    serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService<TView>());
-                }
-            });
+                    // Check if it also implements IWinFormsShell so we can register it as this
+                    var viewType = typeof(TView);
+                    var shellInterfaceType = typeof(IWinFormsShell);
+                    if (shellInterfaceType.IsAssignableFrom(viewType))
+                    {
+                        serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService<TView>());
+                    }
+                });
             return hostBuilder;
         }
 

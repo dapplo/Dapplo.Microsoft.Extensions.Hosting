@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dapplo.Microsoft.Extensions.Hosting.Plugins;
@@ -22,7 +22,7 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
         private const string HostSettingsFile = "hostsettings.json";
         private const string Prefix = "PREFIX_";
 
-        public static async Task Main(string[] args)
+        public static Task Main(string[] args)
         {
             var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             
@@ -48,7 +48,7 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
                     // Specify the location from where the Dll's are "globbed"
                     pluginBuilder.AddScanDirectories(basePath);
                     // Add the framework libraries which can be found with the specified globs
-                    pluginBuilder.IncludeFrameworks(@$"**\bin\{configuration}\netstandard2.0\*.FrameworkLib.dll");
+                    pluginBuilder.IncludeFrameworks(@$"**\bin\{configuration}\\netstandard2.0\*.FrameworkLib.dll");
                     // Add the plugins which can be found with the specified globs
                     pluginBuilder.IncludePlugins(@$"**\bin\{configuration}\{runtime}\*.Sample.Plugin*.dll");
                 })
@@ -63,7 +63,7 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
                 .Build();
 
             Console.WriteLine("Run!");
-            await host.RunAsync();
+            return host.RunAsync();
         }
 
         /// <summary>
@@ -75,8 +75,9 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
         {
             return hostBuilder.ConfigureLogging((hostContext, configLogging) =>
             {
-                configLogging.AddConsole();
-                configLogging.AddDebug();
+                configLogging
+                    .AddConsole()
+                    .AddDebug();
             });
         }
 
@@ -90,20 +91,22 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
         {
             return hostBuilder.ConfigureHostConfiguration(configHost =>
             {
-                configHost.SetBasePath(Directory.GetCurrentDirectory());
-                configHost.AddJsonFile(HostSettingsFile, optional: true);
-                configHost.AddEnvironmentVariables(prefix: Prefix);
-                configHost.AddCommandLine(args);
+                configHost
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(HostSettingsFile, optional: true)
+                    .AddEnvironmentVariables(prefix: Prefix)
+                    .AddCommandLine(args);
             })
                 .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
-                    configApp.AddJsonFile(AppSettingsFilePrefix + ".json", optional: true);
+                    configApp
+                        .AddJsonFile(AppSettingsFilePrefix + ".json", optional: true)
+                        .AddEnvironmentVariables(prefix: Prefix)
+                        .AddCommandLine(args);
                     if (!string.IsNullOrEmpty(hostContext.HostingEnvironment.EnvironmentName))
                     {
                         configApp.AddJsonFile(AppSettingsFilePrefix + $".{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                     }
-                    configApp.AddEnvironmentVariables(prefix: Prefix);
-                    configApp.AddCommandLine(args);
                 });
         }
     }

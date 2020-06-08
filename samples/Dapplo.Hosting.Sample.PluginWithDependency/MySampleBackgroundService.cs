@@ -16,55 +16,55 @@ namespace Dapplo.Hosting.Sample.PluginWithDependency
     /// </summary>
     internal class MySampleBackgroundService : IHostedService, IDisposable
     {
-        private readonly ILogger _logger;
-        private Timer _timer;
-        private readonly string _uri = "https://nu.nl";
+        private readonly ILogger logger;
+        private Timer timer;
+        private readonly string uri = "https://nu.nl";
 
         public MySampleBackgroundService(ILogger<MySampleBackgroundService> logger)
         {
-            _logger = logger;
+            this.logger = logger;
             SomeStaticExampleClass.RegisteredServices.Add(nameof(MySampleBackgroundService));
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("MySampleBackgroundService is starting.");
+            this.logger.LogInformation("MySampleBackgroundService is starting.");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            this.timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
 
             return Task.CompletedTask;
         }
 
         private void DoWork(object state)
         {
-            _logger.LogInformation("Known registered Services {0}", string.Join(", ", SomeStaticExampleClass.RegisteredServices));
-            _logger.LogInformation("Retrieving something.");
+            this.logger.LogInformation("Known registered Services {0}", string.Join(", ", SomeStaticExampleClass.RegisteredServices));
+            this.logger.LogInformation("Retrieving something.");
             Task.Run(async () =>
             {
                 try
                 {
-                    var result = await _uri.GetStringAsync();
-                    _logger.LogInformation("{0} : {1}", _uri, result.Substring(0, 40));
+                    var result = await this.uri.GetStringAsync();
+                    this.logger.LogInformation("{0} : {1}", this.uri, result.Substring(0, 40));
                 }
                 catch (Exception)
                 {
-                    _logger.LogError("Couldn't connect to {0}, this was expected behind a corporate firewall, as HttpClient doesn't have a default proxy!", _uri);
+                    this.logger.LogError("Couldn't connect to {0}, this was expected behind a corporate firewall, as HttpClient doesn't have a default proxy!", this.uri);
                 }
             });
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("MySampleBackgroundService is stopping.");
+            this.logger.LogInformation("MySampleBackgroundService is stopping.");
 
-            _timer?.Change(Timeout.Infinite, 0);
+            this.timer?.Change(Timeout.Infinite, 0);
 
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            _timer?.Dispose();
+            this.timer?.Dispose();
         }
     }
 }
