@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+    <TargetFrameworks>net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x64</Platforms>
@@ -15,10 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
-    <PackageReference Include="NuGet.Protocol" Version="5.6.0" />
-    <PackageReference Include="ReactiveUI.WPF" Version="11.4.1" />
-    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="9.4.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.*" />
+    <PackageReference Include="NuGet.Protocol" Version="5.7.0" />
+    <PackageReference Include="ReactiveUI.WPF" Version="12.1.5" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="9.6.1" />
     <PackageReference Include="System.Reactive" Version="4.4.1" />
   </ItemGroup>
 
