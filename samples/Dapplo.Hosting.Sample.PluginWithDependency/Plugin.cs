@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dapplo.Microsoft.Extensions.Hosting.Plugins;
@@ -14,9 +14,6 @@ namespace Dapplo.Hosting.Sample.PluginWithDependency
     public class Plugin : IPlugin
     {
         /// <inheritdoc />
-        public void ConfigureHost(HostBuilderContext hostBuilderContext, IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddHostedService<MySampleBackgroundService>();
-        }
+        public void ConfigureHost(HostBuilderContext hostBuilderContext, IServiceCollection serviceCollection) => serviceCollection.AddHostedService<MySampleBackgroundService>();
     }
 }

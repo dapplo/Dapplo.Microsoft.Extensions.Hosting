@@ -33,10 +33,10 @@ stages:
     - task: NuGetToolInstaller@1
 
     - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk 3.1.4'
+      displayName: 'Use .NET Core sdk 5.0'
       inputs:
         packageType: sdk
-        version: 3.1.300
+        version: 5.0.100
 
     - task: DotNetCoreCLI@2
       displayName: Build

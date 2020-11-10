@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+    <TargetFrameworks>net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
     <PackageDescription>This extension adds Caliburn.Micro support to generic host based WPF applications. With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this great MVVM framework.</PackageDescription>

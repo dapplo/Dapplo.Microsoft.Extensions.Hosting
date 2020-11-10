@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -51,14 +51,13 @@ namespace Dapplo.Hosting.Sample.ConsoleDemo
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <returns>IHostBuilder</returns>
-        private static IHostBuilder ConfigureLogging(this IHostBuilder hostBuilder)
-        {
-            return hostBuilder.ConfigureLogging((hostContext, configLogging) =>
+        private static IHostBuilder ConfigureLogging(this IHostBuilder hostBuilder) =>
+            hostBuilder.ConfigureLogging((hostContext, configLogging) =>
             {
-                configLogging.AddConsole();
-                configLogging.AddDebug();
+                configLogging
+                    .AddConsole()
+                    .AddDebug();
             });
-        }
 
         /// <summary>
         /// Configure the configuration
@@ -70,10 +69,10 @@ namespace Dapplo.Hosting.Sample.ConsoleDemo
         {
             return hostBuilder.ConfigureHostConfiguration(configHost =>
                 {
-                    configHost.SetBasePath(Directory.GetCurrentDirectory());
-                    configHost.AddJsonFile(HostSettingsFile, optional: true);
-                    configHost.AddEnvironmentVariables(prefix: Prefix);
-                    configHost.AddCommandLine(args);
+                    configHost.SetBasePath(Directory.GetCurrentDirectory())
+                        .AddJsonFile(HostSettingsFile, optional: true)
+                        .AddEnvironmentVariables(prefix: Prefix)
+                        .AddCommandLine(args);
                 })
                 .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
@@ -82,8 +81,9 @@ namespace Dapplo.Hosting.Sample.ConsoleDemo
                     {
                         configApp.AddJsonFile(AppSettingsFilePrefix + $".{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                     }
-                    configApp.AddEnvironmentVariables(prefix: Prefix);
-                    configApp.AddCommandLine(args);
+                    configApp
+                        .AddEnvironmentVariables(prefix: Prefix)
+                        .AddCommandLine(args);
                 });
         }
     }
