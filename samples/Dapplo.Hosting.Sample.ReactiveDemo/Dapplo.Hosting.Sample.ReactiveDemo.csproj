@@ -16,10 +16,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.*" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NuGet.Protocol" Version="5.7.0" />
-    <PackageReference Include="ReactiveUI.WPF" Version="12.1.5" />
-    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="9.6.1" />
-    <PackageReference Include="System.Reactive" Version="4.4.1" />
+    <PackageReference Include="ReactiveUI.WPF" Version="13.0.27" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="9.8.1" />
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
