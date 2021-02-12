@@ -55,6 +55,7 @@ namespace Dapplo.Hosting.Sample.ConsoleDemo
             hostBuilder.ConfigureLogging((hostContext, configLogging) =>
             {
                 configLogging
+                    .AddConfiguration(hostContext.Configuration.GetSection("Logging"))
                     .AddConsole()
                     .AddDebug();
             });

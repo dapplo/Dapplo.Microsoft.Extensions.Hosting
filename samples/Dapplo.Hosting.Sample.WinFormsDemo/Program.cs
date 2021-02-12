@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -73,15 +73,14 @@ namespace Dapplo.Hosting.Sample.WinFormsDemo
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
         /// <returns>IHostBuilder</returns>
-        private static IHostBuilder ConfigureLogging(this IHostBuilder hostBuilder)
-        {
-            return hostBuilder.ConfigureLogging((hostContext, configLogging) =>
+        private static IHostBuilder ConfigureLogging(this IHostBuilder hostBuilder) =>
+            hostBuilder.ConfigureLogging((hostContext, configLogging) =>
             {
                 configLogging
+                    .AddConfiguration(hostContext.Configuration.GetSection("Logging"))
                     .AddConsole()
                     .AddDebug();
             });
-        }
 
         /// <summary>
         /// Configure the configuration

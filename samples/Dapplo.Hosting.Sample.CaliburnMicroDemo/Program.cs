@@ -76,6 +76,7 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo
             return hostBuilder.ConfigureLogging((hostContext, configLogging) =>
             {
                 configLogging
+                    .AddConfiguration(hostContext.Configuration.GetSection("Logging"))
                     .AddConsole()
                     .AddDebug();
             });
