@@ -17,4 +17,19 @@
     <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj" />
     <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.Production.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="hostsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
