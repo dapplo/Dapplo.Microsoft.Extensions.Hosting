@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.IO;
@@ -34,7 +34,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             foreach (var glob in frameworkGlobs)
             {
-                pluginBuilder.FrameworkMatcher.AddExclude(glob);
+                _ = pluginBuilder.FrameworkMatcher.AddExclude(glob);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             foreach (var glob in pluginGlobs)
             {
-                pluginBuilder.PluginMatcher.AddExclude(glob);
+                _ = pluginBuilder.PluginMatcher.AddExclude(glob);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             foreach (var glob in frameworkGlobs)
             {
-                pluginBuilder.FrameworkMatcher.AddInclude(glob);
+                _ = pluginBuilder.FrameworkMatcher.AddInclude(glob);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         {
             foreach (var glob in pluginGlobs)
             {
-                pluginBuilder.PluginMatcher.AddInclude(glob);
+                _ = pluginBuilder.PluginMatcher.AddInclude(glob);
             }
         }
 

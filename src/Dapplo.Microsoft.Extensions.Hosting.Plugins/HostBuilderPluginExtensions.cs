@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -52,7 +52,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
             if (!hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder))
             {
                 // Configure a single time
-                ConfigurePluginScanAndLoad(hostBuilder);
+                _ = ConfigurePluginScanAndLoad(hostBuilder);
             }
             configurePlugin(pluginBuilder);
 
@@ -63,12 +63,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
         /// This enables scanning for and loading of plug-ins
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
-        private static void ConfigurePluginScanAndLoad(IHostBuilder hostBuilder)
-        {
+        private static IHostBuilder ConfigurePluginScanAndLoad(IHostBuilder hostBuilder) =>
             // Configure the actual scanning & loading
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder);
+                _ = hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder);
 
                 if (pluginBuilder.UseContentRoot)
                 {
@@ -88,13 +87,13 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                             var frameworkAssemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(frameworkAssemblyPath));
                             if (AssemblyLoadContext.Default.TryGetAssembly(frameworkAssemblyName, out var alreadyLoadedAssembly))
                             {
-                                scannedAssemblies.Add(alreadyLoadedAssembly);
+                                _ = scannedAssemblies.Add(alreadyLoadedAssembly);
                                 continue;
                             }
 
                             // TODO: Log the loading?
                             var loadedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
-                            scannedAssemblies.Add(loadedAssembly);
+                            _ = scannedAssemblies.Add(loadedAssembly);
                         }
                     }
                 }
@@ -111,7 +110,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                             .Where(plugin => plugin != null);
                         foreach (var pluginAssembly in pluginAssemblies)
                         {
-                            scannedAssemblies.Add(pluginAssembly);
+                            _ = scannedAssemblies.Add(pluginAssembly);
                         }
                     }
                 }
@@ -123,17 +122,13 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins
                     plugin.ConfigureHost(hostBuilderContext, serviceCollection);
                 }
             });
-        }
 
         /// <summary>
         /// Helper method to process the PluginOrder attribute
         /// </summary>
         /// <param name="plugin">IPlugin</param>
         /// <returns>int</returns>
-        private static int GetOrder(this IPlugin plugin)
-        {
-            return plugin.GetType().GetCustomAttribute<PluginOrderAttribute>(false)?.Order ?? 0;
-        }
+        private static int GetOrder(this IPlugin plugin) => plugin.GetType().GetCustomAttribute<PluginOrderAttribute>(false)?.Order ?? 0;
 
         /// <summary>
         /// Helper method to load an assembly which contains plugins

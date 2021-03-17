@@ -69,8 +69,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template
         {
             return hostBuilder.ConfigureLogging((hostContext, configLogging) =>
             {
-                configLogging.AddConsole();
-                configLogging.AddDebug();
+                configLogging.
+                    .AddConfiguration(hostContext.Configuration.GetSection("Logging"))
+                    .AddConsole()
+                    .AddDebug();
             });
         }
 

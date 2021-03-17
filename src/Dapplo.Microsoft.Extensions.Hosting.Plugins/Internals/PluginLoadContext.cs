@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -18,20 +18,14 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
     {
         private readonly AssemblyDependencyResolver resolver;
 
-        public PluginLoadContext(string pluginPath, string name) : base(name)
-        {
-            this.resolver = new AssemblyDependencyResolver(pluginPath);
-        }
+        public PluginLoadContext(string pluginPath, string name) : base(name) => this.resolver = new AssemblyDependencyResolver(pluginPath);
 
         /// <summary>
         /// Returns the path where the specified assembly can be found
         /// </summary>
         /// <param name="assemblyName">AssemblyName</param>
         /// <returns>string with the path</returns>
-        public string ResolveAssemblyPath(AssemblyName assemblyName)
-        {
-            return this.resolver.ResolveAssemblyToPath(assemblyName);
-        }
+        public string ResolveAssemblyPath(AssemblyName assemblyName) => this.resolver.ResolveAssemblyToPath(assemblyName);
 
         /// <inheritdoc />
         protected override Assembly Load(AssemblyName assemblyName)
