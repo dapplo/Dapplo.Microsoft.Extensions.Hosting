@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Caliburn.Micro;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;

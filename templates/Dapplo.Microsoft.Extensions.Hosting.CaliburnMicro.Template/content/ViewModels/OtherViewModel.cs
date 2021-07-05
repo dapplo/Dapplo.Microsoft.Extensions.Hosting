@@ -1,9 +1,10 @@
-﻿using Caliburn.Micro;
+﻿using System.Threading.Tasks;
+using Caliburn.Micro;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.ViewModels
 {
     public class OtherViewModel : Screen
     {
-        public Task Close() => TryCloseAsync();
+        public Task DoClose() => TryCloseAsync();
     }
 }
