@@ -2,9 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp</id>
-    <version>1.0.2</version>
+    <version>0.5.8</version>
     <description>Creates a Caliburn.Micro WPF applications running via the generic host</description>
     <authors>Dapplo</authors>
+    <license type="expression">MIT</license>
+    <icon>icon.png</icon>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
