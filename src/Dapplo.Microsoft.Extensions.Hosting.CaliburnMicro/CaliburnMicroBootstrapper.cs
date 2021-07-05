@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -159,7 +159,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
             foreach (var shell in this.serviceProvider.GetServices<ICaliburnMicroShell>())
             {
                 var viewModel = shell;
-                this.windowManager.ShowWindow(viewModel);
+                _ = this.windowManager.ShowWindowAsync(viewModel);
             }
         }
 

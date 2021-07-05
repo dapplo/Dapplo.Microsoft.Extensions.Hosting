@@ -22,10 +22,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.ViewModels
             _windowManager = windowManager;
         }
 
-        public void Open()
+        public Task Open()
         {
             var otherWindow = _serviceProvider.GetService<OtherViewModel>();
-            _windowManager.ShowWindow(otherWindow);
+            return _windowManager.ShowWindowAsync(otherWindow);
         }
 
         public void Exit()

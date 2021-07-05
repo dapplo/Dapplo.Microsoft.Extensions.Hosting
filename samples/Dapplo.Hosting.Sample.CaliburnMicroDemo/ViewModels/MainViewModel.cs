@@ -1,9 +1,10 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Caliburn.Micro;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
 
@@ -25,10 +26,10 @@ namespace Dapplo.Hosting.Sample.CaliburnMicroDemo.ViewModels
             this.windowManager = windowManager;
         }
 
-        public void Open()
+        public Task Open()
         {
             var otherWindow = this.serviceProvider.GetService<OtherViewModel>();
-            this.windowManager.ShowWindow(otherWindow);
+            return this.windowManager.ShowWindowAsync(otherWindow);
         }
 
         public void Exit()

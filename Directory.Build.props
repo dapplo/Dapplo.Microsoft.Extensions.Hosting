@@ -36,11 +36,11 @@
   </PropertyGroup>
 
   <ItemGroup Condition="!$(MSBuildProjectName.Contains('Sample'))">
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.3.37">
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.220">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-    <None Condition="!$(MSBuildProjectName.Contains('Sample'))" Include="$(SolutionDir)\icon.png" Pack="true" PackagePath="\"/>
+    <None Include="$(SolutionDir)\icon.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

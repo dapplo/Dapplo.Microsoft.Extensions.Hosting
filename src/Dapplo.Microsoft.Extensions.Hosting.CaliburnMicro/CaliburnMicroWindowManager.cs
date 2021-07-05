@@ -1,7 +1,8 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -35,38 +36,38 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         }
 
         /// <inheritdoc />
-        public override void ShowPopup(object rootModel, object context = null, IDictionary<string, object> settings = null)
+        public override Task ShowPopupAsync(object rootModel, object context = null, IDictionary<string, object> settings = null)
         {
             // Maybe the ViewModel supplies settings
             if (settings == null && rootModel != null)
             {
                 settings = (rootModel as IHaveSettings)?.Settings;
             }
-            base.ShowPopup(rootModel, context, settings);
+            return base.ShowPopupAsync(rootModel, context, settings);
         }
 
         /// <inheritdoc />
-        public override bool? ShowDialog(object rootModel, object context = null, IDictionary<string, object> settings = null)
+        public override Task<bool?> ShowDialogAsync(object rootModel, object context = null, IDictionary<string, object> settings = null)
         {
             // Maybe the ViewModel supplies settings
             settings ??= (rootModel as IHaveSettings)?.Settings;
-            return base.ShowDialog(rootModel, context, settings);
+            return base.ShowDialogAsync(rootModel, context, settings);
         }
 
         /// <inheritdoc />
-        public override void ShowWindow(object rootModel, object context = null, IDictionary<string, object> settings = null)
+        public override Task ShowWindowAsync(object rootModel, object context = null, IDictionary<string, object> settings = null)
         {
             // Maybe the ViewModel supplies settings
             settings ??= (rootModel as IHaveSettings)?.Settings;
-            base.ShowWindow(rootModel, context, settings);
+            return base.ShowWindowAsync(rootModel, context, settings);
         }
 
         /// <inheritdoc />
-        public override Page CreatePage(object rootModel, object context, IDictionary<string, object> settings)
+        public override Task<Page> CreatePageAsync(object rootModel, object context, IDictionary<string, object> settings)
         {
             // Maybe the ViewModel supplies settings
             settings ??= (rootModel as IHaveSettings)?.Settings;
-            return base.CreatePage(rootModel, context, settings);
+            return base.CreatePageAsync(rootModel, context, settings);
         }
 
         /// <inheritdoc />
@@ -78,11 +79,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
         }
 
         /// <inheritdoc />
-        protected override Window CreateWindow(object rootModel, bool isDialog, object context, IDictionary<string, object> settings)
+        protected override Task<Window> CreateWindowAsync(object rootModel, bool isDialog, object context, IDictionary<string, object> settings)
         {
             // Maybe the ViewModel supplies settings
             settings ??= (rootModel as IHaveSettings)?.Settings;
-            return base.CreateWindow(rootModel, isDialog, context, settings);
+            return base.CreateWindowAsync(rootModel, isDialog, context, settings);
         }
 
         /// <summary>
