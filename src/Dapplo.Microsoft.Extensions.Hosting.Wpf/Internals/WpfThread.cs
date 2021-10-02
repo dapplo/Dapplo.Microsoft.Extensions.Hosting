@@ -43,7 +43,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
                 if (UiContext.IsLifetimeLinked)
                 {
                     //_logger.LogDebug("Stopping host application due to WPF application exit.");
-                    ServiceProvider.GetService<IHostApplicationLifetime>().StopApplication();
+                    ServiceProvider.GetService<IHostApplicationLifetime>()?.StopApplication();
                 }
             };
 
@@ -58,12 +58,9 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
 
             // Use the provided IWpfService
             var wpfServices = ServiceProvider.GetServices<IWpfService>();
-            if (wpfServices != null)
+            foreach(var wpfService in wpfServices)
             {
-                foreach(var wpfService in wpfServices)
-                {
-                    wpfService.Initialize(UiContext.WpfApplication);
-                }
+                wpfService.Initialize(UiContext.WpfApplication);
             }
             // Run the WPF application in this thread which was specifically created for it, with the specified shell
             var shellWindows = ServiceProvider.GetServices<IWpfShell>().Cast<Window>().ToList();

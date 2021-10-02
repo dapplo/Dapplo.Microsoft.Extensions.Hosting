@@ -89,7 +89,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
             }
 
             //_logger.LogDebug("Stopping host application due to WinForms application exit.");
-            ServiceProvider.GetService<IHostApplicationLifetime>().StopApplication();
+            ServiceProvider.GetService<IHostApplicationLifetime>()?.StopApplication();
         }
     }
 }
