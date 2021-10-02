@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Dapplo.Hosting.Sample.WinUI.SingleProjectPackage": {
+      "commandName": "MsixPackage"
+    }
+  }
+}
