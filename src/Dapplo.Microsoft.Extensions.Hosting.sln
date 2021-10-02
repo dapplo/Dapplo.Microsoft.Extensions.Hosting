@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.UiThread", "Dapplo.Microsoft.Extensions.Hosting.UiThread\Dapplo.Microsoft.Extensions.Hosting.UiThread.csproj", "{C71BD377-5E95-44E5-A099-53C97AD897B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.WinUI", "Dapplo.Microsoft.Extensions.Hosting.WinUI\Dapplo.Microsoft.Extensions.Hosting.WinUI.csproj", "{3613202A-2018-4757-8F47-FFA92C0967BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{C71BD377-5E95-44E5-A099-53C97AD897B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C71BD377-5E95-44E5-A099-53C97AD897B9}.Release|x64.ActiveCfg = Release|Any CPU
 		{C71BD377-5E95-44E5-A099-53C97AD897B9}.Release|x64.Build.0 = Release|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Debug|x64.Build.0 = Debug|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|x64.ActiveCfg = Release|Any CPU
+		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
