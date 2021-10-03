@@ -21,13 +21,12 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinUI
         /// Configure a WinUI application
         /// </summary>
         /// <param name="hostBuilder">IHostBuilder</param>
-        /// <param name="configureDelegate">Action to configure WinUI</param>
         /// <returns></returns>
-        public static IHostBuilder ConfigureWinUI<TApp>(this IHostBuilder hostBuilder, Action<IWinUIBuilder> configureDelegate = null) where TApp : Application
+        public static IHostBuilder ConfigureWinUI<TApp, TAppWindow>(this IHostBuilder hostBuilder)
+            where TApp : Application
+            where TAppWindow : Window
         {
             var appType = typeof(TApp);
-            WinUIBuilder builder = new();
-            configureDelegate?.Invoke(builder);
 
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
@@ -38,10 +37,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinUI
                     serviceCollection.AddHostedService<WinUIHostedService>();
                 }
 
-                foreach (var item in builder.WindowTypes)
-                {
-                    winUIContext.WindowTypes.Add(item);
-                }
+                winUIContext.AppWindowType = typeof(TAppWindow);
                 winUIContext.IsLifetimeLinked = true;
             });
 

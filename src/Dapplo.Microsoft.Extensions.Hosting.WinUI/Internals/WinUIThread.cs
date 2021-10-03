@@ -50,11 +50,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinUI.Internals
                     }
                 }
 
-                foreach (var windowType in UiContext.WindowTypes)
-                {
-                    var window = (Window)ActivatorUtilities.CreateInstance(ServiceProvider, windowType);
-                    window.Activate();
-                }
+                UiContext.AppWindow = (Window)ActivatorUtilities.CreateInstance(ServiceProvider, UiContext.AppWindowType);
+                UiContext.AppWindow.Activate();
             });
             HandleApplicationExit();
         }
