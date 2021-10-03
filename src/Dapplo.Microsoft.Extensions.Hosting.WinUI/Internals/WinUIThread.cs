@@ -28,10 +28,6 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinUI.Internals
         protected override void PreUiThreadStart()
         {
             ComWrappersSupport.InitializeComWrappers();
-            var queue = DispatcherQueue.GetForCurrentThread();
-            DispatcherQueueSynchronizationContext context = new(queue);
-            SynchronizationContext.SetSynchronizationContext(context);
-            UiContext.Dispatcher = queue;
         }
 
         /// <inheritdoc />
@@ -39,6 +35,10 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinUI.Internals
         {
             Application.Start(_ =>
             {
+                UiContext.Dispatcher = DispatcherQueue.GetForCurrentThread();
+                DispatcherQueueSynchronizationContext context = new(UiContext.Dispatcher);
+                SynchronizationContext.SetSynchronizationContext(context);
+
                 UiContext.WinUIApplication = ServiceProvider.GetRequiredService<Application>();
                 // Use the provided IWinUIService
                 var winUIServices = ServiceProvider.GetServices<IWinUIService>();
