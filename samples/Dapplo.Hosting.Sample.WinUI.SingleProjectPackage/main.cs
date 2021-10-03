@@ -3,7 +3,7 @@ using Hosting.Sample.WinUI;
 using Microsoft.Extensions.Hosting;
 
 var host = Host.CreateDefaultBuilder()
-    .ConfigureWinUI<App>(winui => winui.UseWindow<MainWindow>())
+    .ConfigureWinUI<App, MainWindow>()
     .Build();
 
 host.Run();
