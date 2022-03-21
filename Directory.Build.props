@@ -7,7 +7,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <LangVersion>9</LangVersion>
+    <LangVersion>10</LangVersion>
     <DebugType>embedded</DebugType>
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
@@ -36,11 +36,11 @@
   </PropertyGroup>
 
   <ItemGroup Condition="!$(MSBuildProjectName.Contains('Sample'))">
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.240">
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.4.255">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     <None Include="$(SolutionDir)\icon.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

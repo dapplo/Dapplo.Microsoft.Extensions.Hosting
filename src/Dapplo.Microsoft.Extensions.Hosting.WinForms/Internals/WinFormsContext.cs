@@ -4,15 +4,14 @@
 using Dapplo.Microsoft.Extensions.Hosting.UiThread;
 using System.Windows.Threading;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
-{
-    /// <inheritdoc cref="IWinFormsContext"/>
-    public class WinFormsContext : BaseUiContext, IWinFormsContext
-    {
-        /// <inheritdoc />
-        public bool EnableVisualStyles { get; set; } = true;
+namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals;
 
-        /// <inheritdoc />
-        public Dispatcher Dispatcher { get; set; }
-    }
+/// <inheritdoc cref="IWinFormsContext"/>
+public class WinFormsContext : BaseUiContext, IWinFormsContext
+{
+    /// <inheritdoc />
+    public bool EnableVisualStyles { get; set; } = true;
+
+    /// <inheritdoc />
+    public Dispatcher Dispatcher { get; set; }
 }

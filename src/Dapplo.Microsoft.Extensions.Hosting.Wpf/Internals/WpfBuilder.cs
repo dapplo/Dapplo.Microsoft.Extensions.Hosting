@@ -4,18 +4,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
+namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals;
+
+/// <inheritdoc/>
+internal class WpfBuilder : IWpfBuilder
 {
     /// <inheritdoc/>
-    internal class WpfBuilder : IWpfBuilder
-    {
-        /// <inheritdoc/>
-        public Type ApplicationType { get; set; }
+    public Type ApplicationType { get; set; }
 
-        /// <inheritdoc/>
-        public IList<Type> WindowTypes { get; } = new List<Type>();
+    /// <inheritdoc/>
+    public IList<Type> WindowTypes { get; } = new List<Type>();
 
-        /// <inheritdoc/>
-        public Action<IWpfContext> ConfigureContextAction { get; set; }
-    }
+    /// <inheritdoc/>
+    public Action<IWpfContext> ConfigureContextAction { get; set; }
 }

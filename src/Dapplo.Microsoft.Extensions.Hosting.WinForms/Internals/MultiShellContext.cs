@@ -4,41 +4,40 @@
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals
+namespace Dapplo.Microsoft.Extensions.Hosting.WinForms.Internals;
+
+/// <summary>
+/// This provides context for running multiple forms which are defined as IWinFormsShell
+/// </summary>
+internal class MultiShellContext : ApplicationContext
 {
+    private int openForms;
+
     /// <summary>
-    /// This provides context for running multiple forms which are defined as IWinFormsShell
+    /// Constructor which specified the 
     /// </summary>
-    internal class MultiShellContext : ApplicationContext
+    /// <param name="forms"></param>
+    public MultiShellContext(params Form[] forms)
     {
-        private int openForms;
-
-        /// <summary>
-        /// Constructor which specified the 
-        /// </summary>
-        /// <param name="forms"></param>
-        public MultiShellContext(params Form[] forms)
+        this.openForms = forms.Length;
+        foreach (var form in forms)
         {
-            this.openForms = forms.Length;
-            foreach (var form in forms)
-            {
-                form.FormClosed += OnFormClosed;
-                form.Show();
-            }
+            form.FormClosed += OnFormClosed;
+            form.Show();
         }
+    }
 
-        /// <summary>
-        /// Make sure the application stops if all shells are closed
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="args"></param>
-        private void OnFormClosed(object s, FormClosedEventArgs args)
+    /// <summary>
+    /// Make sure the application stops if all shells are closed
+    /// </summary>
+    /// <param name="s"></param>
+    /// <param name="args"></param>
+    private void OnFormClosed(object s, FormClosedEventArgs args)
+    {
+        //When we have closed the last of the "starting" forms, end the program.
+        if (Interlocked.Decrement(ref this.openForms) == 0)
         {
-            //When we have closed the last of the "starting" forms, end the program.
-            if (Interlocked.Decrement(ref this.openForms) == 0)
-            {
-                ExitThread();
-            }
+            ExitThread();
         }
     }
 }
