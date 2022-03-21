@@ -15,7 +15,6 @@ public abstract class BaseUiThread<T> where T : class, IUiContext
 {
     private readonly ManualResetEvent serviceManualResetEvent = new(false);
     private readonly IHostApplicationLifetime hostApplicationLifetime;
-
     /// <summary>
     /// The IUiContext
     /// </summary>
