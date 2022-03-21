@@ -13,7 +13,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
     /// </summary>
     public abstract class BaseUiThread<T> where T : class, IUiContext
     {
-        private readonly ManualResetEvent serviceManualResetEvent = new ManualResetEvent(false);
+        private readonly ManualResetEvent serviceManualResetEvent = new(false);
+        private readonly IHostApplicationLifetime hostApplicationLifetime;
         /// <summary>
         /// The IUiContext
         /// </summary>
@@ -31,6 +32,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
         protected BaseUiThread(IServiceProvider serviceProvider)
         {
             UiContext = serviceProvider.GetService<T>();
+            this.hostApplicationLifetime = serviceProvider.GetService<IHostApplicationLifetime>();
+
             ServiceProvider = serviceProvider;
             // Create a thread which runs the UI
             var newUiThread = new Thread(InternalUiThreadStart)
@@ -89,7 +92,11 @@ namespace Dapplo.Microsoft.Extensions.Hosting.UiThread
             }
 
             //_logger.LogDebug("Stopping host application due to WinForms application exit.");
-            ServiceProvider.GetService<IHostApplicationLifetime>()?.StopApplication();
+            if (this.hostApplicationLifetime.ApplicationStopped.IsCancellationRequested || this.hostApplicationLifetime.ApplicationStopping.IsCancellationRequested)
+            {
+                return;
+            }
+            this.hostApplicationLifetime.StopApplication();
         }
     }
 }

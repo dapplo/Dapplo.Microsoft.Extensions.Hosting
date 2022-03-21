@@ -31,16 +31,16 @@ stages:
       persistCredentials: true
 
     - task: NuGetToolInstaller@0
-      displayName: 'Use NuGet 5.11.0'
+      displayName: 'Use NuGet 6.1.0'
       inputs:
-        versionSpec: 5.11.0
+        versionSpec: 6.1.0
         checkLatest: true
 
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk 6.0'
       inputs:
         packageType: sdk
-        version: 6.0.100-rc.1.21463.6
+        version: 6.0.201
 
     - task: DotNetCoreCLI@2
       displayName: Build
@@ -128,9 +128,9 @@ stages:
               artifact: 'drop'
 
           - task: NuGetToolInstaller@0
-            displayName: 'Use NuGet 5.11.0'
+            displayName: 'Use NuGet 6.1.0'
             inputs:
-              versionSpec: 5.11.0
+              versionSpec: 6.1.0
               checkLatest: true
 
           - task: NuGetCommand@2

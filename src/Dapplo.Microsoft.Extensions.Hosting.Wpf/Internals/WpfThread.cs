@@ -39,12 +39,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
             // Register to the WPF application exit to stop the host application
             wpfApplication.Exit += (s, e) =>
             {
-                UiContext.IsRunning = false;
-                if (UiContext.IsLifetimeLinked)
-                {
-                    //_logger.LogDebug("Stopping host application due to WPF application exit.");
-                    ServiceProvider.GetService<IHostApplicationLifetime>()?.StopApplication();
-                }
+                HandleApplicationExit();
             };
 
             // Store the application for others to interact
