@@ -3,18 +3,17 @@
 
 using System.Windows;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
+namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
+
+/// <summary>
+/// Export with this interface to be able to configure dialog views
+/// </summary>
+public interface IConfigureDialogViews
 {
     /// <summary>
-    /// Export with this interface to be able to configure dialog views
+    /// This is called, so you can configure the dialog view
     /// </summary>
-    public interface IConfigureDialogViews
-    {
-        /// <summary>
-        /// This is called, so you can configure the dialog view
-        /// </summary>
-        /// <param name="view">Window for the view</param>
-        /// <param name="viewModel">object with the ViewModel</param>
-        void ConfigureDialogView(Window view, object viewModel = null);
-    }
+    /// <param name="view">Window for the view</param>
+    /// <param name="viewModel">object with the ViewModel</param>
+    void ConfigureDialogView(Window view, object viewModel = null);
 }

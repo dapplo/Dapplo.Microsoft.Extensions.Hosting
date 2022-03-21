@@ -3,35 +3,34 @@
 
 using System;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Metro
+namespace Dapplo.Microsoft.Extensions.Hosting.Metro;
+
+/// <summary>
+/// Extensions to modify the IMetroContext
+/// </summary>
+public static class MetroContextExtensions
 {
     /// <summary>
-    /// Extensions to modify the IMetroContext
+    /// Add a resource
     /// </summary>
-    public static class MetroContextExtensions
+    /// <param name="metroContext"></param>
+    /// <param name="resource"></param>
+    /// <returns>IMetroContext</returns>
+    public static IMetroContext AddResource(this IMetroContext metroContext, Uri resource)
     {
-        /// <summary>
-        /// Add a resource
-        /// </summary>
-        /// <param name="metroContext"></param>
-        /// <param name="resource"></param>
-        /// <returns>IMetroContext</returns>
-        public static IMetroContext AddResource(this IMetroContext metroContext, Uri resource)
-        {
-            metroContext.Resources.Add(resource);
-            return metroContext;
-        }
+        metroContext.Resources.Add(resource);
+        return metroContext;
+    }
 
-        /// <summary>
-        /// Add a resource
-        /// </summary>
-        /// <param name="metroContext"></param>
-        /// <param name="style">string</param>
-        /// <returns>IMetroContext</returns>
-        public static IMetroContext AddStyle(this IMetroContext metroContext, string style)
-        {
-            metroContext.Styles.Add(style);
-            return metroContext;
-        }
+    /// <summary>
+    /// Add a resource
+    /// </summary>
+    /// <param name="metroContext"></param>
+    /// <param name="style">string</param>
+    /// <returns>IMetroContext</returns>
+    public static IMetroContext AddStyle(this IMetroContext metroContext, string style)
+    {
+        metroContext.Styles.Add(style);
+        return metroContext;
     }
 }

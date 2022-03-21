@@ -4,27 +4,26 @@
 using System;
 using System.Collections.Generic;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Metro
+namespace Dapplo.Microsoft.Extensions.Hosting.Metro;
+
+/// <summary>
+/// The metro context contains all information for MahApps.Metro
+/// </summary>
+public interface IMetroContext
 {
     /// <summary>
-    /// The metro context contains all information for MahApps.Metro
+    /// Specify all the resource to use to initialize
     /// </summary>
-    public interface IMetroContext
-    {
-        /// <summary>
-        /// Specify all the resource to use to initialize
-        /// </summary>
-        List<Uri> Resources { get; }
+    List<Uri> Resources { get; }
 
-        /// <summary>
-        /// Defines all styles to use
-        /// </summary>
-        List<string> Styles { get; }
+    /// <summary>
+    /// Defines all styles to use
+    /// </summary>
+    List<string> Styles { get; }
 
-        /// <summary>
-        /// Defines the theme
-        /// </summary>
-        string Theme { get; set; }
+    /// <summary>
+    /// Defines the theme
+    /// </summary>
+    string Theme { get; set; }
 
-    }
 }
