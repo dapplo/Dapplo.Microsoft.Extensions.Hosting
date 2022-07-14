@@ -90,7 +90,15 @@ public static class HostBuilderWpfExtensions
 
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                serviceCollection.AddSingleton(wpfBuilder.ApplicationType);
+                if (wpfBuilder.Application != null)
+                {
+                    // Add existing Application
+                    serviceCollection.AddSingleton(wpfBuilder.ApplicationType, wpfBuilder.Application);
+                }
+                else
+                {
+                    serviceCollection.AddSingleton(wpfBuilder.ApplicationType);
+                }
 
                 if (wpfBuilder.ApplicationType != baseApplicationType)
                 {
@@ -114,7 +122,7 @@ public static class HostBuilderWpfExtensions
                         serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService(wpfWindowType));
                     }
                 }
-                    
+
             });
         }
 
