@@ -32,8 +32,5 @@ public class MainViewModel : Screen, ICaliburnMicroShell
         return this.windowManager.ShowWindowAsync(otherWindow);
     }
 
-    public void Exit()
-    {
-        this.wpfContext.WpfApplication.Shutdown();
-    }
+    public void Exit() => this.wpfContext.WpfApplication.Shutdown();
 }

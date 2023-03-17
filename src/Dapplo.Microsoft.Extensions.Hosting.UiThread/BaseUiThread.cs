@@ -48,11 +48,9 @@ public abstract class BaseUiThread<T> where T : class, IUiContext
     /// <summary>
     /// Start the DI service on the thread
     /// </summary>
-    public void Start()
-    {
+    public void Start() =>
         // Make the UI thread go
         this.serviceManualResetEvent.Set();
-    }
 
     /// <summary>
     /// Start UI

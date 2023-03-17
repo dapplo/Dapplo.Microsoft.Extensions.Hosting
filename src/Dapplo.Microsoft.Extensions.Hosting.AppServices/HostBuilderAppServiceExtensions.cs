@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -41,8 +41,7 @@ public static class HostBuilderApplicationExtensions
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <param name="configureAction">Action to configure IMutexBuilder</param>
     /// <returns>IHostBuilder for fluently calling</returns>
-    public static IHostBuilder ConfigureSingleInstance(this IHostBuilder hostBuilder, Action<IMutexBuilder> configureAction)
-    {
+    public static IHostBuilder ConfigureSingleInstance(this IHostBuilder hostBuilder, Action<IMutexBuilder> configureAction) =>
         hostBuilder.ConfigureServices((hostContext, serviceCollection) =>
         {
             if (!TryRetrieveMutexBuilder(hostBuilder.Properties, out var mutexBuilder))
@@ -53,8 +52,6 @@ public static class HostBuilderApplicationExtensions
             }
             configureAction?.Invoke(mutexBuilder);
         });
-        return hostBuilder;
-    }
 
     /// <summary>
     /// Prevent that an application runs multiple times
@@ -62,9 +59,7 @@ public static class HostBuilderApplicationExtensions
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <param name="mutexId">string</param>
     /// <returns>IHostBuilder for fluently calling</returns>
-    public static IHostBuilder ConfigureSingleInstance(this IHostBuilder hostBuilder, string mutexId)
-    {
-        return hostBuilder.ConfigureSingleInstance(builder => builder.MutexId = mutexId);
-    }
+    public static IHostBuilder ConfigureSingleInstance(this IHostBuilder hostBuilder, string mutexId) =>
+        hostBuilder.ConfigureSingleInstance(builder => builder.MutexId = mutexId);
 
 }

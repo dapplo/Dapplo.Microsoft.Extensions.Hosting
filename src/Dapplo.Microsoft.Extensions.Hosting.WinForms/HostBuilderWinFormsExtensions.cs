@@ -41,15 +41,12 @@ public static class HostBuilderWinFormsExtensions
     /// </summary>
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder UseWinFormsLifetime(this IHostBuilder hostBuilder)
-    {
+    public static IHostBuilder UseWinFormsLifetime(this IHostBuilder hostBuilder) =>
         hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
         {
             TryRetrieveWinFormsContext(hostBuilder.Properties, out var winFormsContext);
             winFormsContext.IsLifetimeLinked = true;
         });
-        return hostBuilder;
-    }
 
     /// <summary>
     /// Configure an WinForms application
@@ -57,8 +54,7 @@ public static class HostBuilderWinFormsExtensions
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <param name="configureAction">Action to configure the Application</param>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder ConfigureWinForms(this IHostBuilder hostBuilder, Action<IWinFormsContext> configureAction = null)
-    {
+    public static IHostBuilder ConfigureWinForms(this IHostBuilder hostBuilder, Action<IWinFormsContext> configureAction = null) =>
         hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
         {
             if (!TryRetrieveWinFormsContext(hostBuilder.Properties, out var winFormsContext))
@@ -70,8 +66,6 @@ public static class HostBuilderWinFormsExtensions
             }
             configureAction?.Invoke(winFormsContext);
         });
-        return hostBuilder;
-    }
 
     /// <summary>
     /// Configure an WinForms application
@@ -80,11 +74,11 @@ public static class HostBuilderWinFormsExtensions
     /// <param name="configureAction">Action to configure the Application</param>
     /// <typeparam name="TView">Type for the View</typeparam>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder ConfigureWinForms<TView>(this IHostBuilder hostBuilder, Action<IWinFormsContext> configureAction = null) where TView : Form
-    {
+    public static IHostBuilder ConfigureWinForms<TView>(this IHostBuilder hostBuilder, Action<IWinFormsContext> configureAction = null) where TView : Form =>
         hostBuilder
             .ConfigureWinForms(configureAction)
-            .ConfigureServices((hostBuilderContext, serviceCollection) => {
+            .ConfigureServices((hostBuilderContext, serviceCollection) =>
+            {
                 serviceCollection.AddSingleton<TView>();
 
                 // Check if it also implements IWinFormsShell so we can register it as this
@@ -95,8 +89,6 @@ public static class HostBuilderWinFormsExtensions
                     serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService<TView>());
                 }
             });
-        return hostBuilder;
-    }
 
     /// <summary>
     /// Specify a shell, the primary Form, to start
@@ -104,8 +96,6 @@ public static class HostBuilderWinFormsExtensions
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <typeparam name="TShell">Type for the shell, must derive from Form and implement IWinFormsShell</typeparam>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder ConfigureWinFormsShell<TShell>(this IHostBuilder hostBuilder) where TShell : Form, IWinFormsShell
-    {
-        return hostBuilder.ConfigureWinForms<TShell>();
-    }
+    public static IHostBuilder ConfigureWinFormsShell<TShell>(this IHostBuilder hostBuilder) where TShell : Form, IWinFormsShell =>
+        hostBuilder.ConfigureWinForms<TShell>();
 }

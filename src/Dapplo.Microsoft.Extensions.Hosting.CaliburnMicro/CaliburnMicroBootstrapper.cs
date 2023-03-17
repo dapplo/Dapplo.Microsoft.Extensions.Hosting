@@ -58,17 +58,12 @@ public class CaliburnMicroBootstrapper : BootstrapperBase, IWpfService
     ///     Fill imports of the supplied instance
     /// </summary>
     /// <param name="instance">some object to fill</param>
-    protected override void BuildUp(object instance)
-    {
-        this.logger.LogDebug("Should buildup {0}", instance?.GetType().Name);
-        // TODO: don't know how to fill imports yet?
-        //_bootstrapper.Container.InjectProperties(instance);
-    }
+    protected override void BuildUp(object instance) =>
+        this.logger.LogDebug("Should buildup {0}", instance?.GetType().Name); // TODO: don't know how to fill imports yet?//_bootstrapper.Container.InjectProperties(instance);
 
     /// <summary>
     ///     Configure Caliburn.Micro
     /// </summary>
-    [SuppressMessage("Sonar Code Smell", "S2696:Instance members should not write to static fields", Justification = "This is the only location where it makes sense.")]
     protected override void Configure()
     {
         // Create a logger to log caliburn message
@@ -89,14 +84,13 @@ public class CaliburnMicroBootstrapper : BootstrapperBase, IWpfService
     /// <summary>
     ///     Add logic to find the base ViewType if the default locator can't find a view.
     /// </summary>
-    [SuppressMessage("Sonar Code Smell", "S2696:Instance members should not write to static fields", Justification = "This is the only location where it makes sense.")]
     private void ConfigureViewLocator()
     {
         var defaultLocator = ViewLocator.LocateTypeForModelType;
         ViewLocator.LocateTypeForModelType = (modelType, displayLocation, context) =>
         {
             var viewType = defaultLocator(modelType, displayLocation, context);
-            bool initialViewFound = viewType != null;
+            var initialViewFound = viewType != null;
 
             if (initialViewFound)
             {
@@ -123,10 +117,7 @@ public class CaliburnMicroBootstrapper : BootstrapperBase, IWpfService
     ///     Return all instances of a certain service type
     /// </summary>
     /// <param name="service">Type</param>
-    protected override IEnumerable<object> GetAllInstances(Type service)
-    {
-        return this.serviceProvider.GetServices(service);
-    }
+    protected override IEnumerable<object> GetAllInstances(Type service) => this.serviceProvider.GetServices(service);
 
     /// <summary>
     ///     Locate an instance of a service, used in Caliburn.
@@ -134,22 +125,18 @@ public class CaliburnMicroBootstrapper : BootstrapperBase, IWpfService
     /// <param name="service">Type for the service to locate</param>
     /// <param name="contractName">string with the name of the contract</param>
     /// <returns>instance of the service</returns>
-    [SuppressMessage("Sonar Code Smell", "S927:Name parameter to match the base definition", Justification = "The base name is not so clear.")]
-    protected override object GetInstance(Type service, string contractName)
-    {
+    protected override object GetInstance(Type service, string contractName) =>
         // There is no way to get the service by name
-        return this.serviceProvider.GetService(service);
-    }
+        this.serviceProvider.GetService(service);
 
     /// <inheritdoc />
-    protected override IEnumerable<Assembly> SelectAssemblies()
-    {
+    protected override IEnumerable<Assembly> SelectAssemblies() =>
 #if NETCOREAPP
-        return AssemblyLoadContext.Default.Assemblies;
+        AssemblyLoadContext.Default.Assemblies;
 #else
-            return AppDomain.CurrentDomain.GetAssemblies();
+            AppDomain.CurrentDomain.GetAssemblies();
 #endif
-    }
+
 
     /// <inheritdoc />
     protected override void OnStartup(object sender, StartupEventArgs e)
@@ -159,7 +146,7 @@ public class CaliburnMicroBootstrapper : BootstrapperBase, IWpfService
         foreach (var shell in this.serviceProvider.GetServices<ICaliburnMicroShell>())
         {
             var viewModel = shell;
-            _ = this.windowManager.ShowWindowAsync(viewModel);
+            this.windowManager.ShowWindowAsync(viewModel);
         }
     }
 
