@@ -59,13 +59,12 @@ public partial class App : Application
     public App()
     {
         var executableLocation = Path.GetDirectoryName(typeof(App).Assembly.Location) ?? throw new NotSupportedException("Can't start without location.");
-        var args = Array.Empty<string>();
         var host = new HostBuilder()
             .ConfigureLogging()
-            .ConfigureConfiguration(args)
+            .ConfigureConfiguration(Environment.GetCommandLineArgs())
             .ConfigureSingleInstance(builder =>
             {
-                builder.MutexId = "{C3CC6C8F-B40C-4EC2-A540-1D4B8FFFB60D}";
+                builder.MutexId = "{326b35ad-e777-45b9-8fe4-f5edebf9bb2d}";
                 builder.WhenNotFirstInstance = (hostingEnvironment, logger) =>
                     // This is called when an instance was already started, this is in the second instance
                     logger.LogWarning("Application {ApplicationName} already running.", hostingEnvironment.ApplicationName);

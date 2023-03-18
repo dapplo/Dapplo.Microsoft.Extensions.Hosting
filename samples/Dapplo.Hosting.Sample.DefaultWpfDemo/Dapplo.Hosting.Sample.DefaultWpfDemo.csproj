@@ -13,4 +13,10 @@
     <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
