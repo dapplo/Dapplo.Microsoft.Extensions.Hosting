@@ -52,7 +52,7 @@ public static class HostBuilderPluginExtensions
         if (!hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder))
         {
             // Configure a single time
-            _ = ConfigurePluginScanAndLoad(hostBuilder);
+            ConfigurePluginScanAndLoad(hostBuilder);
         }
         configurePlugin(pluginBuilder);
 
@@ -67,7 +67,7 @@ public static class HostBuilderPluginExtensions
         // Configure the actual scanning & loading
         hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
         {
-            _ = hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder);
+            hostBuilder.Properties.TryRetrievePluginBuilder(out var pluginBuilder);
 
             if (pluginBuilder.UseContentRoot)
             {
@@ -87,13 +87,13 @@ public static class HostBuilderPluginExtensions
                         var frameworkAssemblyName = new AssemblyName(Path.GetFileNameWithoutExtension(frameworkAssemblyPath));
                         if (AssemblyLoadContext.Default.TryGetAssembly(frameworkAssemblyName, out var alreadyLoadedAssembly))
                         {
-                            _ = scannedAssemblies.Add(alreadyLoadedAssembly);
+                            scannedAssemblies.Add(alreadyLoadedAssembly);
                             continue;
                         }
 
                         // TODO: Log the loading?
                         var loadedAssembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(frameworkAssemblyPath);
-                        _ = scannedAssemblies.Add(loadedAssembly);
+                        scannedAssemblies.Add(loadedAssembly);
                     }
                 }
             }
@@ -110,7 +110,7 @@ public static class HostBuilderPluginExtensions
                         .Where(plugin => plugin != null);
                     foreach (var pluginAssembly in pluginAssemblies)
                     {
-                        _ = scannedAssemblies.Add(pluginAssembly);
+                        scannedAssemblies.Add(pluginAssembly);
                     }
                 }
             }

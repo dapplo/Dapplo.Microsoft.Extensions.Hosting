@@ -22,11 +22,7 @@ public static class Program
 
     public static Task Main(string[] args)
     {
-        var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
-        if (executableLocation == null)
-        {
-            throw new NotSupportedException("Can't start without location.");
-        }
+        var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location) ?? throw new NotSupportedException("Can't start without location.");
         var host = new HostBuilder()
             .ConfigureLogging()
             .ConfigureConfiguration(args)
@@ -53,11 +49,10 @@ public static class Program
                 pluginBuilder.IncludePlugins(@$"**\bin\{configuration}\{runtime}\*.Sample.Plugin*.dll");
             })
             .ConfigureServices(serviceCollection =>
-            {
                 // Make OtherWindow available for DI to the MainWindow, but not as singleton
-                serviceCollection.AddTransient<OtherWindow>();
-            })
-            .ConfigureWpf(wpfBuilder => {
+                serviceCollection.AddTransient<OtherWindow>())
+            .ConfigureWpf(wpfBuilder =>
+            {
                 wpfBuilder.UseApplication<MyApplication>();
                 wpfBuilder.UseWindow<MainWindow>();
             })
@@ -77,12 +72,10 @@ public static class Program
     /// <returns>IHostBuilder</returns>
     private static IHostBuilder ConfigureLogging(this IHostBuilder hostBuilder) =>
         hostBuilder.ConfigureLogging((hostContext, configLogging) =>
-        {
             configLogging
                 .AddConfiguration(hostContext.Configuration.GetSection("Logging"))
                 .AddConsole()
-                .AddDebug();
-        });
+                .AddDebug());
 
     /// <summary>
     /// Configure the configuration
@@ -90,15 +83,12 @@ public static class Program
     /// <param name="hostBuilder"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    private static IHostBuilder ConfigureConfiguration(this IHostBuilder hostBuilder, string[] args)
-    {
-        return hostBuilder.ConfigureHostConfiguration(configHost =>
-            {
-                configHost.SetBasePath(Directory.GetCurrentDirectory());
-                configHost.AddJsonFile(HostSettingsFile, optional: true);
-                configHost.AddEnvironmentVariables(prefix: Prefix);
-                configHost.AddCommandLine(args);
-            })
+    private static IHostBuilder ConfigureConfiguration(this IHostBuilder hostBuilder, string[] args) =>
+        hostBuilder.ConfigureHostConfiguration(configHost =>
+            configHost.SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(HostSettingsFile, optional: true)
+                    .AddEnvironmentVariables(prefix: Prefix)
+                    .AddCommandLine(args))
             .ConfigureAppConfiguration((hostContext, configApp) =>
             {
                 configApp.AddJsonFile(AppSettingsFilePrefix + ".json", optional: true);
@@ -106,8 +96,7 @@ public static class Program
                 {
                     configApp.AddJsonFile(AppSettingsFilePrefix + $".{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                 }
-                configApp.AddEnvironmentVariables(prefix: Prefix);
-                configApp.AddCommandLine(args);
+                configApp.AddEnvironmentVariables(prefix: Prefix)
+                    .AddCommandLine(args);
             });
-    }
 }

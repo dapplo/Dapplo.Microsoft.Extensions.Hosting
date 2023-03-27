@@ -42,21 +42,18 @@ public static class HostBuilderMetroExtensions
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <param name="configureAction">Action to configure IMetroContext</param>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder ConfigureMetro(this IHostBuilder hostBuilder, Action<IMetroContext> configureAction = null)
-    {
+    public static IHostBuilder ConfigureMetro(this IHostBuilder hostBuilder, Action<IMetroContext> configureAction = null) =>
         hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
         {
             if (!TryRetrieveMetroContext(hostBuilder.Properties, out var metroContext))
             {
                 serviceCollection.AddSingleton(metroContext);
-                serviceCollection.AddSingleton<IWpfService,MetroWpfService>();
+                serviceCollection.AddSingleton<IWpfService, MetroWpfService>();
             }
             // Configure the default styles
             metroContext.Styles.AddRange(new[] { "Controls", "Fonts" });
             configureAction?.Invoke(metroContext);
         });
-        return hostBuilder;
-    }
 
     /// <summary>
     /// Configure WPF to use MahApps.Metro and specify the theme
@@ -64,8 +61,6 @@ public static class HostBuilderMetroExtensions
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <param name="theme">string</param>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder ConfigureMetro(this IHostBuilder hostBuilder, string theme)
-    {
-        return hostBuilder.ConfigureMetro(context => context.Theme = theme);
-    }
+    public static IHostBuilder ConfigureMetro(this IHostBuilder hostBuilder, string theme) =>
+        hostBuilder.ConfigureMetro(context => context.Theme = theme);
 }

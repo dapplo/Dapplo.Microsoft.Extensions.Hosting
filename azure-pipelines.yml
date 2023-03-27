@@ -30,17 +30,17 @@ stages:
     - checkout: self
       persistCredentials: true
 
-    - task: NuGetToolInstaller@0
-      displayName: 'Use NuGet 6.3.0'
+    - task: NuGetToolInstaller@1
+      displayName: 'Use NuGet 6.5.0'
       inputs:
-        versionSpec: 6.3.0
+        versionSpec: 6.5.0
         checkLatest: true
 
     - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk 6.0.8'
+      displayName: 'Use .NET Core sdk 7.0.x'
       inputs:
         packageType: sdk
-        version: 6.0.400
+        version: 7.0.x
 
     - task: DotNetCoreCLI@2
       displayName: Build
@@ -127,10 +127,10 @@ stages:
             inputs:
               artifact: 'drop'
 
-          - task: NuGetToolInstaller@0
-            displayName: 'Use NuGet 6.3.0'
+          - task: NuGetToolInstaller@1
+            displayName: 'Use NuGet 6.5.0'
             inputs:
-              versionSpec: 6.3.0
+              versionSpec: 6.5.0
               checkLatest: true
 
           - task: NuGetCommand@2

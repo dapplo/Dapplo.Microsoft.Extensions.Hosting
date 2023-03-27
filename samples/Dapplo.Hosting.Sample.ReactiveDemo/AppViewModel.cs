@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -102,7 +102,8 @@ public class AppViewModel : ReactiveObject
     // Here we search NuGet packages using the NuGet.Client library. Ideally, we should
     // extract such code into a separate service, say, INuGetSearchService, but let's 
     // try to avoid over complicating things at this time.
-    private async Task<IEnumerable<NugetDetailsViewModel>> SearchNuGetPackages(string term, CancellationToken token)
+    private async Task<IEnumerable<NugetDetailsViewModel>> SearchNuGetPackages(
+            string term, CancellationToken token)
     {
         var providers = new List<Lazy<INuGetResourceProvider>>();
         providers.AddRange(Repository.Provider.GetCoreV3()); // Add v3 API support
@@ -110,8 +111,8 @@ public class AppViewModel : ReactiveObject
         var source = new SourceRepository(package, providers);
 
         var filter = new SearchFilter(false);
-        var resource = await source.GetResourceAsync<PackageSearchResource>(token).ConfigureAwait(false);
-        var metadata = await resource.SearchAsync(term, filter, 0, 10, null, token).ConfigureAwait(false);
+        var resource = await source.GetResourceAsync<PackageSearchResource>().ConfigureAwait(false);
+        var metadata = await resource.SearchAsync(term, filter, 0, 10, new NuGet.Common.NullLogger(), token).ConfigureAwait(false);
         return metadata.Select(x => new NugetDetailsViewModel(x));
     }
 }

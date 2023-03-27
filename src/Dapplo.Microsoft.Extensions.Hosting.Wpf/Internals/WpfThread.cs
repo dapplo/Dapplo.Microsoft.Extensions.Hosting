@@ -36,47 +36,81 @@ public class WpfThread : BaseUiThread<IWpfContext>
         };
 
         // Register to the WPF application exit to stop the host application
-        wpfApplication.Exit += (s, e) =>
-        {
-            HandleApplicationExit();
-        };
+        wpfApplication.Dispatcher.InvokeAsync(() => wpfApplication.Exit += (s, e) => HandleApplicationExit());
 
         // Store the application for others to interact
         UiContext.WpfApplication = wpfApplication;
     }
 
     /// <inheritdoc />
-    protected override void UiThreadStart() {
-        // Mark the application as running
-        UiContext.IsRunning = true;
-
-        // Use the provided IWpfService
-        var wpfServices = ServiceProvider.GetServices<IWpfService>();
-        foreach(var wpfService in wpfServices)
+    protected override void UiThreadStart() =>
+        UiContext.WpfApplication.Dispatcher.Invoke(() =>
         {
-            wpfService.Initialize(UiContext.WpfApplication);
-        }
-        // Run the WPF application in this thread which was specifically created for it, with the specified shell
-        var shellWindows = ServiceProvider.GetServices<IWpfShell>().Cast<Window>().ToList();
+            // Mark the application as running
+            UiContext.IsRunning = true;
 
-        switch (shellWindows.Count)
-        {
-            case 1:
-                UiContext.WpfApplication.Run(shellWindows[0]);
-                break;
-            case 0:
-                UiContext.WpfApplication.Run();
-                break;
-            default:
-                UiContext.WpfApplication.Startup += (sender, args) =>
-                {
-                    foreach (var window in shellWindows)
+            // Use the provided IWpfService
+            var wpfServices = ServiceProvider.GetServices<IWpfService>();
+            foreach (var wpfService in wpfServices)
+            {
+                wpfService.Initialize(UiContext.WpfApplication);
+            }
+            // Run the WPF application in this thread which was specifically created for it, with the specified shell
+            var shellWindows = ServiceProvider.GetServices<IWpfShell>().Cast<Window>().ToList();
+
+            switch (shellWindows.Count)
+            {
+                case 1:
+                    if (UiContext.WpfApplication.Dispatcher.Thread.ThreadState != ThreadState.Running)
                     {
-                        window?.Show();
+                        UiContext.WpfApplication.Run(shellWindows[0]);
                     }
-                };
-                UiContext.WpfApplication.Run();
-                break;
-        }
-    }
+                    else
+                    {
+                        if (UiContext.WpfApplication.StartupUri != null)
+                        {
+                            MessageBox.Show("Please remove the StartupUri configuration in App.xaml");
+                        }
+                        else
+                        {
+                            shellWindows[0].Show();
+                        }
+                    }
+
+                    break;
+                case 0:
+                    if (UiContext.WpfApplication.Dispatcher.Thread.ThreadState != ThreadState.Running)
+                    {
+                        UiContext.WpfApplication.Run();
+                    }
+                    else
+                    {
+                        if (UiContext.WpfApplication.MainWindow != null)
+                        {
+                            // show window if possible
+                            UiContext.WpfApplication.MainWindow.Show();
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Please inherit from IWpfShell in a Window to use the required IWpfShell interface");
+                        }
+                    }
+                    break;
+                default:
+                    UiContext.WpfApplication.Startup += (sender, args) =>
+                    {
+                        foreach (var window in shellWindows)
+                        {
+                            window?.Show();
+                        }
+                    };
+
+                    if (UiContext.WpfApplication.Dispatcher.Thread.ThreadState != ThreadState.Running)
+                    {
+                        UiContext.WpfApplication.Run();
+                    }
+
+                    break;
+            }
+        });
 }

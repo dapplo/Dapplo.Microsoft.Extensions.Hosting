@@ -34,7 +34,7 @@ public static class PluginBuilderExtensions
     {
         foreach (var glob in frameworkGlobs)
         {
-            _ = pluginBuilder.FrameworkMatcher.AddExclude(glob);
+            pluginBuilder.FrameworkMatcher.AddExclude(glob);
         }
     }
 
@@ -47,7 +47,7 @@ public static class PluginBuilderExtensions
     {
         foreach (var glob in pluginGlobs)
         {
-            _ = pluginBuilder.PluginMatcher.AddExclude(glob);
+            pluginBuilder.PluginMatcher.AddExclude(glob);
         }
     }
 
@@ -60,7 +60,7 @@ public static class PluginBuilderExtensions
     {
         foreach (var glob in frameworkGlobs)
         {
-            _ = pluginBuilder.FrameworkMatcher.AddInclude(glob);
+            pluginBuilder.FrameworkMatcher.AddInclude(glob);
         }
     }
 
@@ -73,7 +73,7 @@ public static class PluginBuilderExtensions
     {
         foreach (var glob in pluginGlobs)
         {
-            _ = pluginBuilder.PluginMatcher.AddInclude(glob);
+            pluginBuilder.PluginMatcher.AddInclude(glob);
         }
     }
 

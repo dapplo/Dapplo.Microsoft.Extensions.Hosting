@@ -43,15 +43,13 @@ public static class HostBuilderCaliburnMicroExtensions
     /// <returns>IHostBuilder</returns>
     public static IHostBuilder ConfigureCaliburnMicro(this IHostBuilder hostBuilder)
     {
-        if (!TryRetrieveCaliburnMicroContext(hostBuilder.Properties,out var caliburnMicroContext))
+        if (!TryRetrieveCaliburnMicroContext(hostBuilder.Properties, out var caliburnMicroContext))
         {
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
-            {
                 serviceCollection
                     .AddSingleton(caliburnMicroContext)
                     .AddSingleton<IWindowManager, CaliburnMicroWindowManager>()
-                    .AddSingleton<IWpfService, CaliburnMicroBootstrapper>();
-            });
+                    .AddSingleton<IWpfService, CaliburnMicroBootstrapper>());
         }
         return hostBuilder;
     }
@@ -61,14 +59,8 @@ public static class HostBuilderCaliburnMicroExtensions
     /// </summary>
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder ConfigureCaliburnMicro<TShell>(this IHostBuilder hostBuilder) where TShell : class, ICaliburnMicroShell
-    {
+    public static IHostBuilder ConfigureCaliburnMicro<TShell>(this IHostBuilder hostBuilder) where TShell : class, ICaliburnMicroShell =>
         hostBuilder
             .ConfigureCaliburnMicro()
-            .ConfigureServices((hostBuilderContext, serviceCollection) => {
-                serviceCollection.AddSingleton<ICaliburnMicroShell, TShell>();
-            });
-
-        return hostBuilder;
-    }
+            .ConfigureServices((hostBuilderContext, serviceCollection) => serviceCollection.AddSingleton<ICaliburnMicroShell, TShell>());
 }

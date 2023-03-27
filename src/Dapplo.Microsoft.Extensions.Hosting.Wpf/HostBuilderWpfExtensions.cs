@@ -42,8 +42,7 @@ public static class HostBuilderWpfExtensions
     /// <param name="hostBuilder">IHostBuilder</param>
     /// <param name="shutdownMode">ShutdownMode default is OnLastWindowClose</param>
     /// <returns>IHostBuilder</returns>
-    public static IHostBuilder UseWpfLifetime(this IHostBuilder hostBuilder, ShutdownMode shutdownMode = ShutdownMode.OnLastWindowClose)
-    {
+    public static IHostBuilder UseWpfLifetime(this IHostBuilder hostBuilder, ShutdownMode shutdownMode = ShutdownMode.OnLastWindowClose) =>
         hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
         {
             if (!TryRetrieveWpfContext(hostBuilder.Properties, out var wpfContext))
@@ -54,8 +53,6 @@ public static class HostBuilderWpfExtensions
             wpfContext.ShutdownMode = shutdownMode;
             wpfContext.IsLifetimeLinked = true;
         });
-        return hostBuilder;
-    }
 
     /// <summary>
     /// Configure an WPF application 
@@ -90,7 +87,15 @@ public static class HostBuilderWpfExtensions
 
             hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
             {
-                serviceCollection.AddSingleton(wpfBuilder.ApplicationType);
+                if (wpfBuilder.Application != null)
+                {
+                    // Add existing Application
+                    serviceCollection.AddSingleton(wpfBuilder.ApplicationType, wpfBuilder.Application);
+                }
+                else
+                {
+                    serviceCollection.AddSingleton(wpfBuilder.ApplicationType);
+                }
 
                 if (wpfBuilder.ApplicationType != baseApplicationType)
                 {
@@ -114,7 +119,7 @@ public static class HostBuilderWpfExtensions
                         serviceCollection.AddSingleton(shellInterfaceType, serviceProvider => serviceProvider.GetRequiredService(wpfWindowType));
                     }
                 }
-                    
+
             });
         }
 

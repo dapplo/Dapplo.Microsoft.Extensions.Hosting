@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28711.60
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins", "..\src\Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj", "{021F054E-F3E0-44AB-AF4A-042A7513B2D6}"
 EndProject
@@ -34,6 +34,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.ReactiveDemo", "Dapplo.Hosting.Sample.ReactiveDemo\Dapplo.Hosting.Sample.ReactiveDemo.csproj", "{1B008131-227B-4793-87A3-42E24536807E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.UiThread", "..\src\Dapplo.Microsoft.Extensions.Hosting.UiThread\Dapplo.Microsoft.Extensions.Hosting.UiThread.csproj", "{CF56B3E8-7119-46EB-9F98-04002B6A52BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Hosting.Sample.DefaultWpfDemo", "Dapplo.Hosting.Sample.DefaultWpfDemo\Dapplo.Hosting.Sample.DefaultWpfDemo.csproj", "{3F568DEE-DBB8-411F-8320-6D1200980E00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{BD536381-4FC0-4FAC-ABEE-AA70CE491341}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,9 +175,29 @@ Global
 		{CF56B3E8-7119-46EB-9F98-04002B6A52BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CF56B3E8-7119-46EB-9F98-04002B6A52BC}.Release|x64.ActiveCfg = Release|Any CPU
 		{CF56B3E8-7119-46EB-9F98-04002B6A52BC}.Release|x64.Build.0 = Release|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Debug|x64.Build.0 = Debug|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Release|x64.ActiveCfg = Release|Any CPU
+		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{32B89840-E40B-4530-A454-CF1B4C5CA2EB} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{EA9149C7-5B38-4522-AD58-901AFFDCE588} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{617F6E42-23CB-45C4-AC52-6A44E492E59A} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{B6C058AA-82D5-47E8-A55F-C879C1B39CE3} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{4D3535D7-EE32-43DF-A30C-6E9C58A8F969} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{ECD1ACC3-79B4-4761-B1EA-10425CE25659} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{E2DAE159-D2A9-4E00-894D-EBC74BEB0D92} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{5EFDEEB2-8D32-4917-93A2-6272C168CA97} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{1B008131-227B-4793-87A3-42E24536807E} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
+		{3F568DEE-DBB8-411F-8320-6D1200980E00} = {BD536381-4FC0-4FAC-ABEE-AA70CE491341}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E385CD7A-F537-4976-A3E6-A2FB993A4301}
