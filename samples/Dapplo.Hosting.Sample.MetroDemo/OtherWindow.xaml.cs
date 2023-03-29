@@ -4,25 +4,24 @@
 using System.Windows;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Hosting.Sample.MetroDemo
+namespace Dapplo.Hosting.Sample.MetroDemo;
+
+/// <summary>
+/// A simple example WPF window
+/// </summary>
+public partial class OtherWindow
 {
-    /// <summary>
-    /// A simple example WPF window
-    /// </summary>
-    public partial class OtherWindow
+    private readonly ILogger<OtherWindow> logger;
+
+    public OtherWindow(ILogger<OtherWindow> logger)
     {
-        private readonly ILogger<OtherWindow> logger;
+        InitializeComponent();
+        this.logger = logger;
+    }
 
-        public OtherWindow(ILogger<OtherWindow> logger)
-        {
-            InitializeComponent();
-            this.logger = logger;
-        }
-
-        private void ButtonExit_Click(object sender, RoutedEventArgs e)
-        {
-            this.logger.LogDebug("Closing OtherWindow");
-            Close();
-        }
+    private void ButtonExit_Click(object sender, RoutedEventArgs e)
+    {
+        this.logger.LogDebug("Closing OtherWindow");
+        Close();
     }
 }

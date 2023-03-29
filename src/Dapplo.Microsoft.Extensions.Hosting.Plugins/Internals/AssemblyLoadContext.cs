@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 #if !NETCOREAPP
 
@@ -22,10 +22,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         /// Default constructor
         /// </summary>
         /// <param name="name"></param>
-        public AssemblyLoadContext(string name)
-        {
-            Name = name;
-        }
+        public AssemblyLoadContext(string name) => Name = name;
 
         /// <summary>
         /// The name of the AssemblyLoadContext
@@ -42,10 +39,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         /// </summary>
         /// <param name="assemblyName">AssemblyName</param>
         /// <returns>Assembly</returns>
-        protected virtual Assembly Load(AssemblyName assemblyName)
-        {
-            return null;
-        }
+        protected virtual Assembly Load(AssemblyName assemblyName) => null;
 
         /// <summary>
         /// Load the assembly by name
@@ -68,30 +62,23 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         /// </summary>
         /// <param name="assemblyPath">string with the path to the assembly file</param>
         /// <returns>Assembly</returns>
-        public Assembly LoadFromAssemblyPath(string assemblyPath)
-        {
-            return Assembly.LoadFrom(assemblyPath);
-        }
+        public Assembly LoadFromAssemblyPath(string assemblyPath) => Assembly.LoadFrom(assemblyPath);
 
         /// <summary>
         /// Load the DLL from the specified path
         /// </summary>
         /// <param name="dllPath">string</param>
         /// <returns>IntPtr</returns>
-        protected IntPtr LoadUnmanagedDllFromPath(string dllPath)
-        {
-            return IntPtr.Zero;
-        }
+#pragma warning disable IDE0060 // Remove unused parameter
+        protected IntPtr LoadUnmanagedDllFromPath(string dllPath) => IntPtr.Zero;
+#pragma warning restore IDE0060 // Remove unused parameter
 
         /// <summary>
         /// Loads the specified DLL from the plugin path
         /// </summary>
         /// <param name="unmanagedDllName">string</param>
         /// <returns>IntPtr</returns>
-        protected virtual IntPtr LoadUnmanagedDll(string unmanagedDllName)
-        {
-            return IntPtr.Zero;
-        }
+        protected virtual IntPtr LoadUnmanagedDll(string unmanagedDllName) => IntPtr.Zero;
     }
 }
 #endif

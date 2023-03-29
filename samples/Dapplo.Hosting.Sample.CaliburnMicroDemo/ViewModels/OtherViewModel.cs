@@ -4,10 +4,9 @@
 using System.Threading.Tasks;
 using Caliburn.Micro;
 
-namespace Dapplo.Hosting.Sample.CaliburnMicroDemo.ViewModels
+namespace Dapplo.Hosting.Sample.CaliburnMicroDemo.ViewModels;
+
+public class OtherViewModel : Screen
 {
-    public class OtherViewModel : Screen
-    {
-        public Task Exit() => TryCloseAsync();
-    }
+    public Task Exit() => TryCloseAsync();
 }

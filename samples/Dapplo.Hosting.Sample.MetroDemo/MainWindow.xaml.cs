@@ -7,34 +7,33 @@ using Dapplo.Microsoft.Extensions.Hosting.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Dapplo.Hosting.Sample.MetroDemo
+namespace Dapplo.Hosting.Sample.MetroDemo;
+
+/// <summary>
+/// A simple example WPF window
+/// </summary>
+public partial class MainWindow : IWpfShell
 {
-    /// <summary>
-    /// A simple example WPF window
-    /// </summary>
-    public partial class MainWindow : IWpfShell
+    private readonly ILogger<MainWindow> logger;
+    private readonly IServiceProvider serviceProvider;
+
+    public MainWindow(ILogger<MainWindow> logger, IServiceProvider serviceProvider)
     {
-        private readonly ILogger<MainWindow> logger;
-        private readonly IServiceProvider serviceProvider;
-
-        public MainWindow(ILogger<MainWindow> logger, IServiceProvider serviceProvider)
-        {
-            InitializeComponent();
-            this.logger = logger;
-            this.serviceProvider = serviceProvider;
-        }
-
-        private void ButtonExit_Click(object sender, RoutedEventArgs e)
-        {
-            this.logger.LogInformation("Exit-Button was clicked!");
-            Application.Current.Shutdown();
-        }
-        
-        private void ButtonAnotherWindow_Click(object sender, RoutedEventArgs e)
-        {
-            var otherWindow = this.serviceProvider.GetService<OtherWindow>();
-            otherWindow.Show();
-        }
-        
+        InitializeComponent();
+        this.logger = logger;
+        this.serviceProvider = serviceProvider;
     }
+
+    private void ButtonExit_Click(object sender, RoutedEventArgs e)
+    {
+        this.logger.LogInformation("Exit-Button was clicked!");
+        Application.Current.Shutdown();
+    }
+        
+    private void ButtonAnotherWindow_Click(object sender, RoutedEventArgs e)
+    {
+        var otherWindow = this.serviceProvider.GetService<OtherWindow>();
+        otherWindow.Show();
+    }
+        
 }
