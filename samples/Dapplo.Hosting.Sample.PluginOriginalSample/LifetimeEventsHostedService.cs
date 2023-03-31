@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Threading;
@@ -12,7 +12,7 @@ namespace Dapplo.Hosting.Sample.PluginOriginalSample;
 /// <summary>
 /// Example for a IHostedService which tracks live-time events
 /// </summary>
-internal class LifetimeEventsHostedService : IHostedService
+public class LifetimeEventsHostedService : IHostedService
 {
     private readonly ILogger logger;
     private readonly IHostApplicationLifetime hostApplicationLifetime;
