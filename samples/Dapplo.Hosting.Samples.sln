@@ -35,9 +35,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.React
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.UiThread", "..\src\Dapplo.Microsoft.Extensions.Hosting.UiThread\Dapplo.Microsoft.Extensions.Hosting.UiThread.csproj", "{CF56B3E8-7119-46EB-9F98-04002B6A52BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Hosting.Sample.DefaultWpfDemo", "Dapplo.Hosting.Sample.DefaultWpfDemo\Dapplo.Hosting.Sample.DefaultWpfDemo.csproj", "{3F568DEE-DBB8-411F-8320-6D1200980E00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Hosting.Sample.DefaultWpfDemo", "Dapplo.Hosting.Sample.DefaultWpfDemo\Dapplo.Hosting.Sample.DefaultWpfDemo.csproj", "{3F568DEE-DBB8-411F-8320-6D1200980E00}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{BD536381-4FC0-4FAC-ABEE-AA70CE491341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Microsoft.Extensions.Hosting.ReactiveUI", "..\src\Dapplo.Microsoft.Extensions.Hosting.ReactiveUI\Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.csproj", "{246A4FE0-3B25-4392-B90A-04B1BC3F597D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,6 +185,14 @@ Global
 		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Release|x64.ActiveCfg = Release|Any CPU
 		{3F568DEE-DBB8-411F-8320-6D1200980E00}.Release|x64.Build.0 = Release|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Debug|x64.Build.0 = Debug|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Release|x64.ActiveCfg = Release|Any CPU
+		{246A4FE0-3B25-4392-B90A-04B1BC3F597D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

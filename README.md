@@ -28,7 +28,7 @@ Dapplo.Microsoft.Extensions.Hosting.Plugins
 --------------------------------------------
 [![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.Plugins.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.Plugins/)
 
-This extension adds plug-in support to generic host based dotnet core 3.0 applications.
+This extension adds plug-in support to generic host based dotnet core 6.0 applications.
 
 You can simply add the location of plug-ins by specifying globs to find your plug-in assemblies.
 This can be both files to include and / or exclude.
