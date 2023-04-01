@@ -8,7 +8,7 @@ This repository brings you a few extensions on the generic host which will help 
 - Dapplo.Microsoft.Extensions.Hosting.AppServices - Simple services, e.g. make sure you application runs only once!
 - Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro - Bases upon Dapplo.Microsoft.Extensions.Hosting.Wpf and bootstraps [Caliburn.Micro](https://caliburnmicro.com)
 - Dapplo.Microsoft.Extensions.Hosting.WinForms - Have a way to bootstrap Windows Forms with all the possible generic host functionality, and manage the lifetime.
-- Dapplo.Microsoft.Extensions.Hosting.Wpf -   Have a way to bootstrap WPF with all the possible generic host functionality, and manage the lifetime.
+- Dapplo.Microsoft.Extensions.Hosting.Wpf - Have a way to bootstrap WPF with all the possible generic host functionality, and manage the lifetime.
 - Dapplo.Microsoft.Extensions.Hosting.Plugins - Makes it possible to find & load additional plug-in which can add services to your application.
 
 FYI: there is a solution with samples in the samples directory and one which is used on the build server in the src.
@@ -36,7 +36,7 @@ Each located plug-ins is loaded into it's own AssemblyLoadContext, dependencies 
 
 [Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.ConsoleDemo/Program.cs#L27)
  is an example how to use the loading, and also how to handle framework assemblies:
-```
+```C#
 .ConfigurePlugins(pluginBuilder =>
 	{
 		// Specify the location from where the Dll's are "globbed"
@@ -55,7 +55,7 @@ Now you will need to follow a naming convention, this is for speed so there is n
 
 Example for the IPlugin implementation, this can configure the HostBuilderContext:
 
-```
+```C#
     /// <summary>
     /// This plug-in configures the HostBuilderContext to have the hosted services from the online example
     /// </summary>
@@ -70,6 +70,16 @@ Example for the IPlugin implementation, this can configure the HostBuilderContex
     }
 ```
 
+This can also be simplified to use the following code with up to 3 configured services:
+```C#
+    /// <summary>
+    /// This plug-in configures the HostBuilderContext to have the hosted services from the online example
+    /// </summary>
+    public class Plugin : PluginBase<LifetimeEventsHostedService, TimedHostedService>
+    {
+    }
+```
+
 
 Dapplo.Microsoft.Extensions.Hosting.AppServices
 -----------------------------------------------
@@ -79,7 +89,7 @@ This extension adds some generic application services for desktop applications, 
 
 [Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.WinFormsDemo/Program.cs#L25) is an example how to make sure your application only runs once.
 
-```
+```C#
 .ConfigureSingleInstance(builder =>
 	{
 		builder.MutexId = "{B9CE32C0-59AE-4AF0-BE39-5329AAFF4BE8}";
@@ -107,7 +117,7 @@ With this you can enhance your application with a UI, and use all the services p
 This means you can have a constructor which requests a logger, or other forms.
 
 It's not much more than adding something like this to your hostBuilder:
-```
+```C#
  .ConfigureWinForms<Form1>()
  .UseWinFormsLifetime()
 ```
@@ -126,7 +136,7 @@ With this you can enhance your application with a UI, and use all the services p
 This means your MainWindow can have a constructor which requests a logger, or other windows.
 
 It's not much more than adding something like this to your hostBuilder:
-```
+```C#
 	.ConfigureWpf<MainWindow>()
 	.UseWpfLifetime()
 ```
@@ -145,7 +155,38 @@ With this you can enhance your application with a UI, and use all the services p
 This means your MainWindowViewModel can have a constructor which requests a logger, or other windows.
 
 It's not much more than adding something like this to your hostBuilder:
-```
+```C#
 	.ConfigureCaliburnMicro<MainViewModel>()
 ```
 It assumes Dapplo.Microsoft.Extensions.Hosting.Wpf is used!
+
+
+Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf
+---------------------------------------
+
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf/)
+
+This extension adds [ReactiveUI](https://reactiveui.net/) support to generic host based applications.
+With this you can enhance your application with ReactiveUI functions, and use all the services provided by the generic host like combining Splat with Microsoft DI, logging etc, together with this great Reactive MVVM framework.
+
+This is based on the Dapplo.Microsoft.Extensions.Hosting.Wpf extension, so you can use that to start your application.
+
+Use the following code to merge ReactiveUI.Splat with the Microsoft Dependency Resolver in your application:
+```C#
+    .ConfigureSplatForMicrosoftDependencyResolver()
+```
+
+Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms
+---------------------------------------
+
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms/)
+
+This extension adds [ReactiveUI](https://reactiveui.net/) support to generic host based applications.
+With this you can enhance your application with ReactiveUI functions, and use all the services provided by the generic host like combining Splat with Microsoft DI, logging etc, together with this great Reactive MVVM framework.
+
+This is based on the Dapplo.Microsoft.Extensions.Hosting.WinForms extension, so you can use that to start your application.
+
+Use the following code to merge ReactiveUI.Splat with the Microsoft Dependency Resolver in your application:
+```C#
+    .ConfigureSplatForMicrosoftDependencyResolver()
+```

@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="ReactiveUI.Drawing" Version="18.4.26" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.4.26" />
     <PackageReference Include="ReactiveUI.WPF" Version="18.4.26" />
     <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.6.8" />
   </ItemGroup>
