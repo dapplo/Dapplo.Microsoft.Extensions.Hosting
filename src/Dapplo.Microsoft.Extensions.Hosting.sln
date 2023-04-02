@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28711.60
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.Plugins", "Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj", "{021F054E-F3E0-44AB-AF4A-042A7513B2D6}"
 EndProject
@@ -17,7 +17,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.UiThread", "Dapplo.Microsoft.Extensions.Hosting.UiThread\Dapplo.Microsoft.Extensions.Hosting.UiThread.csproj", "{C71BD377-5E95-44E5-A099-53C97AD897B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.WinUI", "Dapplo.Microsoft.Extensions.Hosting.WinUI\Dapplo.Microsoft.Extensions.Hosting.WinUI.csproj", "{3613202A-2018-4757-8F47-FFA92C0967BA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionConfig", "SolutionConfig", "{B2596DF3-5720-41B9-900C-28593556EFAC}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\azure-pipelines.yml = ..\azure-pipelines.yml
+		..\CODE_OF_CONDUCT.md = ..\CODE_OF_CONDUCT.md
+		..\contributing.md = ..\contributing.md
+		..\Directory.Build.props = ..\Directory.Build.props
+		..\global.json = ..\global.json
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+		..\version.json = ..\version.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf", "Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf\Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf.csproj", "{AA74E656-A5EE-415D-AA19-40222A63F615}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms", "Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms\Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms.csproj", "{3D74C743-4361-4125-A56E-B9F26F9B7747}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,13 +100,22 @@ Global
 		{C71BD377-5E95-44E5-A099-53C97AD897B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C71BD377-5E95-44E5-A099-53C97AD897B9}.Release|x64.ActiveCfg = Release|Any CPU
 		{C71BD377-5E95-44E5-A099-53C97AD897B9}.Release|x64.Build.0 = Release|Any CPU
-		{3613202A-2018-4757-8F47-FFA92C0967BA}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{3613202A-2018-4757-8F47-FFA92C0967BA}.Debug|x64.ActiveCfg = Debug|x64
-		{3613202A-2018-4757-8F47-FFA92C0967BA}.Debug|x64.Build.0 = Debug|x64
-		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|x64.ActiveCfg = Release|Any CPU
-		{3613202A-2018-4757-8F47-FFA92C0967BA}.Release|x64.Build.0 = Release|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Debug|x64.Build.0 = Debug|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Release|x64.ActiveCfg = Release|Any CPU
+		{AA74E656-A5EE-415D-AA19-40222A63F615}.Release|x64.Build.0 = Release|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Debug|x64.Build.0 = Debug|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Release|x64.ActiveCfg = Release|Any CPU
+		{3D74C743-4361-4125-A56E-B9F26F9B7747}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

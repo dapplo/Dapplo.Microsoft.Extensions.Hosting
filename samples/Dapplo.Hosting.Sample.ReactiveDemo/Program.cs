@@ -1,19 +1,20 @@
 // Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Dapplo.Microsoft.Extensions.Hosting.Plugins;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
-using Dapplo.Microsoft.Extensions.Hosting.AppServices;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using ReactiveUI;
-using Splat.Microsoft.Extensions.DependencyInjection;
-using Splat;
+using Dapplo.Microsoft.Extensions.Hosting.AppServices;
+using Dapplo.Microsoft.Extensions.Hosting.Plugins;
+using Dapplo.Microsoft.Extensions.Hosting.ReactiveUI;
 using Dapplo.Microsoft.Extensions.Hosting.Wpf;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ReactiveUI;
+using Splat;
+using Splat.Microsoft.Extensions.DependencyInjection;
 
 namespace Dapplo.Hosting.Sample.ReactiveDemo;
 
@@ -27,6 +28,7 @@ public static class Program
     {
         var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location) ?? throw new NotSupportedException("Can't start without location.");
         var host = new HostBuilder()
+            .ConfigureSplatForMicrosoftDependencyResolver()
             .ConfigureWpf(wpfBuilder => wpfBuilder.UseWindow<MainWindow>())
             .ConfigureLogging()
             .ConfigureConfiguration(args)

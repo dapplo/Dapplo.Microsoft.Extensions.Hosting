@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -14,7 +14,7 @@ namespace Dapplo.Hosting.Sample.PluginWithDependency;
 /// <summary>
 /// Just some service to run in the background and use a dependency
 /// </summary>
-internal class MySampleBackgroundService : IHostedService, IDisposable
+public class MySampleBackgroundService : IHostedService, IDisposable
 {
     private readonly ILogger logger;
     private Timer timer;

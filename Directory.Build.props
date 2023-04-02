@@ -3,6 +3,7 @@
     <Copyright>Copyright © Dapplo</Copyright>
     <Authors>Dapplo</Authors>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/dapplo/Dapplo.Microsoft.Extensions</PackageProjectUrl>
@@ -43,5 +44,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     <None Include="$(SolutionDir)\icon.png" Pack="true" PackagePath="\"/>
+    <None Include="$(MSBuildThisFileDirectory)LICENSE" Pack="true" PackagePath="LICENSE" />
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>
