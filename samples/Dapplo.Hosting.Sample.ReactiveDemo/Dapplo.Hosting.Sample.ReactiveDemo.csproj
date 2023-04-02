@@ -13,15 +13,13 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NuGet.Protocol" Version="6.5.0" />
-    <!--ReactiveUI only supports windows 10.0.17763 plus-->
-    <PackageReference Include="ReactiveUI.WPF" Version="18.4.26" />
     <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.6.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.AppServices\Dapplo.Microsoft.Extensions.Hosting.AppServices.csproj" />
     <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Plugins\Dapplo.Microsoft.Extensions.Hosting.Plugins.csproj" />
-    <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj" />
+    <ProjectReference Include="..\..\src\Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf\Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.Wpf.csproj" />
   </ItemGroup>
 
   <ItemGroup>
