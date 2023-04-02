@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #if !NETCOREAPP
@@ -13,16 +13,13 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
     /// </summary>
     public class AssemblyDependencyResolver
     {
-        private readonly string _pluginPath;
+        private readonly string pluginPath;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pluginPath">string with the path for the plugin and where his dependencies are loaded from</param>
-        public AssemblyDependencyResolver(string pluginPath)
-        {
-            _pluginPath = System.IO.Path.GetDirectoryName(pluginPath);
-        }
+        public AssemblyDependencyResolver(string pluginPath) => this.pluginPath = Path.GetDirectoryName(pluginPath);
 
         /// <summary>
         /// Find the assembly in the directory of the plugin
@@ -32,7 +29,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         /// <exception cref="NotImplementedException"></exception>
         public string ResolveAssemblyToPath(AssemblyName assemblyName)
         {
-            var assemblyPath = Path.Combine(_pluginPath, $"{assemblyName.Name}.dll");
+            var assemblyPath = Path.Combine(this.pluginPath, $"{assemblyName.Name}.dll");
             if (File.Exists(assemblyPath))
             {
                 return assemblyPath;
@@ -47,10 +44,7 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Plugins.Internals
         /// <param name="unmanagedDllName">string</param>
         /// <returns>string with the path</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public string ResolveUnmanagedDllToPath(string unmanagedDllName)
-        {
-            throw new NotImplementedException();
-        }
+        public string ResolveUnmanagedDllToPath(string unmanagedDllName) => throw new NotImplementedException();
     }
 }
 #endif

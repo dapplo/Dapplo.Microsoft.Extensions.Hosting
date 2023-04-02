@@ -116,17 +116,17 @@ namespace Dapplo.Microsoft.Extensions.Hosting.AppServices
             {
                 // Another instance didn't cleanup correctly!
                 // we can ignore the exception, it happened on the "WaitOne" but still the mutex belongs to us
-                this.logger.LogWarning(e, "{0} didn't cleanup correctly, but we got the mutex {1}.", this.resourceName, this.mutexId);
+                this.logger.LogWarning(e, "{resourceName} didn't cleanup correctly, but we got the mutex {mutexId}.", this.resourceName, this.mutexId);
             }
             catch (UnauthorizedAccessException e)
             {
-                this.logger.LogError(e, "{0} is most likely already running for a different user in the same session, can't create/get mutex {1} due to error.",
+                this.logger.LogError(e, "{resourceName} is most likely already running for a different user in the same session, can't create/get mutex {mutexId} due to error.",
                     this.resourceName, this.mutexId);
                 IsLocked = false;
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, "Problem obtaining the Mutex {1} for {0}, assuming it was already taken!", this.resourceName, this.mutexId);
+                this.logger.LogError(ex, "Problem obtaining the Mutex {mutexId} for {resourceName}, assuming it was already taken!", this.resourceName, this.mutexId);
                 IsLocked = false;
             }
             return IsLocked;

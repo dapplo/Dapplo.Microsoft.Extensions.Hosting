@@ -3,17 +3,16 @@
 
 using System.Windows;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf
+namespace Dapplo.Microsoft.Extensions.Hosting.Wpf;
+
+/// <summary>
+/// This defines a service which is called before the message loop is started
+/// </summary>
+public interface IWpfService
 {
     /// <summary>
-    /// This defines a service which is called before the message loop is started
+    /// Do whatever you need to do to initialize WPF, this is called from the UI thread
     /// </summary>
-    public interface IWpfService
-    {
-        /// <summary>
-        /// Do whatever you need to do to initialize WPF, this is called from the UI thread
-        /// </summary>
-        /// <param name="application">Application</param>
-        void Initialize(Application application);
-    }
+    /// <param name="application">Application</param>
+    void Initialize(Application application);
 }

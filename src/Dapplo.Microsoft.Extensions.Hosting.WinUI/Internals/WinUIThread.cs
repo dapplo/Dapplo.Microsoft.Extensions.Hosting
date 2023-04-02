@@ -25,10 +25,8 @@ namespace Dapplo.Microsoft.Extensions.Hosting.WinUI.Internals
         }
 
         /// <inheritdoc />
-        protected override void PreUiThreadStart()
-        {
+        protected override void PreUiThreadStart() =>
             ComWrappersSupport.InitializeComWrappers();
-        }
 
         /// <inheritdoc />
         protected override void UiThreadStart()

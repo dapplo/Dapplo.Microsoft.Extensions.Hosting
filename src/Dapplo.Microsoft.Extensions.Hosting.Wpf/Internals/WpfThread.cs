@@ -8,57 +8,50 @@ using System.Windows;
 using System.Windows.Threading;
 using Dapplo.Microsoft.Extensions.Hosting.UiThread;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
+namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals;
+
+/// <summary>
+/// This contains the logic for the WPF thread
+/// </summary>
+public class WpfThread : BaseUiThread<IWpfContext>
 {
     /// <summary>
-    /// This contains the logic for the WPF thread
+    /// This will create the WpfThread
     /// </summary>
-    public class WpfThread : BaseUiThread<IWpfContext>
+    /// <param name="serviceProvider">IServiceProvider</param>
+    public WpfThread(IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        /// <summary>
-        /// This will create the WpfThread
-        /// </summary>
-        /// <param name="serviceProvider">IServiceProvider</param>
-        public WpfThread(IServiceProvider serviceProvider) : base(serviceProvider)
+    }
+
+    /// <inheritdoc />
+    protected override void PreUiThreadStart()
+    {
+        // Create our SynchronizationContext, and install it:
+        SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
+
+        // Create the new WPF application
+        var wpfApplication = ServiceProvider.GetService<Application>() ?? new Application()
         {
-        }
+            ShutdownMode = UiContext.ShutdownMode
+        };
 
-        /// <inheritdoc />
-        protected override void PreUiThreadStart()
+        // Register to the WPF application exit to stop the host application
+        wpfApplication.Dispatcher.InvokeAsync(() => wpfApplication.Exit += (s, e) => HandleApplicationExit());
+
+        // Store the application for others to interact
+        UiContext.WpfApplication = wpfApplication;
+    }
+
+    /// <inheritdoc />
+    protected override void UiThreadStart() =>
+        UiContext.WpfApplication.Dispatcher.Invoke(() =>
         {
-            // Create our SynchronizationContext, and install it:
-            SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
-
-            // Create the new WPF application
-            var wpfApplication = ServiceProvider.GetService<Application>() ?? new Application()
-            {
-                ShutdownMode = UiContext.ShutdownMode
-            };
-
-            // Register to the WPF application exit to stop the host application
-            wpfApplication.Exit += (s, e) =>
-            {
-                UiContext.IsRunning = false;
-                if (UiContext.IsLifetimeLinked)
-                {
-                    //_logger.LogDebug("Stopping host application due to WPF application exit.");
-                    ServiceProvider.GetService<IHostApplicationLifetime>()?.StopApplication();
-                }
-            };
-
-            // Store the application for others to interact
-            UiContext.WpfApplication = wpfApplication;
-        }
-
-        /// <inheritdoc />
-        protected override void UiThreadStart() {
             // Mark the application as running
             UiContext.IsRunning = true;
 
             // Use the provided IWpfService
             var wpfServices = ServiceProvider.GetServices<IWpfService>();
-            foreach(var wpfService in wpfServices)
+            foreach (var wpfService in wpfServices)
             {
                 wpfService.Initialize(UiContext.WpfApplication);
             }
@@ -68,10 +61,40 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
             switch (shellWindows.Count)
             {
                 case 1:
-                    UiContext.WpfApplication.Run(shellWindows[0]);
+                    if (UiContext.WpfApplication.Dispatcher.Thread.ThreadState != ThreadState.Running)
+                    {
+                        UiContext.WpfApplication.Run(shellWindows[0]);
+                    }
+                    else
+                    {
+                        if (UiContext.WpfApplication.StartupUri != null)
+                        {
+                            MessageBox.Show("Please remove the StartupUri configuration in App.xaml");
+                        }
+                        else
+                        {
+                            shellWindows[0].Show();
+                        }
+                    }
+
                     break;
                 case 0:
-                    UiContext.WpfApplication.Run();
+                    if (UiContext.WpfApplication.Dispatcher.Thread.ThreadState != ThreadState.Running)
+                    {
+                        UiContext.WpfApplication.Run();
+                    }
+                    else
+                    {
+                        if (UiContext.WpfApplication.MainWindow != null)
+                        {
+                            // show window if possible
+                            UiContext.WpfApplication.MainWindow.Show();
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Please inherit from IWpfShell in a Window to use the required IWpfShell interface");
+                        }
+                    }
                     break;
                 default:
                     UiContext.WpfApplication.Startup += (sender, args) =>
@@ -81,9 +104,13 @@ namespace Dapplo.Microsoft.Extensions.Hosting.Wpf.Internals
                             window?.Show();
                         }
                     };
-                    UiContext.WpfApplication.Run();
+
+                    if (UiContext.WpfApplication.Dispatcher.Thread.ThreadState != ThreadState.Running)
+                    {
+                        UiContext.WpfApplication.Run();
+                    }
+
                     break;
             }
-        }
-    }
+        });
 }

@@ -3,16 +3,15 @@
 
 using System.Collections.Generic;
 
-namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro
+namespace Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro;
+
+/// <summary>
+/// A ViewModel can supply settings for a dialog or window
+/// </summary>
+public interface IHaveSettings
 {
     /// <summary>
-    /// A ViewModel can supply settings for a dialog or window
+    /// A IDictionary with properties for the window or dialog
     /// </summary>
-    public interface IHaveSettings
-    {
-        /// <summary>
-        /// A IDictionary with properties for the window or dialog
-        /// </summary>
-        IDictionary<string, object> Settings { get; }
-    }
+    IDictionary<string, object> Settings { get; }
 }

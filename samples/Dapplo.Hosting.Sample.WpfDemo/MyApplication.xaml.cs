@@ -4,18 +4,17 @@
 using Microsoft.Extensions.Logging;
 using System.Windows;
 
-namespace Dapplo.Hosting.Sample.WpfDemo
-{
-    /// <summary>
-    /// Interaction logic for MyApplication.xaml
-    /// </summary>
-    public partial class MyApplication : Application
-    {
-        public MyApplication(ILogger<MyApplication> logger)
-        {
-            InitializeComponent();
+namespace Dapplo.Hosting.Sample.WpfDemo;
 
-            logger.LogInformation("MyApplication was created");
-        }
+/// <summary>
+/// Interaction logic for MyApplication.xaml
+/// </summary>
+public partial class MyApplication : Application
+{
+    public MyApplication(ILogger<MyApplication> logger)
+    {
+        InitializeComponent();
+
+        logger.LogInformation("MyApplication was created");
     }
 }
