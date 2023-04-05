@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--ReactiveUI only supports windows 10.0.17763 plus-->
+    <TargetFrameworks>net6.0-windows10.0.17763;net7.0-windows10.0.17763</TargetFrameworks>
+    <UseWinUI>True</UseWinUI>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageDescription>This extension adds ReactiveUI support to generic host based dotnet core 6.0 / 7.0 WinUI applications. With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this reactive MVVM framework.</PackageDescription>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ReactiveUI.WinUI" Version="18.4.26" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.6.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dapplo.Microsoft.Extensions.Hosting.WinUI\Dapplo.Microsoft.Extensions.Hosting.WinUI.csproj" />
+  </ItemGroup>
+
+</Project>

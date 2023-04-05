@@ -190,3 +190,18 @@ Use the following code to merge ReactiveUI.Splat with the Microsoft Dependency R
 ```C#
     .ConfigureSplatForMicrosoftDependencyResolver()
 ```
+
+Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinUI
+---------------------------------------
+
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.ReactiveUI.WinForms/)
+
+This extension adds [ReactiveUI](https://reactiveui.net/) support to generic host based applications.
+With this you can enhance your application with ReactiveUI functions, and use all the services provided by the generic host like combining Splat with Microsoft DI, logging etc, together with this great Reactive MVVM framework.
+
+This is based on the Dapplo.Microsoft.Extensions.Hosting.WinUI extension, so you can use that to start your application.
+
+Use the following code to merge ReactiveUI.Splat with the Microsoft Dependency Resolver in your application:
+```C#
+    .ConfigureSplatForMicrosoftDependencyResolver()
+```
