@@ -27,6 +27,23 @@ stages:
       buildConfiguration: 'Release'
 
     steps:
+    - name: Get Current Visual Studio Information
+      shell: bash
+      run: |
+        dotnet tool update -g dotnet-vs
+        echo "** About RELEASE **"
+        vs where release
+        
+    - name: Update Visual Studio Latest Release
+      shell: bash
+      run: |
+        echo "** Update RELEASE **"
+        vs update release Enterprise
+        vs modify release Enterprise +mobile +desktop +uwp +web
+        echo "** About RELEASE Updated **"
+        vs where release
+        echo "##vso[task.prependpath]$(vs where release --prop=InstallationPath)\MSBuild\Current\Bin"
+
     - checkout: self
       persistCredentials: true
 
@@ -41,6 +58,11 @@ stages:
       inputs:
         packageType: sdk
         version: 7.0.x
+
+    - name: Install DotNet workloads
+      shell: bash
+      run: |
+        dotnet workload install android ios tvos macos maui maccatalyst
 
     - task: DotNetCoreCLI@2
       displayName: Build
