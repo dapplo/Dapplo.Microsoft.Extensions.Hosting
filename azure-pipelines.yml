@@ -27,14 +27,14 @@ stages:
       buildConfiguration: 'Release'
 
     steps:
-    - name: Get Current Visual Studio Information
+    - displayName: Get Current Visual Studio Information
       shell: bash
       run: |
         dotnet tool update -g dotnet-vs
         echo "** About RELEASE **"
         vs where release
         
-    - name: Update Visual Studio Latest Release
+    - displayName: Update Visual Studio Latest Release
       shell: bash
       run: |
         echo "** Update RELEASE **"
@@ -59,7 +59,7 @@ stages:
         packageType: sdk
         version: 7.0.x
 
-    - name: Install DotNet workloads
+    - displayName: Install DotNet workloads
       shell: bash
       run: |
         dotnet workload install android ios tvos macos maui maccatalyst
