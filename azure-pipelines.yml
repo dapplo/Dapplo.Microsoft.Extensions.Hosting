@@ -28,15 +28,13 @@ stages:
 
     steps:
     # displayName: Get Current Visual Studio Information
-    - shell: bash
-      run: |
+    - script: |
         dotnet tool update -g dotnet-vs
         echo "** About RELEASE **"
         vs where release
 
     # displayName: Update Visual Studio Latest Release
-    - shell: bash
-      run: |
+    - script: |
         echo "** Update RELEASE **"
         vs update release Enterprise
         vs modify release Enterprise +mobile +desktop +uwp +web
@@ -60,9 +58,7 @@ stages:
         version: 7.0.x
 
     # displayName: Install DotNet workloads
-    - shell: bash
-      run: |
-        dotnet workload install android ios tvos macos maui maccatalyst
+    - script: dotnet workload install android ios tvos macos maui maccatalyst
 
     - task: DotNetCoreCLI@2
       displayName: Build
