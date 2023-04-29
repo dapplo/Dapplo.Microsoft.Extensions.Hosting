@@ -59,6 +59,11 @@ stages:
         
     - script: dotnet workload install android ios tvos macos maui maccatalyst
       displayName: 'Install DotNet workloads'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: '$(solution)'
       
     - task: VSBuild@1
       displayName: 'Build solution'
