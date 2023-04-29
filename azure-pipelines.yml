@@ -27,13 +27,12 @@ stages:
       buildConfiguration: 'Release'
 
     steps:
-    # displayName: Get Current Visual Studio Information
     - script: |
         dotnet tool update -g dotnet-vs
         echo "** About RELEASE **"
         vs where release
-
-    # displayName: Update Visual Studio Latest Release
+      displayName: 'Get Current Visual Studio Information'
+      
     - script: |
         echo "** Update RELEASE **"
         vs update release Enterprise
@@ -41,6 +40,7 @@ stages:
         echo "** About RELEASE Updated **"
         vs where release
         echo "##vso[task.prependpath]$(vs where release --prop=InstallationPath)\MSBuild\Current\Bin"
+      displayName: 'Update Visual Studio Latest Release'
 
     - checkout: self
       persistCredentials: true
@@ -56,16 +56,16 @@ stages:
       inputs:
         packageType: sdk
         version: 7.0.x
-
-    # displayName: Install DotNet workloads
+        
     - script: dotnet workload install android ios tvos macos maui maccatalyst
-
-    - task: DotNetCoreCLI@2
-      displayName: Build
+      displayName: 'Install DotNet workloads'
+      
+    - task: VSBuild@1
+      displayName: 'Build solution'
       inputs:
-        command: build
-        projects: '$(solution)'
-        arguments: '--configuration $(buildConfiguration) /p:Platform="$(buildPlatform)"'
+        solution: '$(solution)'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
 
     - task: replacetokens@3
       inputs:
@@ -127,7 +127,7 @@ stages:
       condition: ne(variables['Build.Reason'], 'PullRequest')
       env:
         BuildNumber: $(Build.BuildNumber)
-      displayName: "docfx publish"
+      displayName: 'docfx publish'
 
 - stage: Deploy
   jobs:
