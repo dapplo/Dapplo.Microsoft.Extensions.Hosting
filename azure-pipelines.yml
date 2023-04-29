@@ -37,7 +37,7 @@ stages:
     - script: |
         echo "** Update RELEASE **"
         vs update release Enterprise
-        vs modify release Enterprise +mobile +desktop +uwp +web
+        vs modify release Enterprise +mobile +desktop +uwp +web +core
         echo "** About RELEASE Updated **"
         vs where release
         echo "##vso[task.prependpath]$(vs where release --prop=InstallationPath)\MSBuild\Current\Bin"
