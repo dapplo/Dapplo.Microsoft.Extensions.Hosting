@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NuGet.Protocol" Version="6.5.0" />
-    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.6.8" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.6.37" />
   </ItemGroup>
 
   <ItemGroup>
