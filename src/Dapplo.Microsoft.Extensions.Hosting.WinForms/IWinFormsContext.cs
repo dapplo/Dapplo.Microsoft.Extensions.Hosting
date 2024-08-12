@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Dapplo.Microsoft.Extensions.Hosting.UiThread;
+using System;
 using System.Windows.Threading;
 
 namespace Dapplo.Microsoft.Extensions.Hosting.WinForms;
@@ -20,4 +21,18 @@ public interface IWinFormsContext : IUiContext
     /// The dispatcher to send information to forms
     /// </summary>
     Dispatcher Dispatcher { get; set; }
+
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Specify if the new application bootstrap should be used, default is true
+    /// </summary>
+    bool UseNewApplicationBootstrap { get; set; }
+
+    /// <summary>
+    /// Specifies the action for ApplicationConfiguration.Initialize
+    /// </summary>
+    Action NewApplicationBootstrapAction { get; set; }
+#endif
+
+
 }

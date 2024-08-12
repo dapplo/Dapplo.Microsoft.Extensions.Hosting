@@ -2,19 +2,27 @@
 
   <PropertyGroup>
     <!--ReactiveUI only supports windows 10.0.17763 plus-->
-    <TargetFrameworks>net472;net6.0-windows10.0.17763;net7.0-windows10.0.17763</TargetFrameworks>
+    <TargetFrameworks>net472;net6.0-windows10.0.17763;net8.0-windows10.0.17763</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <PackageDescription>This extension adds ReactiveUI support to generic host based dotnet core 6.0 / 7.0 WPF applications. With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this reactive MVVM framework.</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ReactiveUI.Drawing" Version="18.4.26" />
-    <PackageReference Include="ReactiveUI.WPF" Version="18.4.26" />
-    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.6.8" />
+    <PackageReference Include="ReactiveUI.Drawing" Version="20.1.1" />
+    <PackageReference Include="ReactiveUI.WPF" Version="20.1.1" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="15.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Dapplo.Microsoft.Extensions.Hosting.Wpf\Dapplo.Microsoft.Extensions.Hosting.Wpf.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageReference Update="Nerdbank.GitVersioning" Version="3.6.139">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

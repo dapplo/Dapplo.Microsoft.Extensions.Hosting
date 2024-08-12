@@ -1,4 +1,4 @@
-﻿// Copyright (c) Dapplo and contributors. All rights reserved.
+// Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Microsoft.Extensions.DependencyInjection;
@@ -18,4 +18,11 @@ public interface IPlugin
     /// <param name="hostBuilderContext">HostBuilderContext</param>
     /// <param name="serviceCollection">IServiceCollection</param>
     void ConfigureHost(HostBuilderContext hostBuilderContext, IServiceCollection serviceCollection);
+
+    /// <summary>
+    /// Implementing this method allows a plug-in to configure the host.
+    /// This makes it possible to add services etc
+    /// </summary>
+    /// <param name="hostApplicationBuilder">IHostApplicationBuilder</param>
+    void ConfigureHost(IHostApplicationBuilder hostApplicationBuilder);
 }

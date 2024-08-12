@@ -24,7 +24,19 @@ public static class Program
     {
         var executableLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
         var host = new HostBuilder()
-            .ConfigureWinForms<Form1>()
+            .ConfigureWinForms<Form1>(configureAction =>
+            {
+
+#if NET6_0_OR_GREATER
+                // To customize application configuration such as set high DPI settings or default font,
+                // see https://aka.ms/applicationconfiguration.
+                configureAction.UseNewApplicationBootstrap = true;
+                configureAction.NewApplicationBootstrapAction = () => { ApplicationConfiguration.Initialize(); };
+                configureAction.EnableVisualStyles = false;
+#else
+                configureAction.EnableVisualStyles = true;
+#endif
+            })
             .ConfigureLogging()
             .ConfigureConfiguration(args)
             .ConfigureSingleInstance(builder =>
@@ -33,7 +45,7 @@ public static class Program
                 builder.WhenNotFirstInstance = (hostingEnvironment, logger) =>
                 {
                     // This is called when an instance was already started, this is in the second instance
-                    logger.LogWarning("Application {0} already running.", hostingEnvironment.ApplicationName);
+                    logger.LogWarning("Application {ApplicationName} already running.", hostingEnvironment.ApplicationName);
                 };
             })
             .ConfigurePlugins(pluginBuilder =>

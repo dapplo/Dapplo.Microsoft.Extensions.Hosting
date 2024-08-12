@@ -1,3 +1,4 @@
+#if !USE_HOST_APPLICATION_BUILDER
 // Copyright (c) Dapplo and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
@@ -100,3 +101,4 @@ public static class Program
                     .AddCommandLine(args);
             });
 }
+#endif
