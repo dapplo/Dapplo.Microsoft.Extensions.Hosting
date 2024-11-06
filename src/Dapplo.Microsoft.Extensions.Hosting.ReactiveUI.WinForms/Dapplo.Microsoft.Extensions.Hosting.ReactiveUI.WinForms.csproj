@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ReactiveUI.Drawing" Version="20.1.1" />
-    <PackageReference Include="ReactiveUI.WinForms" Version="20.1.1" />
-    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="15.1.1" />
+    <PackageReference Include="ReactiveUI.Drawing" Version="20.1.63" />
+    <PackageReference Include="ReactiveUI.WinForms" Version="20.1.63" />
+    <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="15.2.22" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <PackageReference Update="Nerdbank.GitVersioning" Version="3.6.139">
+    <PackageReference Update="Nerdbank.GitVersioning" Version="3.6.146">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
