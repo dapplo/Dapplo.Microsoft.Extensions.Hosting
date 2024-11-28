@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <!--ReactiveUI only supports windows 10.0.17763 plus-->
-    <TargetFrameworks>net472;net6.0-windows10.0.17763;net8.0-windows10.0.17763</TargetFrameworks>
+    <TargetFrameworks>net472;net8.0-windows10.0.17763;net9.0-windows10.0.17763</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <PackageDescription>This extension adds ReactiveUI support to generic host based dotnet core 6.0 / 7.0 WinForms applications. With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this reactive MVVM framework.</PackageDescription>
+    <PackageDescription>This extension adds ReactiveUI support to generic host based dotnet core 8.0 / 9.0 WinForms applications. With this you can enhance your application with a UI, and use all the services provided by the generic host like DI, logging etc, together with this reactive MVVM framework.</PackageDescription>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <!--<TargetFrameworks>net8.0-windows;net6.0-windows;net472</TargetFrameworks>-->
-    <TargetFrameworks>net472</TargetFrameworks>
+    <TargetFrameworks>net9.0-windows;net8.0-windows;net472</TargetFrameworks>
+    <!--<TargetFrameworks>net472</TargetFrameworks>-->
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <Platforms>AnyCPU;x64</Platforms>   
@@ -27,7 +27,7 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
