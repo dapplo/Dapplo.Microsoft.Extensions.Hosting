@@ -6,6 +6,7 @@ Ever wondered if it's possible to have a nice modular way to develop a .NET appl
 
 This repository brings you a few extensions on the generic host which will help you on your way to quickly build a new application with extra functionality:
 - Dapplo.Microsoft.Extensions.Hosting.AppServices - Simple services, e.g. make sure you application runs only once!
+- Dapplo.Microsoft.Extensions.Hosting.Avalonia - Have a way to bootstrap Avalonia with all the possible generic host functionality, and manage the lifetime.
 - Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro - Bases upon Dapplo.Microsoft.Extensions.Hosting.Wpf and bootstraps [Caliburn.Micro](https://caliburnmicro.com)
 - Dapplo.Microsoft.Extensions.Hosting.WinForms - Have a way to bootstrap Windows Forms with all the possible generic host functionality, and manage the lifetime.
 - Dapplo.Microsoft.Extensions.Hosting.Wpf - Have a way to bootstrap WPF with all the possible generic host functionality, and manage the lifetime.
@@ -13,13 +14,19 @@ This repository brings you a few extensions on the generic host which will help 
 
 FYI: there is a solution with samples in the samples directory and one which is used on the build server in the src.
 
-I've created a dotnet new template on [![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp/) so to quickly start, you can type the following:
+I've created dotnet new templates to help you get started quickly:
+
+### Avalonia Template
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.Avalonia.Template.CSharp.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.Avalonia.Template.CSharp/)
 ```
-dotnet new --install Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp
+dotnet new --install Dapplo.Microsoft.Extensions.Hosting.Avalonia.Template.CSharp
+dotnet new avaloniahost
 ```
 
-After this you can create a new project by doing something like this (the enable metro and mutex arguments are optional, default is true):
+### Caliburn.Micro WPF Template
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp/)
 ```
+dotnet new --install Dapplo.Microsoft.Extensions.Hosting.CaliburnMicro.Template.CSharp
 dotnet new caliburnmicrohost --EnableMetro true --EnableMutex true
 ```
 
@@ -78,6 +85,46 @@ This can also be simplified to use the following code with up to 3 configured se
     public class Plugin : PluginBase<LifetimeEventsHostedService, TimedHostedService>
     {
     }
+```
+
+
+Dapplo.Microsoft.Extensions.Hosting.Avalonia
+--------------------------------------------
+
+[![Nuget](https://img.shields.io/nuget/v/Dapplo.Microsoft.Extensions.Hosting.Avalonia.svg)](https://www.nuget.org/packages/Dapplo.Microsoft.Extensions.Hosting.Avalonia/)
+
+This extension adds Avalonia 11 support to generic host based applications.
+With this you can enhance your application with a cross-platform UI, and use all the services provided by the generic host like DI, logging etc.
+
+[Here](https://github.com/dapplo/Dapplo.Microsoft.Extensions.Hosting/blob/master/samples/Dapplo.Hosting.Sample.AvaloniaDemo/Program.cs) is an example how to start your application with a MainWindow and have the application automatically shutdown whenever you exit the MainWindow. To make this possible MainWindow must implement a marker interface, which currently has no methods, called IAvaloniaShell. The IAvaloniaShell is considered the main entry point of your UI. You only specify the type, the instance will be created at a later time by the generic host and will automatically go through the DI process.
+
+This means your MainWindow can have a constructor which requests a logger, or other windows.
+
+It's not much more than adding something like this to your hostBuilder:
+```C#
+.ConfigureAvalonia(avaloniaBuilder =>
+{
+    // Use the custom application
+    avaloniaBuilder.UseApplication<App>();
+    
+    // Use the main window
+    avaloniaBuilder.UseWindow<MainWindow>();
+})
+.UseAvaloniaLifetime()
+```
+
+You can also configure the Avalonia AppBuilder if needed:
+```C#
+.ConfigureAvalonia(avaloniaBuilder =>
+{
+    avaloniaBuilder.ConfigureAppBuilder(appBuilder =>
+    {
+        appBuilder.UsePlatformDetect()
+                  .LogToTrace();
+    });
+    avaloniaBuilder.UseApplication<App>();
+    avaloniaBuilder.UseWindow<MainWindow>();
+})
 ```
 
 
