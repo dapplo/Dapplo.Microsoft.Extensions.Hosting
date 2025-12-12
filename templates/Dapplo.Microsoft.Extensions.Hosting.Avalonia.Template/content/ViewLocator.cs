@@ -23,7 +23,14 @@ public class ViewLocator : IDataTemplate
 
         if (type != null)
         {
-            return (Control)Activator.CreateInstance(type)!;
+            try
+            {
+                return (Control)Activator.CreateInstance(type)!;
+            }
+            catch
+            {
+                return new TextBlock { Text = "Failed to create: " + name };
+            }
         }
 
         return new TextBlock { Text = "Not Found: " + name };
