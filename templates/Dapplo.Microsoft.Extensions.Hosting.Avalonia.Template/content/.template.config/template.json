@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Dapplo",
+    "classifications": [ "Common", "Avalonia" ],
+    "identity": "Dapplo.Microsoft.Extensions.Hosting.Avalonia.Template.CSharp",
+    "name": "Avalonia application on generic host",
+    "shortName": "avaloniahost",
+    "tags": {
+        "language": "C#"
+    },
+    "sourceName": "Dapplo.Microsoft.Extensions.Hosting.Avalonia.Template"
+}

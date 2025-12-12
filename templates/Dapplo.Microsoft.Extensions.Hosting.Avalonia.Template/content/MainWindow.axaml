@@ -1,0 +1,14 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Dapplo.Microsoft.Extensions.Hosting.Avalonia.Template.MainWindow"
+        Title="Avalonia Demo Application"
+        Width="800"
+        Height="450">
+    <StackPanel Margin="20" Spacing="10">
+        <TextBlock FontSize="24" FontWeight="Bold">Welcome to Avalonia with Generic Host!</TextBlock>
+        <TextBlock TextWrapping="Wrap">
+            This is a template Avalonia application using Dapplo.Microsoft.Extensions.Hosting.Avalonia
+        </TextBlock>
+        <Button Name="ExitButton" Content="Exit Application" HorizontalAlignment="Left" />
+    </StackPanel>
+</Window>

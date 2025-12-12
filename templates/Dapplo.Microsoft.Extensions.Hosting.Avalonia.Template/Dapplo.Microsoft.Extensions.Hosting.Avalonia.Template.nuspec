@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Dapplo.Microsoft.Extensions.Hosting.Avalonia.Template.CSharp</id>
+    <version>1.0.0</version>
+    <description>Creates an Avalonia application running via the generic host</description>
+    <authors>Dapplo</authors>
+    <license type="expression">MIT</license>
+    <icon>icon.png</icon>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+  </metadata>
+</package>
