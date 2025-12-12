@@ -99,23 +99,21 @@ internal static class InternalBuilderAvaloniaUtility
         {
             serviceCollection.AddSingleton(avaloniaContext);
             
-            // Create the AppBuilder
-            var appBuilder = AppBuilder.Configure(() => null);
-            
-            // Allow custom configuration of the AppBuilder
-            avaloniaBuilder.ConfigureAppBuilderAction?.Invoke(appBuilder);
-            
-            // Use platform defaults if not configured
-            if (appBuilder.Instance == null)
+            // The AppBuilder will be created by resolving the Application from DI
+            // and applying any custom configuration
+            serviceCollection.AddSingleton(serviceProvider =>
             {
-                appBuilder = AppBuilder.Configure(() => avaloniaBuilder.Application ?? new Application())
+                var application = serviceProvider.GetService<Application>();
+                var appBuilder = AppBuilder.Configure(() => application ?? new Application())
                     .UsePlatformDetect()
                     .LogToTrace();
-                    
+                
+                // Allow custom configuration of the AppBuilder
                 avaloniaBuilder.ConfigureAppBuilderAction?.Invoke(appBuilder);
-            }
+                
+                return new AvaloniaThread(serviceProvider, appBuilder);
+            });
             
-            serviceCollection.AddSingleton(serviceProvider => new AvaloniaThread(serviceProvider, appBuilder));
             serviceCollection.AddHostedService<AvaloniaHostedService>();
         }
         avaloniaBuilder.ConfigureContextAction?.Invoke(avaloniaContext);
