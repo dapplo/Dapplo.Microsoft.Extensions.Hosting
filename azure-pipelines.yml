@@ -37,10 +37,10 @@ stages:
         checkLatest: true
 
     - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk 7.0.x'
+      displayName: 'Use .NET Core sdk 9.0.x'
       inputs:
         packageType: sdk
-        version: 7.0.x
+        version: 9.0.x
 
     - task: DotNetCoreCLI@2
       displayName: Build

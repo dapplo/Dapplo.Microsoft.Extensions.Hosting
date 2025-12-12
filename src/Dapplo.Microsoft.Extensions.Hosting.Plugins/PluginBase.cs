@@ -14,6 +14,10 @@ public class PluginBase<T> : IPlugin
     /// <inheritdoc />
     public void ConfigureHost(HostBuilderContext hostBuilderContext, IServiceCollection serviceCollection) =>
         serviceCollection.AddHostedService<T>();
+
+    /// <inheritdoc />
+    public void ConfigureHost(IHostApplicationBuilder hostApplicationBuilder) =>
+        hostApplicationBuilder.Services.AddHostedService<T>();
 }
 
 /// <summary>
@@ -29,6 +33,10 @@ public class PluginBase<T1, T2> : IPlugin
     /// <inheritdoc />
     public void ConfigureHost(HostBuilderContext hostBuilderContext, IServiceCollection serviceCollection) =>
         serviceCollection.AddHostedService<T1>().AddHostedService<T2>();
+
+    /// <inheritdoc />
+    public void ConfigureHost(IHostApplicationBuilder hostApplicationBuilder) =>
+        hostApplicationBuilder.Services.AddHostedService<T1>().AddHostedService<T2>();
 }
 
 /// <summary>
@@ -47,4 +55,8 @@ public class PluginBase<T1, T2, T3> : IPlugin
     /// <inheritdoc />
     public void ConfigureHost(HostBuilderContext hostBuilderContext, IServiceCollection serviceCollection) =>
         serviceCollection.AddHostedService<T1>().AddHostedService<T2>().AddHostedService<T3>();
+
+    /// <inheritdoc />
+    public void ConfigureHost(IHostApplicationBuilder hostApplicationBuilder) =>
+        hostApplicationBuilder.Services.AddHostedService<T1>().AddHostedService<T2>().AddHostedService<T3>();
 }

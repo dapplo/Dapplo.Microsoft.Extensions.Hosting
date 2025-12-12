@@ -33,6 +33,13 @@ public class WinFormsThread : BaseUiThread<IWinFormsContext>
         // Create our SynchronizationContext, and install it:
         SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(currentDispatcher));
 
+#if NET6_0_OR_GREATER
+        if (UiContext.UseNewApplicationBootstrap
+            && UiContext.NewApplicationBootstrapAction != null)
+        {
+            UiContext.NewApplicationBootstrapAction.Invoke();
+        }
+#endif
         if (UiContext.EnableVisualStyles)
         {
             Application.EnableVisualStyles();
