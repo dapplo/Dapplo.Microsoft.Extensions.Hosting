@@ -28,8 +28,4 @@
       <DependentUpon>appsettings.json</DependentUpon>
     </None>
   </ItemGroup>
-  
-  <ItemGroup>
-    <AvaloniaResource Include="**\*.axaml" />
-  </ItemGroup>
 </Project>
